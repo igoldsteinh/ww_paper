@@ -84,19 +84,6 @@ include(projectdir("src/prior_constants_eir_cases_LA.jl"))
 
 end 
 
-if sim == 111
-  all_dat = CSV.read("data/sim_data/scenario111_lump7data_100sims.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 111, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_eir_cases.jl"))
-end 
-
 
 
 data_cases = dat[:, :total_cases]
@@ -116,9 +103,6 @@ my_model = bayes_eir_cases!(
     obstimes, 
     param_change_times)
 
-# Sample Posterior
-# Random.seed!(seed)
-# posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, n_chains, discard_initial = 10, thin=2)
 
 if priors_only
   Random.seed!(seed)
@@ -137,17 +121,6 @@ init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 Random.seed!(seed)
 
 posterior_samples = sample(my_model, NUTS(-1, 0.8), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples, init_params = init)
-# posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples)
 
 
 wsave(resultsdir("eir_cases", "posterior_samples", string("posterior_samples_scenario", sim, "_seed", seed, ".jld2")), @dict posterior_samples)
-
-# are we type stable
-#   @code_warntype my_model.f(
-#     my_model,
-#     Turing.VarInfo(my_model),
-#     Turing.SamplingContext(
-#         Random.GLOBAL_RNG, Turing.SampleFromPrior(), Turing.DefaultContext(),
-#     ),
-#     my_model.args...,
-# )

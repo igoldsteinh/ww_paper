@@ -1,5 +1,4 @@
 # fit epidemia to real LA data
-# example model fits
 library(tidyverse)
 library(tidybayes)
 library(patchwork)
@@ -36,9 +35,6 @@ sum <- sum(gen_weights)
 
 gen_weights <- gen_weights/ sum
 
-# incubation period for cholera
-# going off of this: https://pubmed.ncbi.nlm.nih.gov/23201968/
-# median is 1.4 days
 delay_weights <- epidemia_gamma(10, delay_params[1], delay_params[2])
 
 delay_sum <- sum(delay_weights)
@@ -67,7 +63,6 @@ obs <-  epiobs(
   prior_intercept = rstanarm::normal(location=0.066, scale=0.05),
   link = "identity",
   i2o = delay_weights
-  #prior_aux = rstanarm::normal(location = 1/58, scale = 1/35)
 )
 
 
@@ -87,7 +82,6 @@ args$inf <- epiinf(gen = gen_weights,
                    prior_aux = normal(10,2))
 fm2 <- do.call(epim, args)
 
-# priors <- prior_summary(fm2)
 posteriors <- as.data.frame(fm2)
 
 subset_samples <- as_draws_df(fm2[["stanfit"]])

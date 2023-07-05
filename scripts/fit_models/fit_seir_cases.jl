@@ -37,11 +37,6 @@ if priors_only
 end
 
 
-if sim == 11 | sim == 1111
-  fixed = true 
-  else 
-  fixed = false 
-  end 
   
   
 Logging.disable_logging(Logging.Warn)
@@ -52,76 +47,13 @@ mkpath(resultsdir("seir_cases", "posterior_samples"))
 # choose sim 
 if sim == 1
   all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
   overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
   const phi_sd = overdisp_priors[1, :sd] 
   const phi_mean = overdisp_priors[1, :mean]
   ## Define Priors
   include(projectdir("src/prior_constants_seir_cases.jl"))
 end 
 
-if sim == 11
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 1, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario11.jl"))
-end 
-
-if sim == 13
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 1, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario13.jl"))
-end 
-
-if sim == 14
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 1, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario14.jl"))
-end 
-
-if sim == 111
-  all_dat = CSV.read("data/sim_data/scenario111_lump7data_100sims.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 111, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario111.jl"))
-end 
-
-# 1111 is not like 111, it is like 11, same data as scenario 1, same priors as scenario 1, but now they're fixed 
-if sim == 1111
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 1, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases.jl"))
-end 
 dat = subset(all_dat, :seed => ByRow(x -> x == seed))
 data_cases = dat[:, :total_cases]
 obstimes = dat[:, :new_week]
@@ -183,19 +115,9 @@ MAP_noise = [MAP_noise[:,i] for i in 1:size(MAP_noise,2)]
 
 init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 Random.seed!(seed)
-# posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples)
 
 posterior_samples = sample(my_model, NUTS(-1, 0.8), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples, init_params = init)
 
 
 
 wsave(resultsdir("seir_cases", "posterior_samples", string("posterior_samples_scenario", sim, "_seed", seed, ".jld2")), @dict posterior_samples)
-
-# @code_warntype my_model.f(
-#     my_model,
-#     Turing.VarInfo(my_model),
-#     Turing.SamplingContext(
-#         Random.GLOBAL_RNG, Turing.SampleFromPrior(), Turing.DefaultContext(),
-#     ),
-#     my_model.args...,
-# )

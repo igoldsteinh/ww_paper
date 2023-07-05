@@ -68,69 +68,6 @@ include(projectdir("src/prior_constants_seirr_student.jl"))
 
 end 
 
-if sim == "fixed"
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-data_log_copies = long_dat[:, :value]
-
-## Define Priors
-include(projectdir("src/prior_constants_seirr_student.jl"))
-
-end 
-
-if sim == "frw"
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-data_log_copies = long_dat[:, :value]
-
-## Define Priors
-include(projectdir("src/prior_constants_seirr_student.jl"))
-
-end 
-
-if sim == "alt_prior"
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-data_log_copies = long_dat[:, :value]
-
-## Define Priors
-include(projectdir("src/prior_constants_seirr_student_altprior.jl"))
-
-end 
-
-if sim == "apf"
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-data_log_copies = long_dat[:, :value]
-
-## Define Priors
-include(projectdir("src/prior_constants_seirr_student_altprior.jl"))
-
-end 
-if sim == "own"
-  all_dat = CSV.read("data/sim_data/seirr_sim_data.csv", DataFrame)
-  dat = subset(all_dat, :iteration => ByRow(x -> x == 1))
-  true_long_dat = DataFrames.stack(dat)
-
-data_log_copies = true_long_dat[:, :value]
-
-other_dat =CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
-other_dat = subset(other_dat, :seed => ByRow(x -> x == seed))
-subset_dat = other_dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-
-## Define Priors
-include(projectdir("src/prior_constants_seirr_student.jl"))
-
-end 
 
 
 
