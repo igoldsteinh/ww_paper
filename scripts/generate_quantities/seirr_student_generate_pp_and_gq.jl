@@ -54,33 +54,6 @@ data_log_copies = long_dat[:, :value]
 
 end 
 
-if sim == 3
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
-  subset_dat = dat[:, [:new_time, 
-  :log_gene_copies1, 
-  :log_gene_copies2, 
-  :log_gene_copies3, 
-  :log_gene_copies4, 
-  :log_gene_copies5, 
-  :log_gene_copies6, 
-  :log_gene_copies7,
-  :log_gene_copies8,
-  :log_gene_copies9,
-  :log_gene_copies10]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, 
-                      :log_gene_copies2, 
-                      :log_gene_copies3, 
-                      :log_gene_copies4, 
-                      :log_gene_copies5, 
-                      :log_gene_copies6, 
-                      :log_gene_copies7,
-                      :log_gene_copies8,
-                      :log_gene_copies9,
-                      :log_gene_copies10])
-long_dat = filter(:value => value -> value > 0, long_dat)
-data_log_copies = long_dat[:, :value]
-end 
-
 obstimes = long_dat[:, :new_time]
 obstimes = convert(Vector{Float64}, obstimes)
 if maximum(obstimes) % 7 == 0

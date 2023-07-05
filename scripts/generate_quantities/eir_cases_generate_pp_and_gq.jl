@@ -67,20 +67,6 @@ include(projectdir("src/prior_constants_eir_cases_LA.jl"))
 
 end 
 
-if sim == 111
-  all_dat = CSV.read("data/sim_data/scenario111_lump7data_100sims.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 111, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_eir_cases.jl"))
-end 
-
-
 
 data_cases = dat[:, :total_cases]
 obstimes = dat[:, :new_week]
@@ -129,8 +115,6 @@ if priors_only
     Random.seed!(seed)
     
     
-    # prior_predictive_randn = predict(my_model_forecast_missing, prior_samples_randn)
-    # CSV.write(resultsdir("eir_cases", string("prior_predictive_scenario", sim, "_seed", seed, ".csv")), DataFrame(prior_predictive_randn))
     
     Random.seed!(seed)
     prior_gq_randn = get_gq_chains(my_model, prior_samples_randn);

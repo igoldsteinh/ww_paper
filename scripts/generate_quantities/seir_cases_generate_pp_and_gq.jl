@@ -49,69 +49,7 @@ end
 # choose sim 
 if sim == 1
   all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
   overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases.jl"))
-end 
-
-if sim == 11
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 1, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario11.jl"))
-end 
-
-if sim == 13
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 1, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario13.jl"))
-end 
-if sim == 14
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 1, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario14.jl"))
-end 
-
-if sim == 111
-  all_dat = CSV.read("data/sim_data/scenario111_lump7data_100sims.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", 111, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
-  const phi_sd = overdisp_priors[1, :sd] 
-  const phi_mean = overdisp_priors[1, :mean]
-  ## Define Priors
-  include(projectdir("src/prior_constants_seir_cases_scenario111.jl"))
-end 
-# 1111 is not like 111, it is like 11, same data as scenario 1, same priors as scenario 1, but now they're fixed 
-if sim == 1111
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-  # all_dat = CSV.read("data/sim_data/test_weekly_data.csv", DataFrame)
-  # all_dat = CSV.read("results/seir_cases/sim_data/long_sim_data_scenario1_seed1.csv", DataFrame)
-  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
-  # overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_simweekly", ".csv")), DataFrame)
   const phi_sd = overdisp_priors[1, :sd] 
   const phi_mean = overdisp_priors[1, :mean]
   ## Define Priors
