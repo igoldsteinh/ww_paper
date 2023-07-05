@@ -1,0 +1,27 @@
+
+const gamma_sd = 0.2
+const gamma_mean =log(1/4)
+const nu_sd = 0.2
+const nu_mean = log(1/7)
+const eta_sd = 0.2
+const eta_mean = log(1/18)
+const rho_gene_sd =  1
+const rho_gene_mean = 0
+const tau_sd = 1
+const tau_mean = 0
+const sigma_R0_sd = 0.2
+const sigma_R0_mean = log(0.1)
+const S_SEIR1_sd = 0.05
+const S_SEIR1_mean = 3.468354
+const I_EIR1_sd = 0.05
+const I_EIR1_mean = -1.548302
+const R1_ER1_sd = 0.05
+const R1_ER1_mean = 2.221616
+const r0_init_sd = 0.2
+const r0_init_mean = log(0.88)
+const lambda_mean = 5.685528
+const lambda_sd = 2.178852
+const df_shape = 2
+const df_scale = 10
+const popsize = 100000 
+const active_pop = 92271
