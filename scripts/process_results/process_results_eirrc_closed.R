@@ -145,7 +145,6 @@ rm(posterior_gq_samples_all)
 
 
 # create posterior predictive quantiles -----------------------------------
-# preserve if needed, but comment out for now due to possiblity of whacky numerical errors (not our fault)
 post_pred_address <- paste0("results/eirrc_closed/posterior_predictive/posterior_predictive_scenario",
                             snum,
                             "_seed",
