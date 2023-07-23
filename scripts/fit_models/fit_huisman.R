@@ -45,12 +45,11 @@ full_simdata <- cbind(full_simdata, date = fake_dates)
 
 rt_quantiles <- NULL
 # attach results to data ---------------------------------------------
-for (i in 1:10){
+for (i in 1:100){
   seed_val = i
-  
   data <- all_data %>% filter(seed == seed_val)
   
-  scenario1_huisman_rt <- calculate_huisman_rt(data, sim = TRUE)
+  scenario1_huisman_rt <- calculate_huisman_rt(data, sim = TRUE, mean_si = 11, std_si = sqrt(65))
   
   sim_rt_quantiles <- scenario1_huisman_rt %>% 
     dplyr::select(date, median_R_mean, median_R_highHPD, median_R_lowHPD) %>%
@@ -70,7 +69,7 @@ write_csv(rt_quantiles, here::here("results", "huisman", "huisman_scenario1_alls
 
 la_data <- read_csv("data/LA_daily_data_feb2022.csv")
 set.seed(1234)
-la_huisman_rt <- calculate_huisman_rt(la_data, sim = FALSE)
+la_huisman_rt <- calculate_huisman_rt(la_data, sim = FALSE,  mean_si = 9.7, std_si = sqrt(2*(9.7/2)^2))
 
 write_csv(la_huisman_rt, here::here("results", "huisman", "huisman_la_rt_quantiles.csv"))
 
@@ -112,9 +111,8 @@ clean_data <- raw_data %>%
 deconv_result <- data.frame()
 result <- data.frame()
 set.seed(50)
-mean_si = 11
-std_si = 8
-
+mean_si = 3
+std_si = 2.4
 for (incidence_var_i in c('n_gene', 's_gene', 'ORF1a')){
   new_deconv_result = deconvolveIncidence(clean_data, 
                                           incidence_var = incidence_var_i,

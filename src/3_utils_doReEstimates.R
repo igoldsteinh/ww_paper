@@ -263,6 +263,8 @@ doAllReEstimations <- function(data,
                                all_delays,
                                truncations,
                                interval_ends = list(default = c("2020-04-01")),
+                               mean_si,
+                               std_si,
                                ...) {
   results_list <- list()
 

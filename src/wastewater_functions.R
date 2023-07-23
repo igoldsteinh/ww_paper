@@ -1610,8 +1610,14 @@ make_post_pred_plot <- function(posterior_predictive_intervals,
 
 
 # calculate huisman rt ----------------------------------------------------
-
-calculate_huisman_rt <- function(simdata, sim = TRUE) {
+# seed_val = i
+# print(i)
+# data <- all_data %>% filter(seed == seed_val)
+# mean_si = 11
+# std_si = 8
+# sim = TRUE
+# simdata = data
+calculate_huisman_rt <- function(simdata, sim = TRUE, mean_si, std_si) {
   
   if (sim == TRUE){
     date_length <- length(simdata$time)
@@ -1670,9 +1676,7 @@ calculate_huisman_rt <- function(simdata, sim = TRUE) {
     
     deconv_ww_data <- data.frame()
     Re_ww <- data.frame()
-    mean_si <- 11.00176
-    std_si <- 8.070758
-    
+
     for(row_i in 1:nrow(config_df)){
       row_i = 1
       new_deconv_data = deconvolveIncidence(ww_data %>% filter(region == config_df[row_i, 'region']), 
@@ -1685,7 +1689,7 @@ calculate_huisman_rt <- function(simdata, sim = TRUE) {
         mutate(incidence_var = config_df[row_i, 'incidence_var'])
       
       ##### Get Re #####
-      new_Re_ww = getReBootstrap(new_deconv_data, mean_si, std_si)
+      new_Re_ww = getReBootstrap(new_deconv_data, mean_si = mean_si, std_si = std_si)
       new_Re_ww <- new_Re_ww %>%
         mutate(variable = config_df[row_i, 'incidence_var'],
                region = config_df[row_i, 'region'])

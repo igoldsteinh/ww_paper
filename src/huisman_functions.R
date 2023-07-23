@@ -36,7 +36,7 @@ getCountParams <- function(obs_type){
          wolfel = getGammaParams(8.6, 0.9),
          benefield = list(shape = 0.929639, scale = 7.241397),
          sim_latent = list(shape = 1, scale = 4),
-         sim_sld = getGammaParams(24.9382, 19.35773)
+         sim_sld = getGammaParams(2.183783, 1.836103)
   )
 }
 
@@ -113,8 +113,8 @@ getReBootstrap <- function(deconvoluted_data, mean_si, std_si){
     all_delays,
     truncations,
     interval_ends = list(),
-    mean_si, 
-    std_si) )
+    mean_si = mean_si, 
+    std_si = std_si) )
   
   cleanEstimates <- cleanCountryReEstimate(rawReEstimates, method = 'bootstrap',
                                            rename_types = F, alpha=0.95)
