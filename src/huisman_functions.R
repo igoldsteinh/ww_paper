@@ -36,7 +36,8 @@ getCountParams <- function(obs_type){
          wolfel = getGammaParams(8.6, 0.9),
          benefield = list(shape = 0.929639, scale = 7.241397),
          sim_latent = list(shape = 1, scale = 4),
-         sim_sld = getGammaParams(24.9382, 19.35773))
+         sim_sld = getGammaParams(24.9382, 19.35773)
+  )
 }
 
 ###########################################################
@@ -66,12 +67,6 @@ addUselessColumns <- function(df, inc_var = 'n1'){
 }
 
 # wrapper around the actual deconvolution function
-# df <- ww_data %>% filter(region == config_df[row_i, 'region'])
-# incidence_var = config_df[row_i, 'incidence_var']
-# IncubationParams = getCountParams(as.character(config_df[row_i, 'FirstGamma']))
-# OnsetToCountParams = getCountParams(as.character(config_df[row_i, 'SecondGamma']))
-# smooth_param = TRUE
-# n_boot = 50
 deconvolveIncidence <- function(df, incidence_var = 'n1',
                                 IncubationParams, OnsetToCountParams,
                                 smooth_param = FALSE, n_boot = 50){
@@ -100,9 +95,9 @@ deconvolveIncidence <- function(df, incidence_var = 'n1',
 
 ###########################################################
 # Estimate Re ####
-# deconvoluted_data = new_deconv_data
+
 # wrapper around the Re estimation function
-getReBootstrap <- function(deconvoluted_data, mean_si, std_si){
+getReBootstrap <- function(deconvoluted_data){
   
   all_delays <- lapply(unique(deconvoluted_data$data_type), function(x){ c(Cori = 0)})
   names(all_delays) <- unique(deconvoluted_data$data_type)
@@ -117,9 +112,7 @@ getReBootstrap <- function(deconvoluted_data, mean_si, std_si){
     variationTypes = c("slidingWindow"),
     all_delays,
     truncations,
-    interval_ends = list(),
-    mean_si = mean_si, 
-    std_si = std_si) )
+    interval_ends = list()) )
   
   cleanEstimates <- cleanCountryReEstimate(rawReEstimates, method = 'bootstrap',
                                            rename_types = F, alpha=0.95)

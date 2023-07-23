@@ -73,3 +73,63 @@ set.seed(1234)
 la_huisman_rt <- calculate_huisman_rt(la_data, sim = FALSE)
 
 write_csv(la_huisman_rt, here::here("results", "huisman", "huisman_la_rt_quantiles.csv"))
+
+
+
+# sanity checking huisman on their own data -------------------------------
+sim_latent = list(shape = 1, scale = 4),
+sim_sld = getGammaParams(24.9382, 19.35773)
+## Wastewater data - SCAN Pilot Project ####
+
+
+raw_data <- read.csv(here::here("data", "CA_ww_data.csv")) %>%
+  mutate(n_orig = n_gene,
+         s_orig = s_gene,
+         orf1a_orig = ORF1a)
+
+## Normalisation ####
+norm_min <- raw_data %>%
+  filter(n_gene != 0) %>%
+  pull(n_gene) %>% min()
+
+## Final Cleaning ####
+#  gaps in the data prior to 15 Nov.
+# stop on 18.3.2021
+# 03 January, 18 February do not meet quality control
+raw_data$date <- as.Date(raw_data$date)
+clean_data <- raw_data %>%
+  mutate(orig_data = TRUE) %>%
+  filter(date >= as_date('2020-11-15'),
+         date <= as_date('2021-03-18'),
+         date != as_date('2021-01-03'),
+         date != as_date('2021-02-18') ) %>%
+  complete(date = seq.Date(min(date), max(date), by = 'days')) %>%
+  mutate(across(where(is.numeric), ~ zoo::na.approx(.x, na.rm = F) )) %>%
+  mutate(across(c(n_gene, s_gene, ORF1a), ~ ./norm_min ) ) %>%
+  mutate(county = 'Santa Clara',
+         region = county)
+
+###### Deconvolve #####
+
+deconv_result <- data.frame()
+result <- data.frame()
+set.seed(50)
+for (incidence_var_i in c('n_gene', 's_gene', 'ORF1a')){
+  new_deconv_result = deconvolveIncidence(clean_data, 
+                                          incidence_var = incidence_var_i,
+                                          getCountParams('incubation'), 
+                                          getCountParams('benefield'),
+                                          smooth_param = TRUE, n_boot = 50) %>% #n_boot = 1000 in paper
+    mutate(data_type = incidence_var_i)
+  
+  new_result = getReBootstrap(new_deconv_result)
+  new_result = new_result %>%
+    mutate(data_type = incidence_var_i)
+  new_result['variable'] = incidence_var_i
+  
+  deconv_result = bind_rows(deconv_result, new_deconv_result)
+  result = bind_rows(result, new_result)
+  
+}
+
+
