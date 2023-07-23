@@ -97,7 +97,7 @@ deconvolveIncidence <- function(df, incidence_var = 'n1',
 # Estimate Re ####
 
 # wrapper around the Re estimation function
-getReBootstrap <- function(deconvoluted_data){
+getReBootstrap <- function(deconvoluted_data, mean_si, std_si){
   
   all_delays <- lapply(unique(deconvoluted_data$data_type), function(x){ c(Cori = 0)})
   names(all_delays) <- unique(deconvoluted_data$data_type)
@@ -112,7 +112,9 @@ getReBootstrap <- function(deconvoluted_data){
     variationTypes = c("slidingWindow"),
     all_delays,
     truncations,
-    interval_ends = list()) )
+    interval_ends = list(),
+    mean_si, 
+    std_si) )
   
   cleanEstimates <- cleanCountryReEstimate(rawReEstimates, method = 'bootstrap',
                                            rename_types = F, alpha=0.95)

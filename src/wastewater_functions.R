@@ -1,5 +1,5 @@
 # wasterwater functions
-library(stemr)
+# library(stemr)
 library(tidyverse)
 library(lubridate)
 library(patchwork)
@@ -1679,7 +1679,7 @@ calculate_huisman_rt <- function(simdata, sim = TRUE) {
                                             incidence_var = config_df[row_i, 'incidence_var'],
                                             getCountParams(as.character(config_df[row_i, 'FirstGamma'])), 
                                             getCountParams(as.character(config_df[row_i, 'SecondGamma'])),
-                                            smooth_param = TRUE, n_boot = 50)
+                                            smooth_param = TRUE, n_boot = 1000)
       
       new_deconv_data <- new_deconv_data %>%
         mutate(incidence_var = config_df[row_i, 'incidence_var'])

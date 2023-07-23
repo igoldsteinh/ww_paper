@@ -186,7 +186,9 @@ doReEstimation <- function(data_subset,
                            variationTypes,
                            interval_ends = c("2020-04-01"),
                            delays,
-                           truncations) {
+                           truncations,
+                           mean_si,
+                           std_si) {
   end_result <- data.frame()
 
   for (method_i in methods) {
@@ -225,7 +227,9 @@ doReEstimation <- function(data_subset,
         leftTruncation = leftTrunc,
         method = method_i,
         variationType = variation_i,
-        interval_ends = interval_ends
+        interval_ends = interval_ends,
+        mean_si = mean_si, 
+        std_si = std_si
       )
       if (nrow(result) > 0) {
         result$region <- unique(data_subset$region)[1]
@@ -308,7 +312,9 @@ doAllReEstimations <- function(data,
                 variationTypes = variationTypes,
                 interval_ends = region_interval_ends,
                 delays = delay_i,
-                truncations = truncations
+                truncations = truncations,
+                mean_si = mean_si,
+                std_si = std_si
               )
             )
           )

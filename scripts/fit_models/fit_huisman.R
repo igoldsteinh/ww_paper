@@ -45,7 +45,7 @@ full_simdata <- cbind(full_simdata, date = fake_dates)
 
 rt_quantiles <- NULL
 # attach results to data ---------------------------------------------
-for (i in 1:100){
+for (i in 1:10){
   seed_val = i
   
   data <- all_data %>% filter(seed == seed_val)
@@ -77,8 +77,6 @@ write_csv(la_huisman_rt, here::here("results", "huisman", "huisman_la_rt_quantil
 
 
 # sanity checking huisman on their own data -------------------------------
-sim_latent = list(shape = 1, scale = 4),
-sim_sld = getGammaParams(24.9382, 19.35773)
 ## Wastewater data - SCAN Pilot Project ####
 
 
@@ -114,6 +112,9 @@ clean_data <- raw_data %>%
 deconv_result <- data.frame()
 result <- data.frame()
 set.seed(50)
+mean_si = 11
+std_si = 8
+
 for (incidence_var_i in c('n_gene', 's_gene', 'ORF1a')){
   new_deconv_result = deconvolveIncidence(clean_data, 
                                           incidence_var = incidence_var_i,
@@ -122,7 +123,7 @@ for (incidence_var_i in c('n_gene', 's_gene', 'ORF1a')){
                                           smooth_param = TRUE, n_boot = 50) %>% #n_boot = 1000 in paper
     mutate(data_type = incidence_var_i)
   
-  new_result = getReBootstrap(new_deconv_result)
+  new_result = getReBootstrap(new_deconv_result, mean_si, std_si)
   new_result = new_result %>%
     mutate(data_type = incidence_var_i)
   new_result['variable'] = incidence_var_i
