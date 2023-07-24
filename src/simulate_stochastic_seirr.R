@@ -505,3 +505,92 @@ simulate_case_data <- function(true_E2I_counts, seed, rho, phi) {
               mutate(cases = rnbinom(1, size, prob = 1/(1 + ((E2I_transitions * rho)/phi))))
 }
 
+
+# simulate agent-based seirr ----------------------------------------------
+# for sanity checking 
+# pop_size = 1000
+# r0 = 1.5
+# nu = 1/7
+# beta = (r0 * nu)/pop_size 
+# gamma = 1/4
+# eta = 1/18
+# I_init = 50
+
+sim_agent_SEIRR <- function(pop_size, I_init, beta, gamma, nu, eta) {
+  # setting up initial states and frames
+  pop_vec <- rep("S", length.out = pop_size)
+  pop_vec[1:I_init] <- "I"
+  
+  rate_vec <- rep(0, length.out = pop_size)
+  id_vec <- 1:pop_size
+  
+  # copying what I did in the other model
+  init_infectious <- rep(rexp(1, rate = gamma), I_init)
+  
+  t <- unique(init_infectious);
+  
+  rate_frame <- data.frame(id = id_vec, 
+                           state = pop_vec,
+                           rate = rate_vec)
+  
+  # setting up the output frame
+  init_state <- t(c(t, rate_frame$state))
+  state_frame <- NULL
+  state_frame <- rbind(state_frame, init_state)
+  
+  # have to count num infectious and num R1 to copy other simulation
+  num_infectious <- rate_frame %>% 
+    mutate(isI = state == "I") %>% 
+    summarise(total = sum(isI)) %>%
+    pull(total)
+  
+  num_r1 <- rate_frame %>% 
+    mutate(isR1 = state == "R1") %>% 
+    summarise(total = sum(isR1)) %>%
+    pull(total)
+  
+  # frame of individual rates for each individual
+  rate_frame <- rate_frame %>% 
+    mutate(rate = ifelse(state == "S", beta * num_infectious, 
+                         ifelse(state == "E", gamma, 
+                                ifelse(state == "I", nu, 
+                                       ifelse (state == "R1", eta, 0)))))
+  
+  while (num_infectious > 0 | num_r1 > 0) {
+    # time to next event is the min of all possible events
+    next_event = rexp(1, rate = sum(rate_frame$rate))
+    
+    # choose which event happens proportional to the rates
+    which_id = sample(rate_frame$id, 1, prob = rate_frame$rate)
+    
+    # update the state of the individual who changes
+    rate_frame$state[which(rate_frame$id == which_id)] <- ifelse(rate_frame$state[which(rate_frame$id == which_id)] == "S", "E", 
+                                                                   ifelse(rate_frame$state[which(rate_frame$id == which_id)] == "E", "I", 
+                                                                            ifelse(rate_frame$state[which(rate_frame$id == which_id)] == "I", 
+                                                                                   "R1", "R2")))
+    # update total infections and r1 counts
+    num_infectious <- rate_frame %>% 
+      mutate(isI = state == "I") %>% 
+      summarise(total = sum(isI)) %>%
+      pull(total)
+    
+    num_r1 <- rate_frame %>% 
+      mutate(isR1 = state == "R1") %>% 
+      summarise(total = sum(isR1)) %>%
+      pull(total)
+    
+    #re-calculate rate frame (changes with num_infectious, as well state changes)
+    rate_frame <- rate_frame %>% 
+      mutate(rate = ifelse(state == "S", beta * num_infectious, 
+                           ifelse(state == "E", gamma, 
+                                  ifelse(state == "I", nu, 
+                                         ifelse (state == "R1", eta, 0)))))
+    
+    # update time 
+    t <- t + next_event 
+    current_state <- c(t, rate_frame$state)
+    state_frame <- rbind(state_frame, current_state)
+  }
+  return(state_frame)
+  
+}
