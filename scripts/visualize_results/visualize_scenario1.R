@@ -26,7 +26,7 @@ my_theme <- list(
   scale_fill_brewer(name = "Credible Interval Width",
                     labels = ~percent(as.numeric(.))),
   guides(fill = guide_legend(reverse = TRUE)),
-  theme_minimal_grid(),
+  theme_bw(),
   theme())
 
 
@@ -137,7 +137,7 @@ point_legend <- get_legend(point_plot)
 line_plot <- eir_rt_scenario1 %>% 
              mutate(Median = " ") %>%
              ggplot() + 
-             geom_line(aes(x = time, y = value, linetype = Median)) + 
+             geom_line(aes(x = time, y = value, linetype = Median), size = 2) + 
             scale_linetype_manual(values = c( # actual line types used in the plot
     " " = "solid"),
     drop = F) + 
@@ -240,7 +240,7 @@ epi_curve <- truecurve %>%
   ylab("Compartment Counts") + 
   ggtitle("Simulated Epidemic") +
   geom_point() + 
-  theme_minimal_grid() +
+  theme_bw() +
   theme(legend.position = c(0.63, 0.78),
         legend.background = element_rect("transparent"),
         text = element_text(size = 18)) 
@@ -251,17 +251,17 @@ gene_plot <- scenario1_simdata %>%
   pivot_longer(-new_time) %>% 
   ggplot(aes(x = new_time, y = value)) + 
   geom_point() + 
-  theme_minimal_grid() +
+  theme_bw() +
   theme(text = element_text(size = 18)) +
   xlab("Time") + 
-  ylab("Log RNA Counts") +
+  ylab("Log Genetic Conc.") +
   ggtitle("Wastewater Data")
 
 case_plot <- scenario1_casedata %>% 
   mutate(time = new_week * 7) %>% 
   ggplot(aes(x = time, y = log(total_cases))) + 
   geom_point() + 
-  theme_minimal_grid() +
+  theme_bw() +
   theme(text = element_text(size = 18)) +
   xlab("Time") + 
   ylab("Log Weekly Cases") +
@@ -273,7 +273,7 @@ rt_plot <- scenario1_truecurve %>%
   ggplot(aes(x = new_time, y = Rt)) +
   geom_point() +
   geom_line() +
-  theme_minimal_grid() +
+  theme_bw() +
   theme(text = element_text(size = 18)) +
   xlab("Time") +
   ylab("Rt") +
@@ -405,12 +405,11 @@ ggsave(here::here("figures", "scenario1_fixedparamplot.pdf"), eirr_scenario1_fix
 # posterior predictive ----------------------------------------------------
 
 eirr_scenario1_post_pred_intervals <- read_csv(here::here("results",
-                                                          "eirr_closed",
+                                                          "eirrc_closed",
                                                           "posterior_predictive",
                                                           paste0("posterior_predictive_intervals_scenario", snum, "_seed", seed_val, ".csv")))
 
-
-true_data <- simdata %>%
+true_data <- scenario1_simdata %>%
   dplyr::select(new_time, 
                 log_gene_copies1, 
                 log_gene_copies2, 
@@ -431,9 +430,40 @@ posterior_predictive_plot <- eirr_scenario1_post_pred_intervals %>%
   theme_bw() + 
   ggtitle("EIRR Scenario 1 Posterior Predictive") +
   xlab("Time") +
-  ylab("Log RNA Counts")
+  ylab("Log Genetic Conc.")
 
 
 posterior_predictive_plot
 ggsave(here::here("figures", "scenario1_posteriorpredictive.pdf"), posterior_predictive_plot, width = 8, height = 5)
+
+
+# huisman visualization ---------------------------------------------------
+
+
+# scenario 1 --------------------------------------------------------------
+# read in data, lets just look at 80% CI
+huisman_rt_scenario1 <- read_csv(here::here("results", "huisman", "huisman_scenario1_allseeds_rt_quantiles.csv"))
+
+my_theme <- list(
+  scale_fill_brewer(name = "Credible Interval Width",
+                    labels = ~percent(as.numeric(.))),
+  guides(fill = guide_legend(reverse = TRUE)),
+  theme_bw(),
+  theme())
+
+
+seed_val = 1
+huisman_scenario1_rt_plot <- huisman_rt_scenario1 %>%
+  filter(seed == seed_val) %>%
+  mutate(time = time - min(time) + 1) %>%
+  ggplot(aes(time, median_R_mean, ymin = median_R_lowHPD, ymax = median_R_highHPD)) +
+  geom_lineribbon() +
+  geom_point(aes(time, true_rt), color = "coral1") + 
+  scale_y_continuous("Rt", label = comma) +
+  scale_x_continuous(name = "Time") +
+  ggtitle(str_c("Huisman (WW)")) +
+  my_theme +
+  ylab(TeX('$R_{t}$')) +
+  theme(legend.position = "none",
+        text = element_text(size = 18))
 
