@@ -638,5 +638,5 @@ all_metric_plot_95 <- all_metrics %>%
   ylab("") + 
   xlab("Model")
 
-ggsave(here::here("figures", "scenario1_frequentist_metrics_95CI.pdf"), all_metric_plot, width = 10, height =10)
+ggsave(here::here("figures", "scenario1_frequentist_metrics_95CI.pdf"), all_metric_plot_95, width = 10, height =10)
 
