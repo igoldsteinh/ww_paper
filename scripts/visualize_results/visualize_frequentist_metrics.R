@@ -104,6 +104,7 @@ all_metric_plot <- all_metrics %>%
                    geom_boxplot() + 
                    geom_hline(aes(yintercept = useful_value)) + 
                    theme_bw() + 
+                   theme(text = element_text(size = 18)) +
                    facet_wrap(vars(metric),
                               scales = "free") +
                    ggtitle("Frequentist Metrics Across Models") + 
@@ -190,12 +191,6 @@ checking6 <- eirr_rt_scenario6 %>%
   unique()
 
 
-# check stan diagnostics
-
-standiag_scenario5 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario5_allseeds_stan_diag.csv"))
-
-standiag_scenario6 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario6_allseeds_stan_diag.csv"))
-
 
 # create metrics
 
@@ -203,7 +198,7 @@ eirr_rt_metrics3 = NULL
 for (i in 1:100) {
   sub_frame = eirr_rt_scenario3 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIRR (10)")
+                                                                                            model = "10-rep")
   eirr_rt_metrics3 = bind_rows(eirr_rt_metrics3, metrics)
 }
 
@@ -212,7 +207,7 @@ eirr_rt_metrics4 = NULL
 for (i in 1:100) {
   sub_frame = eirr_rt_scenario4 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIRR (3 Mean)")
+                                                                                            model = "3-mean")
   eirr_rt_metrics4 = bind_rows(eirr_rt_metrics4, metrics)
 }
 
@@ -220,7 +215,7 @@ eirr_rt_metrics5 = NULL
 for (i in 1:100) {
   sub_frame = eirr_rt_scenario5 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIRR (10 Mean)")
+                                                                                            model = "10-mean")
   eirr_rt_metrics5 = bind_rows(eirr_rt_metrics5, metrics)
 }
 
@@ -228,7 +223,7 @@ eirr_rt_metrics6 = NULL
 for (i in 1:100) {
   sub_frame = eirr_rt_scenario6 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIRR (1)")
+                                                                                            model = "1-rep")
   eirr_rt_metrics6 = bind_rows(eirr_rt_metrics6, metrics)
 }
 
@@ -244,21 +239,21 @@ all_metrics2 <- bind_rows(eirr_rt_metrics,
 
 level_list <- c("mean_dev", "mean_env", "MCIW", "MASV", "true_MASV")
 
-label_list <- c("Deviation", "Envelope", "MCIW", "MASV", "True MASV")
+label_list <- c("EIRR Deviation", "EIRR Envelope", "EIRR MCIW", "EIRR MASV", "True MASV")
 
 
 all_metrics2$metric <- factor(all_metrics2$metric, levels=level_list, labels=label_list)
 
 
-all_metrics2$model[all_metrics2$model == "EIRR"] <- "EIRR (3)"
-model_level_list <-c ("EIRR (3)", "EIRR (1)", "EIRR (10)", "EIRR (3 Mean)", "EIRR (10 Mean)")
+all_metrics2$model[all_metrics2$model == "EIRR"] <- "3-rep"
+model_level_list <-c ("3-rep", "1-rep", "10-rep", "3-mean", "10-mean")
 all_metrics2$model <- factor(all_metrics2$model, levels = model_level_list)
 
 
 all_metrics2$useful_value <- 0
-all_metrics2$useful_value[all_metrics2$metric == "Envelope"] <- 0.8
-all_metrics2$useful_value[all_metrics2$metric == "MCIW"] <- NA
-all_metrics2$useful_value[all_metrics2$metric == "MASV"] <- 0.02361307
+all_metrics2$useful_value[all_metrics2$metric == "EIRR Envelope"] <- 0.8
+all_metrics2$useful_value[all_metrics2$metric == "EIRR MCIW"] <- NA
+all_metrics2$useful_value[all_metrics2$metric == "EIRR MASV"] <- 0.02361307
 
 all_metric_plot2 <- all_metrics2 %>% 
   filter(metric != "True MASV") %>% 
@@ -266,6 +261,7 @@ all_metric_plot2 <- all_metrics2 %>%
   geom_boxplot() + 
   geom_hline(aes(yintercept = useful_value)) + 
   theme_bw() + 
+  theme(text = element_text(size = 18)) +
   facet_wrap(vars(metric), scales = "free") +
   ggtitle("Frequentist Metrics Across Data Sources") + 
   ylab("") +
@@ -342,11 +338,11 @@ checking10 <- eirr_rt_scenario10 %>%
 # stan diags
 # standiag_scenario7 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario7_allseed_stan_diag.csv"))
 
-standiag_scenario8 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario8_allseeds_stan_diag.csv"))
-
-standiag_scenario9 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario9_allseeds_stan_diag.csv"))
-
-standiag_scenario10 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario10_allseeds_stan_diag.csv"))
+# standiag_scenario8 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario8_allseeds_stan_diag.csv"))
+# 
+# standiag_scenario9 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario9_allseeds_stan_diag.csv"))
+# 
+# standiag_scenario10 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario10_allseeds_stan_diag.csv"))
 
 # create metrics
 
@@ -415,6 +411,7 @@ all_metric_plot3 <- all_metrics3 %>%
   geom_boxplot() + 
   geom_hline(aes(yintercept = useful_value)) + 
   theme_bw() + 
+  theme(text = element_text(size = 18)) +
   facet_wrap(vars(metric),
              scales = "free") +
   ggtitle("Frequentist Metrics (Sensitivity Analysis)") + 
@@ -465,7 +462,7 @@ eirr_rt_scenario1_0.95 <- read_csv(here::here("results", "eirr_closed", "eirr_sc
 abbreviated_eirr = NULL
 
 for (i in 1:100) {
-  sub_frame = eirr_rt_scenario1_0.95 %>% filter(seed == i) %>% mutate(time <= max(huisman_rt_scenario1$time) & time >= min(huisman_rt_scenario1$time))
+  sub_frame = eirr_rt_scenario1_0.95 %>% filter(seed == i) %>% filter(time <= max(huisman_rt_scenario1$time) & time >= min(huisman_rt_scenario1$time))
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% 
     mutate(seed = i,
            model = "EIRR")
@@ -497,11 +494,12 @@ all_metrics4$useful_value[all_metrics4$metric == "MASV"] <- 0.02361307
 
 all_metric_plot4 <- all_metrics4 %>% 
   filter(metric != "True MASV") %>% 
-  filter(value <= 2) %>%
+  filter(value <= 600) %>%
   ggplot(aes(x = model, y = value)) + 
   geom_boxplot() + 
   geom_hline(aes(yintercept = useful_value)) + 
   theme_bw() + 
+  theme(text = element_text(size = 18)) +
   facet_wrap(vars(metric), scales = "free") +
   ggtitle("Frequentist Metrics (State of the Art)") + 
   ylab("") +
@@ -528,4 +526,117 @@ ggsave(here::here("figures", "stateoftheart_presentation_frequentist_metrics.png
        width = 10, 
        height =4)
 
+
+# repeating model comparison figure with 95% CI ---------------------------
+
+
+# scenario 1 --------------------------------------------------------------
+# read in data, lets just look at 80% CI
+seirr_rt_scenario1 <- read_csv(here::here("results", "seirr_student", "seirr_scenario1_allseeds_rt_quantiles.csv")) %>% 
+  mutate(model = "SEIRR") %>% 
+  filter(.width == 0.95)
+
+eirr_rt_scenario1 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario1_allseeds_rt_quantiles.csv")) %>% 
+  mutate(model = "EIRR")%>% 
+  filter(.width == 0.95)
+
+seir_rt_scenario1 <- read_csv(here::here("results", "seir_cases", "seir_cases_scenario1_allseeds_rt_quantiles.csv")) %>% 
+  mutate(model = "SEIR")%>% 
+  filter(.width == 0.95)
+
+eir_rt_scenario1 <- read_csv(here::here("results", "eir_cases", "eir_cases_scenario1_allseeds_rt_quantiles.csv")) %>% 
+  mutate("EIR")%>% 
+  filter(.width == 0.95)
+
+checking_eirr <- eirr_rt_scenario1 %>% 
+  group_by(seed) %>% 
+  summarise(num = n()) %>% 
+  pull(num) %>% 
+  unique()
+
+checking_seir <- seir_rt_scenario1 %>% 
+  group_by(seed) %>% 
+  summarise(num = n()) %>% 
+  pull(num) %>% 
+  unique()
+checking_eir <- eir_rt_scenario1 %>% 
+  group_by(seed) %>% 
+  summarise(num = n()) %>% 
+  pull(num) %>% 
+  unique()
+
+checking_seirr <- seirr_rt_scenario1 %>% 
+  group_by(seed) %>% 
+  summarise(num = n()) %>% 
+  pull(num) %>% 
+  unique()
+
+# create metrics
+
+eirr_rt_metrics = NULL
+for (i in 1:100) {
+  sub_frame = eirr_rt_scenario1 %>% filter(seed == i) 
+  metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
+                                                                                            model = "EIRR")
+  eirr_rt_metrics = bind_rows(eirr_rt_metrics, metrics)
+}
+
+seirr_rt_metrics = NULL
+for (i in 1:100) {
+  sub_frame = seirr_rt_scenario1 %>% filter(seed == i) 
+  metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
+                                                                                            model = "SEIRR")
+  seirr_rt_metrics = bind_rows(seirr_rt_metrics, metrics)
+}
+
+eir_rt_metrics = NULL
+for (i in 1:100) {
+  sub_frame = eir_rt_scenario1 %>% filter(seed == i) 
+  metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
+                                                                                            model = "EIR")
+  eir_rt_metrics = bind_rows(eir_rt_metrics, metrics)
+}
+
+seir_rt_metrics = NULL
+for (i in 1:100) {
+  sub_frame = seir_rt_scenario1 %>% filter(seed == i) 
+  metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
+                                                                                            model = "SEIR")
+  seir_rt_metrics = bind_rows(seir_rt_metrics, metrics)
+}
+
+
+
+
+all_metrics <- bind_rows(eirr_rt_metrics, seirr_rt_metrics, eir_rt_metrics, seir_rt_metrics) %>% 
+  pivot_longer(cols = -c(seed, model), names_to = "metric")
+
+
+level_list <- c("mean_dev", "mean_env", "MCIW", "MASV", "true_MASV")
+
+label_list <- c("Deviation", "Envelope", "MCIW", "MASV", "True MASV")
+all_metrics$metric <- factor(all_metrics$metric, levels=level_list, labels=label_list)
+
+
+model_level_list <-c ("EIRR", "SEIRR", "EIR", "SEIR")
+all_metrics$model <- factor(all_metrics$model, levels = model_level_list)
+
+all_metrics$useful_value <- 0
+all_metrics$useful_value[all_metrics$metric == "Envelope"] <- 0.95
+all_metrics$useful_value[all_metrics$metric == "MCIW"] <- NA
+all_metrics$useful_value[all_metrics$metric == "MASV"] <- 0.02361307
+all_metric_plot_95 <- all_metrics %>% 
+  filter(metric != "True MASV") %>% 
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  facet_wrap(vars(metric),
+             scales = "free") +
+  ggtitle("Frequentist Metrics Across Models (95% CI)") + 
+  ylab("") + 
+  xlab("Model")
+
+ggsave(here::here("figures", "scenario1_frequentist_metrics_95CI.pdf"), all_metric_plot, width = 10, height =10)
 

@@ -204,7 +204,7 @@ combined_plot <- (seirr_scenario1_rt_plot + eirr_scenario1_rt_plot) /
                 )) 
 
 
-ggsave(here::here("figures", "scenario1_example_rt_plot.png"), combined_plot, width = 14, height =10)
+ggsave(here::here("figures", "scenario1_example_rt_plot.pdf"), combined_plot, width = 14, height =10)
                  
 
 
