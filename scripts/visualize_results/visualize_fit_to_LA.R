@@ -52,55 +52,12 @@ combined_data_plot
 ggsave(here::here("figures", "LA_data_jul21_feb22.pdf"), combined_data_plot, width = 10, height = 4)
 
 
-# EIRR --------------------------------------------------------------------
 
 
 real_data$epi_week[real_data$year == 2022] <- real_data$epi_week[real_data$year == 2022] + 52
 date_week_crosswalk <- real_data %>% 
   dplyr::select(date, epi_week, new_time) %>%
   mutate(time = epi_week - 27)
-timevarying_quantiles <- read_csv(paste0("results/eirr_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
-                                         snum,
-                                         "_seed",
-                                         seed_val,
-                                         ".csv")) 
-
-
-rt_quantiles_eirr <- timevarying_quantiles %>%
-  filter(name == "rt_t_values") %>%
-  left_join(date_week_crosswalk, by = "time") %>%
-  dplyr::select(time, date, epi_week, value, .lower, .upper, .width,.point, .interval) 
-
-fill_date = as.Date("2021-10-11")
-fill_week = 41
-
-rt_quantiles_eirr$date[is.na(rt_quantiles_eirr$date)] <- fill_date
-rt_quantiles_eirr$epi_week[is.na(rt_quantiles_eirr$epi_week)] <- fill_week
-# visualize results
-# all credit to Damon Bayer for plot functions 
-my_theme <- list(
-  scale_fill_brewer(name = "Credible Interval Width",
-                    labels = ~percent(as.numeric(.))),
-  guides(fill = guide_legend(reverse = TRUE)),
-  theme_minimal_grid(),
-  theme(legend.position = "bottom"))
-
-
-
-
-eirr_realdata_rt_plot_seed1 <- rt_quantiles_eirr %>%
-  ggplot(aes(date, value, ymin = .lower, ymax = .upper)) +
-  geom_lineribbon() +
-  scale_y_continuous("Rt", label = comma, breaks = c(0:8), limits = c(0,7.5)) +
-  scale_x_date(name = "Date", date_breaks = "month") +
-  ggtitle("EIRR Posterior Rt") +
-  my_theme + 
-  theme(axis.text.x = element_text(angle = 90),
-        legend.position = c(0.25, 0.75)) 
-
-
-eirr_realdata_rt_plot_seed1
-
 
 # EIR ---------------------------------------------------------------------
 
@@ -132,7 +89,7 @@ my_theme <- list(
   scale_fill_brewer(name = "Credible Interval Width",
                     labels = ~percent(as.numeric(.))),
   guides(fill = guide_legend(reverse = TRUE)),
-  theme_minimal_grid(),
+  theme_bw()+
   theme(legend.position = "bottom"))
 
 
@@ -202,7 +159,7 @@ my_theme <- list(
   scale_fill_brewer(name = "Credible Interval Width",
                     labels = ~percent(as.numeric(.))),
   guides(fill = guide_legend(reverse = TRUE)),
-  theme_minimal_grid(),
+  theme_bw(),
   theme(legend.position = "bottom"))
 
 
@@ -216,8 +173,9 @@ eirrc_realdata_rt_plot_seed1 <- rt_quantiles_eirr %>%
   ggtitle("EIRR Posterior Rt") +
   my_theme + 
   theme(axis.text.x = element_text(angle = 90),
-        legend.position = c(0.25, 0.75),
-        text = element_text(size = 18)) 
+        legend.position = c(0.4, 0.75),
+        text = element_text(size = 18),
+        legend.background = element_blank())
 
 
 eirrc_realdata_rt_plot_seed1
@@ -327,7 +285,7 @@ my_theme <- list(
   scale_fill_brewer(name = "Credible Interval Width",
                     labels = ~percent(as.numeric(.))),
   guides(fill = guide_legend(reverse = TRUE)),
-  theme_minimal_grid(),
+  theme_bw(),
   theme(legend.position = "bottom"))
 
 
@@ -509,7 +467,8 @@ plot_rho_quantiles <- weekly_rho_quantiles %>%
   ggtitle("EIRR Posterior Normalized CDR") +
   my_theme + 
   theme(axis.text.x = element_text(angle = 90),
-        legend.position = c(0.62, 0.75)) 
+        legend.position = c(0.42, 0.75),
+        legend.background = element_blank()) 
 
 plot_relrho_quantiles <- weekly_relrho_quantiles %>% 
   drop_na() %>%
@@ -520,7 +479,8 @@ plot_relrho_quantiles <- weekly_relrho_quantiles %>%
   ggtitle("EIRR Posterior Rho Ratio") +
   my_theme + 
   theme(axis.text.x = element_text(angle = 90),
-        legend.position = c(0.25, 0.75)) 
+        legend.position = c(0.25, 0.75),
+        legend.background = element_blank()) 
 
 plot_incid_quantiles <- weekly_incid_quantiles %>% 
   drop_na() %>%
@@ -531,7 +491,8 @@ plot_incid_quantiles <- weekly_incid_quantiles %>%
   ggtitle("EIRRC Posterior Weekly Incidence") +
   my_theme + 
   theme(axis.text.x = element_text(angle = 90),
-        legend.position = c(0.25, 0.75)) 
+        legend.position = c(0.25, 0.75),
+        legend.background = element_blank()) 
 
 
 case_plus_rho <- plot_weekly_detect + plot_rho_quantiles  
