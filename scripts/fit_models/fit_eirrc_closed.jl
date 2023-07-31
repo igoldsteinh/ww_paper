@@ -17,7 +17,7 @@ using PreallocationTools
 
 sim =
 if length(ARGS) == 0
-   "uci"
+   "ODE"
 else
   parse(Int64, ARGS[1])
 end
@@ -66,6 +66,20 @@ long_dat = filter(:value => value -> value > 0, long_dat)
 data_log_copies = long_dat[:, :value]
 end 
 
+
+### Baseline scenario
+if sim == "ODE"
+  all_dat = CSV.read("data/sim_data/ODE_comp_fitted_genecount_obsdata.csv", DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+long_dat = filter(:value => value -> value > 0, long_dat)
+# long_dat = filter(:value => value -> value < 16, long_dat)
+data_log_copies = long_dat[:, :value]
+end 
 
 
 

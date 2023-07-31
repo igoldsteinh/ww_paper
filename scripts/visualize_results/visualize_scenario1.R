@@ -39,7 +39,7 @@ seirr_scenario1_rt_plot <- seirr_rt_scenario1 %>%
   scale_y_continuous("Rt", label = comma) +
   scale_x_continuous(name = "Time") +
   ylim(c(0,3.5)) +
-  ggtitle(str_c("SEIRR (WW)")) +
+  ggtitle(str_c("SEIRR-ww")) +
   my_theme +
   ylab(TeX('$R_{t}$')) +
   theme(legend.position = "none",
@@ -82,7 +82,7 @@ eirr_scenario1_rt_plot <- eirr_rt_scenario1 %>%
   scale_y_continuous("Rt", label = comma) +
   scale_x_continuous(name = "Time") +
   ylim(c(0,3.5)) +
-  ggtitle(str_c("EIRR (WW)")) +
+  ggtitle(str_c("EIRR-ww")) +
   my_theme + 
   theme(legend.position = c(0.6, 0.8),
         legend.background = element_rect(fill = "transparent"),
@@ -99,7 +99,7 @@ seir_scenario1_rt_plot <- seir_rt_scenario1 %>%
   scale_y_continuous("Rt", label = comma) +
   scale_x_continuous(name = "Time") +
   ylim(c(0,3.5)) +
-  ggtitle(str_c("SEIR (Cases)")) +
+  ggtitle(str_c("SEIR-cases")) +
   my_theme + 
   theme(legend.position = "none",
         text = element_text(size = 18)) +
@@ -114,7 +114,7 @@ eir_scenario1_rt_plot <- eir_rt_scenario1 %>%
   scale_y_continuous("Rt", label = comma) +
   scale_x_continuous(name = "Time") +
   ylim(c(0,3.5)) +
-  ggtitle(str_c("EIR (Cases)")) +
+  ggtitle(str_c("EIR-cases")) +
   my_theme + 
   theme(legend.position = "none",
         text = element_text(size = 18)) +
@@ -182,7 +182,7 @@ fill_plot <- seirr_rt_scenario1 %>%
   scale_y_continuous("Rt", label = comma) +
   scale_x_continuous(name = "Time") +
   ylim(c(0,3.5)) +
-  ggtitle(str_c("SEIRR (WW)")) +
+  ggtitle(str_c("SEIRR-ww")) +
   my_theme +
   ylab("R[t]") +
   theme(
@@ -241,8 +241,8 @@ epi_curve <- truecurve %>%
   ggtitle("Simulated Epidemic") +
   geom_point() + 
   theme_bw() +
-  theme(legend.position = c(0.63, 0.78),
-        legend.background = element_rect("transparent"),
+  theme(legend.position = c(0.83, 0.78),
+        legend.background = element_blank(),
         text = element_text(size = 18)) 
 
 
@@ -284,7 +284,7 @@ scenario1_sim_plot_paper <- (epi_curve + rt_plot) / (gene_plot + case_plot)
 scenario1_sim_plot_paper
 # ggsave(here::here("figures", "scenario1_sim_plot.png"), scenario1_sim_plot, width = 6, height = 10)
 
-ggsave(here::here("figures", "scenario1_sim_plot_paper.pdf"), scenario1_sim_plot_paper, width = 10, height = 10)
+ggsave(here::here("figures", "scenario1_sim_plot_paper.pdf"), scenario1_sim_plot_paper, width = 11, height = 11)
 
 
 # presentation plot -------------------------------------------------------
@@ -296,7 +296,7 @@ eirr_scenario1_rt_plot <- eirr_rt_scenario1 %>%
   scale_y_continuous("Rt", label = comma) +
   scale_x_continuous(name = "Time") +
   ylim(c(0,3.5)) +
-  ggtitle(str_c("EIRR (WW)")) +
+  ggtitle(str_c("EIRR-ww")) +
   my_theme + 
   theme(legend.position = c(0.6, 0.8),
         legend.background = element_rect(fill = "transparent"),
@@ -367,7 +367,7 @@ true_vals <- c(1/4,
                1/18,
                NA,
                NA,
-               0.8,
+               0.88,
                0.5,
                NA,
                2.99,
@@ -385,7 +385,7 @@ eirr_scenario1_fixed_posterior_samples <- read_csv(here::here("results",
   mutate(type = "posterior") %>%
   filter(name != ".draw")
 
-eirr_prior_samples <- read_csv(here::here("results", "eirr_closed", paste0("prior_samples_scenario", snum, "_seed", seed_val, ".csv"))) %>%
+eirr_prior_samples <- read_csv(here::here("results", "eirrc_closed", paste0("prior_samples_scenario", snum, "_seed", seed_val, ".csv"))) %>%
   mutate(type = "prior") %>%
   left_join(true_frame, by = "name")
 

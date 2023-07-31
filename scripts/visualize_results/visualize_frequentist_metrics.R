@@ -9,16 +9,16 @@ seirr_rt_scenario1 <- read_csv(here::here("results", "seirr_student", "seirr_sce
                       mutate(model = "SEIRR") %>% 
                       filter(.width == 0.8)
 
-eirr_rt_scenario1 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario1_allseeds_rt_quantiles.csv")) %>% 
-                     mutate(model = "EIRR")%>% 
+eirr_rt_scenario1 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario1_allseeds_rt_quantiles.csv")) %>% 
+                     mutate(model = "EIRR-ww")%>% 
   filter(.width == 0.8)
 
 seir_rt_scenario1 <- read_csv(here::here("results", "seir_cases", "seir_cases_scenario1_allseeds_rt_quantiles.csv")) %>% 
-                     mutate(model = "SEIR")%>% 
+                     mutate(model = "SEIR-cases")%>% 
   filter(.width == 0.8)
 
 eir_rt_scenario1 <- read_csv(here::here("results", "eir_cases", "eir_cases_scenario1_allseeds_rt_quantiles.csv")) %>% 
-                    mutate("EIR")%>% 
+                    mutate("EIR-cases")%>% 
   filter(.width == 0.8)
 
 checking_eirr <- eirr_rt_scenario1 %>% 
@@ -50,7 +50,7 @@ eirr_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = eirr_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIRR")
+                                                                                            model = "EIRR-ww")
   eirr_rt_metrics = bind_rows(eirr_rt_metrics, metrics)
 }
 
@@ -58,7 +58,7 @@ seirr_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = seirr_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "SEIRR")
+                                                                                            model = "SEIRR-ww")
   seirr_rt_metrics = bind_rows(seirr_rt_metrics, metrics)
 }
 
@@ -66,7 +66,7 @@ eir_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = eir_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIR")
+                                                                                            model = "EIR-cases")
   eir_rt_metrics = bind_rows(eir_rt_metrics, metrics)
 }
 
@@ -74,7 +74,7 @@ seir_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = seir_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "SEIR")
+                                                                                            model = "SEIR-cases")
   seir_rt_metrics = bind_rows(seir_rt_metrics, metrics)
 }
 
@@ -91,7 +91,7 @@ label_list <- c("Deviation", "Envelope", "MCIW", "MASV", "True MASV")
 all_metrics$metric <- factor(all_metrics$metric, levels=level_list, labels=label_list)
 
 
-model_level_list <-c ("EIRR", "SEIRR", "EIR", "SEIR")
+model_level_list <-c ("EIRR-ww", "SEIRR-ww", "EIR-cases", "SEIR-cases")
 all_metrics$model <- factor(all_metrics$model, levels = model_level_list)
 
 all_metrics$useful_value <- 0
@@ -150,19 +150,19 @@ ggsave(here::here("figures", "scenario1_presentation_frequentist_metrics.png"),
 # Scenario 1 vs 3 vs 4 vs 5 vs 6 (data type plot) -----------------------------------
 # read in data, sanity check we have the same number of comparison points
 # ten replicates
-eirr_rt_scenario3 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario3_allseeds_rt_quantiles.csv")) %>% 
+eirr_rt_scenario3 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario3_allseeds_rt_quantiles.csv")) %>% 
   mutate(model = "EIRR (Ten)")%>% 
   filter(.width == 0.8)
 # three mean
-eirr_rt_scenario4 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario4_allseeds_rt_quantiles.csv")) %>% 
+eirr_rt_scenario4 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario4_allseeds_rt_quantiles.csv")) %>% 
   mutate(model = "EIRR (Mean)")%>% 
   filter(.width == 0.8)
 # 10 mean
-eirr_rt_scenario5 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario5_allseeds_rt_quantiles.csv")) %>% 
+eirr_rt_scenario5 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario5_allseeds_rt_quantiles.csv")) %>% 
   mutate(model = "EIRR (Mean)")%>% 
   filter(.width == 0.8)
 # 1 replicate
-eirr_rt_scenario6 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario6_allseeds_rt_quantiles.csv")) %>% 
+eirr_rt_scenario6 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario6_allseeds_rt_quantiles.csv")) %>% 
   mutate(model = "EIRR (Mean)")%>% 
   filter(.width == 0.8)
 
@@ -239,21 +239,21 @@ all_metrics2 <- bind_rows(eirr_rt_metrics,
 
 level_list <- c("mean_dev", "mean_env", "MCIW", "MASV", "true_MASV")
 
-label_list <- c("EIRR Deviation", "EIRR Envelope", "EIRR MCIW", "EIRR MASV", "True MASV")
+label_list <- c("EIRR-ww Deviation", "EIRR-ww Envelope", "EIRR-ww MCIW", "EIRR-ww MASV", "True MASV")
 
 
 all_metrics2$metric <- factor(all_metrics2$metric, levels=level_list, labels=label_list)
 
 
-all_metrics2$model[all_metrics2$model == "EIRR"] <- "3-rep"
+all_metrics2$model[all_metrics2$model == "EIRR-ww"] <- "3-rep"
 model_level_list <-c ("3-rep", "1-rep", "10-rep", "3-mean", "10-mean")
 all_metrics2$model <- factor(all_metrics2$model, levels = model_level_list)
 
 
 all_metrics2$useful_value <- 0
-all_metrics2$useful_value[all_metrics2$metric == "EIRR Envelope"] <- 0.8
-all_metrics2$useful_value[all_metrics2$metric == "EIRR MCIW"] <- NA
-all_metrics2$useful_value[all_metrics2$metric == "EIRR MASV"] <- 0.02361307
+all_metrics2$useful_value[all_metrics2$metric == "EIRR-ww Envelope"] <- 0.8
+all_metrics2$useful_value[all_metrics2$metric == "EIRR-ww MCIW"] <- NA
+all_metrics2$useful_value[all_metrics2$metric == "EIRR-ww MASV"] <- 0.02361307
 
 all_metric_plot2 <- all_metrics2 %>% 
   filter(metric != "True MASV") %>% 
@@ -290,21 +290,21 @@ ggsave(here::here("figures", "otherscenarios_presentation_frequentist_metrics.pn
 
 # scenario 1 vs 7-10 (sensitivity analysis) -------------------------------
 # lambda = 0.4
-# eirr_rt_scenario7 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario7_allseeds_rt_quantiles.csv")) %>% 
+# eirr_rt_scenario7 <- read_csv(here::here("results", "eirrc_closed", "eirr_scenario7_allseeds_rt_quantiles.csv")) %>% 
 #   mutate(model = "EIRR (Mean)")%>% 
 #   filter(.width == 0.8)
 
 # lambda centered at 0.8
-eirr_rt_scenario8 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario8_allseeds_rt_quantiles.csv")) %>% 
+eirr_rt_scenario8 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario8_allseeds_rt_quantiles.csv")) %>% 
   mutate(model = "EIRR (Mean)")%>% 
   filter(.width == 0.8)
 # E,I are at 75%
-eirr_rt_scenario9 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario9_allseeds_rt_quantiles.csv")) %>% 
+eirr_rt_scenario9 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario9_allseeds_rt_quantiles.csv")) %>% 
   mutate(model = "EIRR (Mean)")%>% 
   filter(.width == 0.8)
 
 # E,I are at 133%
-eirr_rt_scenario10 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario10_allseeds_rt_quantiles.csv")) %>% 
+eirr_rt_scenario10 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario10_allseeds_rt_quantiles.csv")) %>% 
   mutate(model = "EIRR (Mean)")%>% 
   filter(.width == 0.8)
 
@@ -336,13 +336,13 @@ checking10 <- eirr_rt_scenario10 %>%
   unique()
 
 # stan diags
-# standiag_scenario7 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario7_allseed_stan_diag.csv"))
+# standiag_scenario7 <- read_csv(here::here("results", "eirrc_closed", "eirr_scenario7_allseed_stan_diag.csv"))
 
-# standiag_scenario8 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario8_allseeds_stan_diag.csv"))
+# standiag_scenario8 <- read_csv(here::here("results", "eirrc_closed", "eirr_scenario8_allseeds_stan_diag.csv"))
 # 
-# standiag_scenario9 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario9_allseeds_stan_diag.csv"))
+# standiag_scenario9 <- read_csv(here::here("results", "eirrc_closed", "eirr_scenario9_allseeds_stan_diag.csv"))
 # 
-# standiag_scenario10 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario10_allseeds_stan_diag.csv"))
+# standiag_scenario10 <- read_csv(here::here("results", "eirrc_closed", "eirr_scenario10_allseeds_stan_diag.csv"))
 
 # create metrics
 
@@ -396,7 +396,7 @@ label_list <- c("Deviation", "Envelope", "MCIW", "MASV", "True MASV")
 
 all_metrics3$metric <- factor(all_metrics3$metric, levels=level_list, labels=label_list)
 
-model_level_list <-c ("EIRR", "Low Prop", "High Prop", "Low Init", "High Init")
+model_level_list <-c ("EIRR-ww", "Low Prop", "High Prop", "Low Init", "High Init")
 all_metrics3$model <- factor(all_metrics3$model, levels = model_level_list)
 
 
@@ -454,8 +454,8 @@ for (i in 1:100) {
   huisman_rt_metrics = bind_rows(huisman_rt_metrics, metrics)
 }
 
-eirr_rt_scenario1_0.95 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario1_allseeds_rt_quantiles.csv")) %>% 
-  mutate(model = "EIRR")%>% 
+eirr_rt_scenario1_0.95 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario1_allseeds_rt_quantiles.csv")) %>% 
+  mutate(model = "EIRR-ww")%>% 
   filter(.width == 0.95)
 
 
@@ -465,7 +465,7 @@ for (i in 1:100) {
   sub_frame = eirr_rt_scenario1_0.95 %>% filter(seed == i) %>% filter(time <= max(huisman_rt_scenario1$time) & time >= min(huisman_rt_scenario1$time))
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% 
     mutate(seed = i,
-           model = "EIRR")
+           model = "EIRR-ww")
   abbreviated_eirr = bind_rows(abbreviated_eirr, metrics)
 }
 
@@ -483,7 +483,7 @@ label_list <- c("Deviation", "Envelope", "MCIW", "MASV", "True MASV")
 
 all_metrics4$metric <- factor(all_metrics4$metric, levels=level_list, labels=label_list)
 
-model_level_list <-c ("EIRR", "Huisman")
+model_level_list <-c ("EIRR-ww", "Huisman")
 all_metrics4$model <- factor(all_metrics4$model, levels = model_level_list)
 
 
@@ -528,24 +528,20 @@ ggsave(here::here("figures", "stateoftheart_presentation_frequentist_metrics.png
 
 
 # repeating model comparison figure with 95% CI ---------------------------
-
-
-# scenario 1 --------------------------------------------------------------
-# read in data, lets just look at 80% CI
 seirr_rt_scenario1 <- read_csv(here::here("results", "seirr_student", "seirr_scenario1_allseeds_rt_quantiles.csv")) %>% 
-  mutate(model = "SEIRR") %>% 
+  mutate(model = "SEIRR-ww") %>% 
   filter(.width == 0.95)
 
-eirr_rt_scenario1 <- read_csv(here::here("results", "eirr_closed", "eirr_scenario1_allseeds_rt_quantiles.csv")) %>% 
-  mutate(model = "EIRR")%>% 
+eirr_rt_scenario1 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario1_allseeds_rt_quantiles.csv")) %>% 
+  mutate(model = "EIRR-ww")%>% 
   filter(.width == 0.95)
 
 seir_rt_scenario1 <- read_csv(here::here("results", "seir_cases", "seir_cases_scenario1_allseeds_rt_quantiles.csv")) %>% 
-  mutate(model = "SEIR")%>% 
+  mutate(model = "SEIR-cases")%>% 
   filter(.width == 0.95)
 
 eir_rt_scenario1 <- read_csv(here::here("results", "eir_cases", "eir_cases_scenario1_allseeds_rt_quantiles.csv")) %>% 
-  mutate("EIR")%>% 
+  mutate("EIR-cases")%>% 
   filter(.width == 0.95)
 
 checking_eirr <- eirr_rt_scenario1 %>% 
@@ -577,7 +573,7 @@ eirr_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = eirr_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIRR")
+                                                                                            model = "EIRR-ww")
   eirr_rt_metrics = bind_rows(eirr_rt_metrics, metrics)
 }
 
@@ -585,7 +581,7 @@ seirr_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = seirr_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "SEIRR")
+                                                                                            model = "SEIRR-ww")
   seirr_rt_metrics = bind_rows(seirr_rt_metrics, metrics)
 }
 
@@ -593,7 +589,7 @@ eir_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = eir_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "EIR")
+                                                                                            model = "EIR-cases")
   eir_rt_metrics = bind_rows(eir_rt_metrics, metrics)
 }
 
@@ -601,7 +597,7 @@ seir_rt_metrics = NULL
 for (i in 1:100) {
   sub_frame = seir_rt_scenario1 %>% filter(seed == i) 
   metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
-                                                                                            model = "SEIR")
+                                                                                            model = "SEIR-cases")
   seir_rt_metrics = bind_rows(seir_rt_metrics, metrics)
 }
 
@@ -618,7 +614,7 @@ label_list <- c("Deviation", "Envelope", "MCIW", "MASV", "True MASV")
 all_metrics$metric <- factor(all_metrics$metric, levels=level_list, labels=label_list)
 
 
-model_level_list <-c ("EIRR", "SEIRR", "EIR", "SEIR")
+model_level_list <-c ("EIRR-ww", "SEIRR-ww", "EIR-cases", "SEIR-cases")
 all_metrics$model <- factor(all_metrics$model, levels = model_level_list)
 
 all_metrics$useful_value <- 0

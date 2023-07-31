@@ -1,0 +1,126 @@
+### Summarise processed results eirrc_closed
+library(tidyverse)
+library(tidybayes)
+library(posterior)
+library(fs)
+library(gridExtra)
+library(ggplot2)
+library(scales)
+library(cowplot)
+source("src/wastewater_functions.R")
+
+args <- commandArgs(trailingOnly=TRUE)
+
+
+if (length(args) == 0) {
+  snum = 1
+} else {
+  snum <- as.integer(args[1])
+}
+
+repeat_scenario1s = c(3,4,5,6,7,8,9,10, 12)
+if (snum %in% repeat_scenario1s) {
+  scenario_snum = 1
+} else {
+  scenario_snum = snum
+}
+
+# read in data and results ---------------------------------------------------------
+num_sims = 100
+seed_vals = 1:num_sims
+full_stan_diag <- map(seed_vals, ~read_csv(paste0("results/eirrc_closed/mcmc_summaries/mcmc_summary_scenario", 
+                                                             snum, 
+                                                             "_seed",
+                                                             .x,
+                                                             ".csv"))) %>%
+  bind_rows(.id = "seed") %>%
+  group_by(seed) %>% 
+  filter(variable != "R2[0]") %>%
+  summarise(min_rhat = min(rhat),
+            max_rhat = max(rhat),
+            min_ess_bulk = min(ess_bulk),
+            max_ess_bulk = max(ess_bulk),
+            min_ess_tail = min(ess_tail),
+            max_ess_tail = max(ess_tail))
+
+write_csv(full_stan_diag, here::here("results", "eirrc_closed", paste0("eirr_scenario", snum,  "_allseeds_stan_diag.csv")))
+# create final rt frame ---------------------------------------------------
+if (snum != 12) {
+  full_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_full_genecount_obsdata.csv")
+  
+} else if (snum == 12) {
+  full_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_fulldata_seiirr.rds")
+  
+}
+full_simdata <- read_csv(full_simdata_address) %>% filter(seed == 1) %>% rename("true_rt" = "Rt")
+
+# the data set is simulated for a certain period of time
+# but then based on how we choose to space apart observations (every two days, every seven etc)
+# there is a max observed time in the data set, we should not judge the model beyond the fitted data (for now)
+# this time should be the same across models (it will be the same for the case models even though they're slightly different)
+fitted_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_fitted_genecount_obsdata.csv")
+
+fitted_simdata <- read_csv(fitted_simdata_address)
+max_time <- max(fitted_simdata$time)
+
+timevarying_quantiles <- map(seed_vals, ~read_csv(paste0("results/eirrc_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
+                                                                    snum,
+                                                                    "_seed",
+                                                                    .x,
+                                                                    ".csv"))) 
+var_names <- unique(timevarying_quantiles[[1]]$name)
+
+rt_quantiles <- timevarying_quantiles %>%
+                map(~.x %>% filter(name == "rt_t_values") %>%
+                      rename(week = time) %>%
+                      right_join(full_simdata, by = "week") %>%
+                dplyr::select(week, time, true_rt, value, .lower, .upper, .width,.point, .interval) %>%
+                filter(time <= max_time,
+                       week >= 0)
+                ) %>%
+  bind_rows(.id = "seed")
+
+I_quantiles <- timevarying_quantiles %>% 
+  map(~.x %>% filter(name == "I") %>%
+        right_join(full_simdata, by = c("time" = "new_time")) %>%
+        dplyr::select(week, time, num_I, value, .lower, .upper, .width,.point, .interval) %>%
+        filter(time <= max_time,
+               week >= 0)
+  ) %>%
+  bind_rows(.id = "seed")
+
+write_csv(rt_quantiles, here::here("results", "eirrc_closed", paste0("eirr_scenario", snum,  "_allseeds_rt_quantiles.csv")))
+write_csv(I_quantiles, here::here("results", "eirrc_closed", paste0("eirr_scenario", snum,  "_allseeds_prevI_quantiles.csv")))
+
+# visualize results
+# all credit to Damon Bayer for plot functions 
+my_theme <- list(
+  scale_fill_brewer(name = "Credible Interval Width",
+                    labels = ~percent(as.numeric(.))),
+  guides(fill = guide_legend(reverse = TRUE)),
+  theme_minimal_grid(),
+  theme(legend.position = "bottom"))
+
+make_rt_plot <- function(seed_val) {
+  rt_quantiles %>%
+    filter(seed == seed_val) %>%
+    ggplot(aes(time, value, ymin = .lower, ymax = .upper)) +
+    geom_lineribbon() +
+    geom_point(aes(time, true_rt), color = "coral1") + 
+    scale_y_continuous("Rt", label = comma) +
+    scale_x_continuous(name = "Time") +
+    ggtitle(str_c("EIRR Posterior Rt Scenario ", snum, " Seed ", seed_val)) +
+    my_theme
+}
+
+ggsave2(filename = here::here("results", "eirrc_closed", paste0("eirr_rt_plots_scenario", snum, ".pdf")),
+        plot = rt_quantiles %>%
+          distinct(seed) %>%
+          arrange(seed) %>%
+          pull(seed) %>%
+          map(make_rt_plot) %>%
+          marrangeGrob(ncol = 1, nrow = 1),
+        width = 12,
+        height = 8)
+
+
