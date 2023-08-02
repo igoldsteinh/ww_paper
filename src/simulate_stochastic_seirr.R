@@ -17,7 +17,7 @@ sim_SEIRR <- function(N, I_init, beta, gamma, nu, eta) {
   init_stopshed <- init_recover + rexp(I, rate = eta) 
   
   t <- unique(init_infectious);
-  times <- c(rep(t,5));
+  times <- c(rep(t,I_init));
   
   
 
@@ -511,7 +511,7 @@ simulate_case_data <- function(true_E2I_counts, seed, rho, phi) {
 # pop_size = 1000
 # r0 = 1.5
 # nu = 1/7
-# beta = (r0 * nu)/pop_size 
+# beta = (r0 * nu)/pop_size
 # gamma = 1/4
 # eta = 1/18
 # I_init = 50
@@ -524,10 +524,8 @@ sim_agent_SEIRR <- function(pop_size, I_init, beta, gamma, nu, eta) {
   rate_vec <- rep(0, length.out = pop_size)
   id_vec <- 1:pop_size
   
-  # copying what I did in the other model
-  init_infectious <- rep(rexp(1, rate = gamma), I_init)
-  
-  t <- unique(init_infectious);
+  # copying what I did in the time-varying model
+  t <- 0
   
   rate_frame <- data.frame(id = id_vec, 
                            state = pop_vec,
@@ -594,3 +592,91 @@ sim_agent_SEIRR <- function(pop_size, I_init, beta, gamma, nu, eta) {
   return(state_frame)
   
 }
+
+
+# create daily data from agent model --------------------------------------
+# res <- sim_agent_SEIRR(pop_size, I_init, beta, gamma, nu, eta)
+
+
+create_daily_from_agent <- function(res) {
+  day_data <- data.frame(res) %>%
+    rename("time" = "X1") %>%
+    pivot_longer(-time, names_to = "id", values_to = "state") 
+  
+  day_data$time <- as.numeric(day_data$time) 
+  
+  day_data <- day_data %>% 
+    mutate(integer_day = ceiling(time),
+           time_diff = integer_day - time) %>%
+    group_by(integer_day) %>% 
+    filter(time_diff == min(time_diff)) %>%
+    group_by(integer_day) %>% 
+    summarise(S = sum(state == "S"),
+              E = sum(state == "E"),
+              I = sum(state == "I"), 
+              R1 = sum(state == "R1"),
+              R2 = sum(state == "R2"))
+  
+  return(day_data)
+}
+
+
+# simulate classic gillespie seirr ----------------------------------------
+gillespie_seirr <- function(pop_size, I_init, beta, gamma, nu, eta) {
+  # initial number of infectives and susceptibles;
+  R1 <- 0
+  E <- 0
+  I <- I_init
+  S <- pop_size-I_init
+  
+  t <- 0;
+
+  # a dataframe to store the states as well as beta and r0
+  states <- as.matrix(t(c(t,S,E,I,R1)))  
+  
+  while (I >0 | R1 >0) {
+    total_rate <- (beta/pop_size * I * S) + gamma*E + nu*I + eta*R1
+    
+    next_event <- rexp(1, total_rate)
+    
+    type_event <- sample(c("infection", "infectious", "recover", "stop_shed"), size = 1, prob = c((beta/pop_size * I * S),
+                                                                                         gamma*E,
+                                                                                         nu*I, 
+                                                                                         eta*R1))
+    
+    t <- t + next_event
+    if (type_event == "infection") {
+      S <- S - 1
+      E <- E + 1
+    } else if (type_event == "infectious") {
+      E <- E - 1
+      I <- I + 1
+    } else if (type_event == "recover") {
+      I <- I - 1
+      R1 <- R1 + 1
+    } else {
+      R1 <- R1 - 1
+    }
+    
+    current_state <- t(c(t,S,E,I,R1))
+    states <- rbind(states, current_state)
+  }
+  return(states)
+}
+
+# function for creating day level state data ------------------------------
+create_gillespie_daily_data <- function(sim_states) {
+  day_data <- data.frame(sim_states) %>%
+    rename("time" = "X1",
+           "S" = "X2",
+           "E" = "X3", 
+           "I" = "X4", 
+           "R1" = "X5") %>%
+    mutate(integer_day = ceiling(time),
+           time_diff = integer_day - time) %>%
+    group_by(integer_day) %>% 
+    filter(time_diff == min(time_diff)) 
+  
+  return(day_data)
+}
+

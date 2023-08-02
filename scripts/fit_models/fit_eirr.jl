@@ -1,3 +1,4 @@
+# file purely used to test how long it takes to run the eirr model with an ode solver
 using DrWatson
 using Revise
 using JLD2
@@ -13,11 +14,19 @@ using Optim
 using LineSearches
 using wastewater2
 using Logging
-using PreallocationTools
+priors_only = false 
+
+## Control Parameters
+n_samples = 250
+n_chains = 4
+time_interval_in_days = 7
+
+
+
 
 sim =
 if length(ARGS) == 0
-   "ODE_long"
+  "ODE_long"
 else
   parse(Int64, ARGS[1])
 end
@@ -40,9 +49,6 @@ if sim == 56
   sim = "real"
 end 
 Logging.disable_logging(Logging.Warn)
-
-mkpath(resultsdir("eirrc_closed"))
-mkpath(resultsdir("eirrc_closed", "posterior_samples"))
 
 ## Control Parameters
 n_samples = 250
@@ -93,7 +99,6 @@ long_dat = filter(:value => value -> value > 0, long_dat)
 # long_dat = filter(:value => value -> value < 16, long_dat)
 data_log_copies = long_dat[:, :value]
 end 
-
 
 
 if sim == "real"
@@ -222,7 +227,7 @@ end
 
 
 obstimes = long_dat[:, :new_time]
-obstimes = convert(Vector{Float64}, obstimes)
+# obstimes = convert(Vector{Float64}, obstimes)
 
 # pick the change times 
 if maximum(obstimes) % 7 == 0
@@ -230,35 +235,45 @@ if maximum(obstimes) % 7 == 0
 else 
   param_change_max = maximum(obstimes)
 end 
-param_change_times = collect(7:7.0:param_change_max)
-outs_tmp = dualcache(zeros(6,length(1:obstimes[end])), 10)
+param_change_times = collect(7:7:param_change_max)
 
-## Define closed form solution
-include(projectdir("src/closed_soln_eirr_withincid.jl"))
-
+## Define ODE
+include(projectdir("src/eirr_ode_log.jl"))
 
 ## Load Model
-include(projectdir("src/bayes_eirrc_closed.jl"))
+include(projectdir("src/bayes_eirr_student.jl"))
 
 
-my_model = bayes_eirrc_closed!(
-    outs_tmp, 
-    data_log_copies,
+my_model_optimize = bayes_eirr_student(
+    data_log_copies, 
     obstimes, 
-    param_change_times)
+    param_change_times, 
+    true, 
+    prob,
+    1e-11,
+    1e-8)
+
+my_model = bayes_eirr_student(
+    data_log_copies, 
+    obstimes, 
+    param_change_times, 
+    true, 
+    prob,
+    1e-9,
+    1e-6)
 
 # Sample Posterior
 
 if priors_only
-  Random.seed!(seed)
-  prior_samples = sample(my_model, Prior(), MCMCThreads(), 400, n_chains)
-  wsave(resultsdir("eirrc_closed",string("prior_samples_scenario", sim, "_seed", seed, ".jld2")), @dict prior_samples)
-  exit()
+  Random.seed!(1234)
+  prior_samples = sample(my_model, Prior(), MCMCThreads(), n_samples, n_chains)
+  wsave(resultsdir("eirr",string("prior_samples_scenario", sim, ".jld2")), @dict prior_samples)
+  # exit()
 end
 
 Random.seed!(seed)
 
-MAP_init = optimize_many_MAP(my_model, 10, 1, true)[1]
+MAP_init = optimize_many_MAP(my_model_optimize, 10, 1, true)[1]
 
 Random.seed!(seed)
 MAP_noise = vcat(randn(length(MAP_init) - 1, n_chains), transpose(zeros(n_chains)))
@@ -268,6 +283,5 @@ init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 
 Random.seed!(seed)
 posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, 4, discard_initial = n_samples, init_params = init)
-wsave(resultsdir("eirrc_closed", "posterior_samples", string("posterior_samples_scenario", sim, "_seed", seed, ".jld2")), @dict posterior_samples)
 
-
+# wsave(resultsdir("eirr", "posterior_samples", string("posterior_samples_scenario", sim, ".jld2")), @dict posterior_samples)

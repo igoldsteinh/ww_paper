@@ -27,7 +27,7 @@ ww_data_plot <- real_data %>%
   theme_bw() + 
   theme(axis.text.x = element_text(angle = 90),
         text = element_text(size = 18)) +
-  scale_y_continuous("Log RNA Counts", breaks = 0:20) +
+  scale_y_continuous("Log Genome Conc.", breaks = 0:20) +
   scale_x_date("Date", breaks = "months") +
   ggtitle("LA Wastewater Jul 21 - Feb 22")
 

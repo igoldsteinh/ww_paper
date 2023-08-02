@@ -254,7 +254,7 @@ gene_plot <- scenario1_simdata %>%
   theme_bw() +
   theme(text = element_text(size = 18)) +
   xlab("Time") + 
-  ylab("Log Genetic Conc.") +
+  ylab("Log Genome Conc.") +
   ggtitle("Wastewater Data")
 
 case_plot <- scenario1_casedata %>% 
