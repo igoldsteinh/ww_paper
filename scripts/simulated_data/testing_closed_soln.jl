@@ -7,6 +7,7 @@ using DataFrames
 include(projectdir("src/eirr_ode_log.jl"))
 include(projectdir("src/closed_soln_eirr_withincid.jl"))
 include(projectdir("src/newnew_closed_soln_eirr_withincid.jl"))
+include(projectdir("src/eirr_ode.jl"))
 
 E_init = 5
 I_init = 5
@@ -37,8 +38,13 @@ change_times = [7.0]
 t0 = 0.0
 alphas_no_init = alphas[2]
 
-prob = ODEProblem(eirr_ode_log!,
+log_prob = ODEProblem(eirr_ode_log!,
 log.(u0),
+(0.0, times[end]),
+[alphas[1], gamma, nu, eta])
+
+prob = ODEProblem(eirr_ode!,
+u0,
 (0.0, times[end]),
 [alphas[1], gamma, nu, eta])
 
@@ -50,8 +56,8 @@ end
 param_callback = PresetTimeCallback(change_times, param_affect_β_IFR!, save_positions = (false, false))
 
 # Solve the ODE at intervals of 1.0, could also solve at obstimes
-sol = solve(prob, Tsit5(), callback = param_callback, saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
-
+log_sol = solve(log_prob, Tsit5(), callback = param_callback, saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
+ode_sol = solve(prob, Tsit5(), callback = param_callback, saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
 exp_sol = exp.(sol)
 # eir_closed_solution!(outs_tmp, times, change_times, 0.0, alphas, init_conds, gamma, nu)
 
@@ -101,12 +107,14 @@ init_conds = u0
 
 
 alphas_no_init = alphas[2:end]
-gamma = 1/4
-nu = 1/7
-eta = 1/18
 
-prob = ODEProblem(eirr_ode_log!,
+log_prob = ODEProblem(eirr_ode_log!,
 log.(u0),
+(0.0, maximum(times)),
+[alphas[1], gamma, nu, eta])
+
+prob = ODEProblem(eirr_ode!,
+u0,
 (0.0, maximum(times)),
 [alphas[1], gamma, nu, eta])
 
@@ -118,8 +126,17 @@ end
 param_callback = PresetTimeCallback(change_times, param_affect_β_IFR!, save_positions = (false, false))
 
 # Solve the ODE at intervals of 1.0, could also solve at obstimes
-@btime sol = solve(prob, Tsit5(), callback = param_callback, saveat = 1.0, save_start = true, verbose = false, abstol = 1e-11, reltol = 1e-8)  
+@btime log_sol = solve(log_prob, Tsit5(), callback = param_callback, saveat = 1.0, save_start = true, verbose = false, abstol = 1e-11, reltol = 1e-8)  
 
+# this did not help at all in fact it was even faster than the log version 
+@btime ode_sol = solve(prob, Tsit5(), callback = param_callback, saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
+
+
+# testing purely the matrix exponential 
+alpha = alphas[1]
+my_fixed_alpha = fixed_alpha_closed_soln(outs_tmp, times,  grid_size, t0, alpha, init_conds, gamma, nu, eta)
+
+ode_fixed_alpha = solve(prob, Tsit5(), saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
 # testing speed on time series equal to length of real data
 dat = CSV.read("data/LA_daily_data_feb2022.csv", DataFrame)
 # for now I'm going to remove the last observation as we don't have a full week's worth of data for it
