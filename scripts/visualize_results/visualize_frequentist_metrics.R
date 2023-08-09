@@ -111,7 +111,60 @@ all_metric_plot <- all_metrics %>%
                    ylab("") + 
                    xlab("Model")
 
-ggsave(here::here("figures", "scenario1_frequentist_metrics.pdf"), all_metric_plot, width = 10, height =10)
+all_metric_dev_plot <- all_metrics %>% 
+            filter(metric == "Deviation") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x=element_blank(),
+        ) +
+  ggtitle("Deviation") + 
+  ylab("Deviation") + 
+  xlab("")
+
+all_metric_env_plot <- all_metrics %>% 
+  filter(metric == "Envelope") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x = element_blank()) +
+  ggtitle("Envelope") + 
+  ylab("Envelope") + 
+  xlab("")
+
+
+all_metric_mciw_plot <- all_metrics %>% 
+  filter(metric == "MCIW") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MCIW") + 
+  ylab("MCIW") + 
+  xlab("Model")
+
+all_metric_masv_plot <- all_metrics %>% 
+  filter(metric == "MASV") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MASV") + 
+  ylab("MASV") + 
+  xlab("Model")
+
+new_all_metric_plot <- all_metric_dev_plot + all_metric_env_plot + all_metric_mciw_plot + all_metric_masv_plot + plot_annotation(
+  title = 'Frequentist Metrics Across Models'
+) &
+theme(text = element_text(size = 18))
+
+ggsave(here::here("figures", "scenario1_frequentist_metrics.pdf"), new_all_metric_plot, width = 11, height =11)
 
 
 # calculating MCIW --------------------------------------------------------
@@ -267,7 +320,61 @@ all_metric_plot2 <- all_metrics2 %>%
   ylab("") +
   xlab("Fitted Data")
 
-ggsave(here::here("figures", "otherscenarios_frequentist_metrics.pdf"), all_metric_plot2, width = 10, height =10)
+
+all_metric2_dev_plot <- all_metrics2 %>% 
+  filter(metric == "EIRR-ww Deviation") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x=element_blank(),
+  ) +
+  ggtitle("EIRR-ww Deviation") + 
+  ylab("Deviation") + 
+  xlab("")
+
+all_metric2_env_plot <- all_metrics2 %>% 
+  filter(metric == "EIRR-ww Envelope") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x = element_blank()) +
+  ggtitle("EIRR-ww Envelope") + 
+  ylab("Envelope") + 
+  xlab("")
+
+
+all_metric2_mciw_plot <- all_metrics2 %>% 
+  filter(metric == "EIRR-ww MCIW") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("EIRR-ww MCIW") + 
+  ylab("MCIW") + 
+  xlab("Fitted Data")
+
+all_metric2_masv_plot <- all_metrics2 %>% 
+  filter(metric == "EIRR-ww MASV") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("EIRR-ww MASV") + 
+  ylab("MASV") + 
+  xlab("Fitted Data")
+
+new_all_metric2_plot <- all_metric2_dev_plot + all_metric2_env_plot + all_metric2_mciw_plot + all_metric2_masv_plot + plot_annotation(
+  title = 'Frequentist Metrics Across Data Sources'
+) &
+  theme(text = element_text(size = 18))
+
+ggsave(here::here("figures", "otherscenarios_frequentist_metrics.pdf"), new_all_metric2_plot, width = 11, height =11)
 
 # presentation version ----------------------------------------------------
 presentation_all_metric2_plot <- all_metrics2 %>% 
@@ -418,7 +525,61 @@ all_metric_plot3 <- all_metrics3 %>%
   ylab("") + 
   xlab("Sensitivity Setting")
 
-ggsave(here::here("figures", "sensitivity_frequentist_metrics.pdf"), all_metric_plot3, width = 10, height =10)
+
+all_metric3_dev_plot <- all_metrics3 %>% 
+  filter(metric == "Deviation") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x=element_blank(),
+  ) +
+  ggtitle("Deviation") + 
+  ylab("Deviation") + 
+  xlab("")
+
+all_metric3_env_plot <- all_metrics3 %>% 
+  filter(metric == "Envelope") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x = element_blank()) +
+  ggtitle("Envelope") + 
+  ylab("Envelope") + 
+  xlab("")
+
+
+all_metric3_mciw_plot <- all_metrics3 %>% 
+  filter(metric == "MCIW") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MCIW") + 
+  ylab("MCIW") + 
+  xlab("Sensitivity Setting")
+
+all_metric3_masv_plot <- all_metrics3 %>% 
+  filter(metric == "MASV") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MASV") + 
+  ylab("MASV") + 
+  xlab("Sensitivity Setting")
+
+new_all_metric3_plot <- all_metric3_dev_plot + all_metric3_env_plot + all_metric3_mciw_plot + all_metric3_masv_plot + plot_annotation(
+  title = 'Frequentist Metrics (Sensitivity Analysis)'
+) &
+  theme(text = element_text(size = 18))
+
+ggsave(here::here("figures", "sensitivity_frequentist_metrics.pdf"), new_all_metric3_plot, width = 11, height =11)
 
 # presentation version ----------------------------------------------------
 presentation_all_metric3_plot <- all_metrics3 %>% 
@@ -505,7 +666,62 @@ all_metric_plot4 <- all_metrics4 %>%
   ylab("") +
   xlab("Model")
 
-ggsave(here::here("figures", "stateoftheart_frequentist_metrics.pdf"), all_metric_plot4, width = 10, height =10)
+
+all_metric4_dev_plot <- all_metrics4 %>% 
+  filter(metric == "Deviation") %>%
+  filter(value <= 600) %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x=element_blank(),
+  ) +
+  ggtitle("Deviation") + 
+  ylab("Deviation") + 
+  xlab("")
+
+all_metric4_env_plot <- all_metrics4 %>% 
+  filter(metric == "Envelope") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x = element_blank()) +
+  ggtitle("Envelope") + 
+  ylab("Envelope") + 
+  xlab("")
+
+
+all_metric4_mciw_plot <- all_metrics4 %>% 
+  filter(metric == "MCIW") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MCIW") + 
+  ylab("MCIW") + 
+  xlab("Model")
+
+all_metric4_masv_plot <- all_metrics4 %>% 
+  filter(metric == "MASV") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MASV") + 
+  ylab("MASV") + 
+  xlab("Model")
+
+new_all_metric4_plot <- all_metric4_dev_plot + all_metric4_env_plot + all_metric4_mciw_plot + all_metric4_masv_plot + plot_annotation(
+  title = 'Frequentist Metrics (State of the Art)'
+) &
+  theme(text = element_text(size = 18))
+
+ggsave(here::here("figures", "stateoftheart_frequentist_metrics.pdf"), new_all_metric4_plot, width = 10, height =10)
 
 # presentation version ----------------------------------------------------
 presentation_all_metric4_plot <- all_metrics4 %>% 
@@ -634,5 +850,58 @@ all_metric_plot_95 <- all_metrics %>%
   ylab("") + 
   xlab("Model")
 
-ggsave(here::here("figures", "scenario1_frequentist_metrics_95CI.pdf"), all_metric_plot_95, width = 10, height =10)
+all_metric_dev_plot_95 <- all_metrics %>% 
+  filter(metric == "Deviation") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x=element_blank(),
+  ) +
+  ggtitle("Deviation") + 
+  ylab("Deviation") + 
+  xlab("")
+
+all_metric_env_plot_95 <- all_metrics %>% 
+  filter(metric == "Envelope") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x = element_blank()) +
+  ggtitle("Envelope") + 
+  ylab("Envelope") + 
+  xlab("")
+
+
+all_metric_mciw_plot_95 <- all_metrics %>% 
+  filter(metric == "MCIW") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MCIW") + 
+  ylab("MCIW") + 
+  xlab("Model")
+
+all_metric_masv_plot_95 <- all_metrics %>% 
+  filter(metric == "MASV") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MASV") + 
+  ylab("MASV") + 
+  xlab("Model")
+
+new_all_metric_plot_95 <- all_metric_dev_plot_95 + all_metric_env_plot_95 + all_metric_mciw_plot_95 + all_metric_masv_plot_95 + plot_annotation(
+  title = 'Frequentist Metrics Across Models (95% CI)'
+) &
+  theme(text = element_text(size = 18))
+
+ggsave(here::here("figures", "scenario1_frequentist_metrics_95CI.pdf"), new_all_metric_plot_95, width = 11, height =11)
 
