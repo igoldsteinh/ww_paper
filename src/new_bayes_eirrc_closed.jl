@@ -2,7 +2,7 @@
 using LinearAlgebra
 using ForwardDiff
 using NaNMath
-@model function bayes_eirrc_closed!(outs_tmp,data_log_copies, obstimes, param_change_times)
+@model function new_bayes_eirrc_closed!(outs_tmp,data_log_copies, obstimes, param_change_times, grid_size, index)
   # Calculate number of observed datapoints timepoints
   l_copies = length(obstimes)
   l_param_change_times = length(param_change_times)
@@ -51,7 +51,7 @@ using NaNMath
   alpha_t_values_no_init = exp.(log(rt_init) .+ cumsum(vec(log_rt_steps_non_centered) * sigma_rt)) * nu
   alpha_t_values_with_init = vcat(alpha_init, alpha_t_values_no_init)
 
-  sol_reg_scale_array = new_eirrc_closed_solution!(outs_tmp, 1:maximum(obstimes), param_change_times, 0.0, alpha_t_values_with_init, u0, gamma, nu, eta)
+  sol_reg_scale_array = newnew_eirrc_closed_solution!(outs_tmp, 1:maximum(obstimes), param_change_times, grid_size, 0.0, alpha_t_values_with_init, u0, gamma, nu, eta)
   # print(" alpha is ")
   # print(ForwardDiff.value(alpha_t_values_with_init))
   # print(" I is ")
@@ -62,8 +62,7 @@ using NaNMath
   incid = sol_reg_scale_array[6, 2:end] - sol_reg_scale_array[6, 1:(end-1)]
 
   for i in 1:l_copies
-    index = obstimes[i] # what time in the ode matches the obs time?
-    data_log_copies[i] ~ GeneralizedTDist(log_genes_mean[round(Int64,index)], tau, df) 
+    data_log_copies[i] ~ GeneralizedTDist(log_genes_mean[round(Int64,index[i])], tau, df) 
     # data_log_copies[i] ~ Normal(log_genes_mean[round(Int64,index)], tau) 
 end
 

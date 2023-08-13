@@ -9,7 +9,7 @@ args <- commandArgs(trailingOnly=TRUE)
 
 
 if (length(args) == 0) {
-  snum = "uci"
+  snum = 1
   seed_val = 1
 } else {
   snum <- as.integer(args[1])

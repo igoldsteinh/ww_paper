@@ -17,7 +17,7 @@ using PreallocationTools
 
 sim =
 if length(ARGS) == 0
-   "ODE_long"
+   "real"
 else
   parse(Int64, ARGS[1])
 end
@@ -64,10 +64,11 @@ long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :
 long_dat = filter(:value => value -> value > 0, long_dat)
 # long_dat = filter(:value => value -> value < 16, long_dat)
 data_log_copies = long_dat[:, :value]
+grid_size = 1.0
 end 
 
 
-### Baseline scenario
+### compare with ODE model 
 if sim == "ODE"
   all_dat = CSV.read("data/sim_data/ODE_comp_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
@@ -79,19 +80,7 @@ long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :
 long_dat = filter(:value => value -> value > 0, long_dat)
 # long_dat = filter(:value => value -> value < 16, long_dat)
 data_log_copies = long_dat[:, :value]
-end 
-
-if sim == "ODE_long"
-  all_dat = CSV.read("data/sim_data/ODElong_comp_fitted_genecount_obsdata.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenarioodelong.jl"))
-
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-long_dat = filter(:value => value -> value > 0, long_dat)
-# long_dat = filter(:value => value -> value < 16, long_dat)
-data_log_copies = long_dat[:, :value]
+grid_size = 0.5
 end 
 
 
@@ -107,7 +96,7 @@ subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_
 long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
 long_dat = filter(:value => value -> value > 0, long_dat)
 data_log_copies = long_dat[:, :value]
-
+grid_size = 1.0
 end 
 
 ### 10 replicates--EIRR (10)
@@ -231,21 +220,30 @@ else
   param_change_max = maximum(obstimes)
 end 
 param_change_times = collect(7:7.0:param_change_max)
-outs_tmp = dualcache(zeros(6,length(1:obstimes[end])), 10)
+full_time_series = collect(minimum(obstimes):grid_size:maximum(obstimes))
+outs_tmp = dualcache(zeros(6,length(full_time_series)), 10)
+
+index = zeros(length(obstimes))
+for i in 1:length(index)
+    time = obstimes[i]
+    index[i] = indexin(round(Int64,time), full_time_series)[1]
+end 
 
 ## Define closed form solution
-include(projectdir("src/closed_soln_eirr_withincid.jl"))
+include(projectdir("src/newnew_closed_soln_eirr_withincid.jl"))
 
 
 ## Load Model
-include(projectdir("src/bayes_eirrc_closed.jl"))
+include(projectdir("src/new_bayes_eirrc_closed.jl"))
 
 
-my_model = bayes_eirrc_closed!(
+my_model = new_bayes_eirrc_closed!(
     outs_tmp, 
     data_log_copies,
     obstimes, 
-    param_change_times)
+    param_change_times,
+    grid_size,
+    index)
 
 # Sample Posterior
 
@@ -268,6 +266,8 @@ init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 
 Random.seed!(seed)
 posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, 4, discard_initial = n_samples, init_params = init)
+# posterior_samples = sample(my_model, NUTS(), MCMCThreads(), 10, 4, discard_initial = n_samples)
+
 wsave(resultsdir("eirrc_closed", "posterior_samples", string("posterior_samples_scenario", sim, "_seed", seed, ".jld2")), @dict posterior_samples)
 
 

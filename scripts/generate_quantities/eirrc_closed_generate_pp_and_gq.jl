@@ -203,30 +203,42 @@ else
   param_change_max = maximum(obstimes)
 end 
 param_change_times = collect(7:7.0:param_change_max)
-outs_tmp = dualcache(zeros(6,length(1:obstimes[end])), 10)
+full_time_series = collect(minimum(obstimes):grid_size:maximum(obstimes))
+outs_tmp = dualcache(zeros(6,length(full_time_series)), 10)
+
+index = zeros(length(obstimes))
+for i in 1:length(index)
+    time = obstimes[i]
+    index[i] = indexin(time, full_time_series)[1]
+end 
 
 ## Define closed form solution
-include(projectdir("src/closed_soln_eirr_withincid.jl"))
+include(projectdir("src/newnew_closed_soln_eirr_withincid.jl"))
 
 
 ## Load Model
-include(projectdir("src/bayes_eirrc_closed.jl"))
+include(projectdir("src/new_bayes_eirrc_closed.jl"))
 
 
-my_model = bayes_eirrc_closed!(
+
+my_model = new_bayes_eirrc_closed!(
     outs_tmp, 
     data_log_copies,
     obstimes, 
-    param_change_times)
+    param_change_times,
+    grid_size,
+    index)
   
   
   missing_log_copies = repeat([missing], length(data_log_copies))
   
-  my_model_forecast_missing = bayes_eirrc_closed!(
+  my_model_forecast_missing = new_bayes_eirrc_closed!(
     outs_tmp, 
     missing_log_copies,
     obstimes,
-    param_change_times)
+    param_change_times,
+    grid_size,
+    index)
   
 
 if priors_only
