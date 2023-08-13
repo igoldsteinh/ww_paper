@@ -26,7 +26,7 @@ time_interval_in_days = 7
 
 sim =
 if length(ARGS) == 0
-  "ODE_long"
+  "ODE"
 else
   parse(Int64, ARGS[1])
 end
@@ -70,6 +70,7 @@ long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :
 long_dat = filter(:value => value -> value > 0, long_dat)
 # long_dat = filter(:value => value -> value < 16, long_dat)
 data_log_copies = long_dat[:, :value]
+grid_size = 1
 end 
 
 
@@ -85,6 +86,7 @@ long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :
 long_dat = filter(:value => value -> value > 0, long_dat)
 # long_dat = filter(:value => value -> value < 16, long_dat)
 data_log_copies = long_dat[:, :value]
+grid_size = 0.5
 end 
 
 if sim == "ODE_long"
@@ -237,6 +239,13 @@ else
 end 
 param_change_times = collect(7:7:param_change_max)
 
+index = zeros(length(obstimes))
+savetimes = collect(minimum(obstimes)[1]:grid_size:maximum(obstimes)[end])
+for i in 1:length(index)
+    time = obstimes[i]
+    index[i] = indexin(time, savetimes)[1]
+end 
+
 ## Define ODE
 include(projectdir("src/eirr_ode_log.jl"))
 
@@ -251,7 +260,9 @@ my_model_optimize = bayes_eirr_student(
     true, 
     prob,
     1e-11,
-    1e-8)
+    1e-8,
+    savetimes,
+    index)
 
 my_model = bayes_eirr_student(
     data_log_copies, 
@@ -260,7 +271,9 @@ my_model = bayes_eirr_student(
     true, 
     prob,
     1e-9,
-    1e-6)
+    1e-6,
+    savetimes,
+    index)
 
 # Sample Posterior
 
@@ -283,5 +296,6 @@ init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 
 Random.seed!(seed)
 posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, 4, discard_initial = n_samples, init_params = init)
+
 
 # wsave(resultsdir("eirr", "posterior_samples", string("posterior_samples_scenario", sim, ".jld2")), @dict posterior_samples)
