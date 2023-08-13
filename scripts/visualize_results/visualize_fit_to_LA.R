@@ -17,6 +17,13 @@ snum = "real"
 real_data <- read_csv("data/LA_daily_data_feb2022.csv")
 
 
+snum = "real"
+seed_val = 1
+date_week_crosswalk <- real_data %>% 
+  dplyr::select(date, epi_week, new_time) %>%
+  mutate(time = epi_week - 27)
+
+
 # visualized data ----------------------------------------------------------
 ww_data_plot <- real_data %>% 
   dplyr::select(date, log_gene_copies1, log_gene_copies2, log_gene_copies3) %>% 
@@ -60,12 +67,6 @@ date_week_crosswalk <- real_data %>%
   mutate(time = epi_week - 27)
 
 # EIR ---------------------------------------------------------------------
-
-snum = "real"
-seed_val = 1
-date_week_crosswalk <- real_data %>% 
-  dplyr::select(date, epi_week, new_time) %>%
-  mutate(time = epi_week - 27)
 timevarying_quantiles_eir <- read_csv(paste0("results/eir_cases/generated_quantities/posterior_timevarying_quantiles_scenario",
                                          snum,
                                          "_seed",
@@ -100,7 +101,7 @@ eir_realdata_rt_plot_seed1 <- rt_quantiles_eir %>%
   geom_lineribbon() +
   scale_y_continuous("Rt", label = comma, breaks = c(0:5), limits = c(0,5)) +
   scale_x_date(name = "Date", date_breaks = "month") +
-  ggtitle("EIR Posterior Rt") +
+  ggtitle("EIR-cases Posterior Rt") +
   my_theme + 
   theme(axis.text.x = element_text(angle = 90),
         legend.position = "none",
@@ -170,7 +171,7 @@ eirrc_realdata_rt_plot_seed1 <- rt_quantiles_eirr %>%
   geom_lineribbon() +
   scale_y_continuous("Rt", label = comma, breaks = c(0:5), limits = c(0,5)) +
   scale_x_date(name = "Date", date_breaks = "month") +
-  ggtitle("EIRR Posterior Rt") +
+  ggtitle("EIRR-ww Posterior Rt") +
   my_theme + 
   theme(axis.text.x = element_text(angle = 90),
         legend.position = c(0.4, 0.75),
