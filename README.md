@@ -2,7 +2,7 @@
 
 This repository has all code needed to recreate the analyses conducted in the paper Semiparametric Inference of Effective Reproduction Number Dynamics from Wastewater Pathogen Surveillance Data. 
 Models were fit in Julia, while simulation and visualization was done in R. 
-[R](https://github.com/igoldsteinh/testpackage) and [Julia](https://github.com/igoldsteinh/testpackage.jl) packages which implement the models described in the paper are also available. 
+[R](https://github.com/igoldsteinh/concRt) and [Julia](https://github.com/igoldsteinh/concRt.jl) packages which implement the models described in the paper are also available. 
 
 ## Navigation
 Core functions--including simulation engines and implementations of Bayesian models--are located in the [src folder](https://github.com/igoldsteinh/ww_paper/tree/main/src). 
