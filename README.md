@@ -44,6 +44,7 @@ All results files needed to reproduce the figures are in the repo, individual si
 The workflow for the main models involves multiple files. As an example, to generate results from the the EIRR-ww model, [fit_eirrc_closed.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_eirrc_closed.jl) is used to fit the model, then [eirrc_closed_generate_pp_and_gq.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/generate_quantities/eirrc_closed_generate_pp_and_gq.jl) is run to re-scale the posterior and generate posterior predictive values, finally [process_results_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/process_results_eirrc_closed.R) creates tidy versions of the posterior and posterior predictive summaries.
 When summarising results from multiple simulations, [summarise_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/summarise_eirrc_closed.R) is used to create summary outputs. 
 Similarly named files exist for all models used in the paper. 
+The [vignettes](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two vignettes which condense this workflow and demonstrate how to fit the EIRR-ww model to the Los Angeles wastewater data.  
 
 ## Simulation name key
 When executing scripts, the `sim` parameter controls what simulation is being used, the `seed` parameter controls the seed and also the specific data set used. 
