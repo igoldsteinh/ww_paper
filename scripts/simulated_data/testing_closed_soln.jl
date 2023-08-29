@@ -1,4 +1,4 @@
-# testing out our new function 
+# testing out our new function which allows for finer grids
 using DifferentialEquations
 using DrWatson
 using BenchmarkTools

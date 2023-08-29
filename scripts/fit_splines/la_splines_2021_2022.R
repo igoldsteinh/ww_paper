@@ -1,4 +1,5 @@
-# check on LA splines for 2021-2022 period
+# Calculate realistic noise parameters for simulation purposes by fitting 
+# student-t splines to real data
 library(tidyverse)
 library(brms)
 library(tidybayes)

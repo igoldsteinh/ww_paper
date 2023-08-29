@@ -1,4 +1,4 @@
-# simulate observed gene counts from our individual seirr
+# simulate observed gene counts from our individual seirr engine
 library(tidyverse)
 library(glmnet)
 library(patchwork)
@@ -29,8 +29,7 @@ gamma = 1/4
 nu = 1/7
 eta = 1/18
 beta_init = r0_init * nu
-beta_vec = unique_r0 * nu # so can this
-
+beta_vec = unique_r0 * nu 
 set.seed(3)
 testing = sim_SEIRR_nonconst(N = N, 
                              I_init = I_init, 

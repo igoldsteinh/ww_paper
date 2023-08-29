@@ -1,4 +1,4 @@
-# visualize fits to LA Data
+# visualize various model fits to LA Data
 library(tidyverse)
 library(GGally)
 library(gridExtra)

@@ -1,7 +1,7 @@
 # calculate priors for normalized lambda 
-# by simulating outbreak under different period distributions
+# by simulating outbreak under different infectious/shedding but recovered period distributions
 # and then fitting glmnet to each outbreak
-# use the priors of our model to draw the different means of hte distributions
+# use the priors of our model to draw the different means of the distributions
 
 library(tidyverse)
 library(greybox)

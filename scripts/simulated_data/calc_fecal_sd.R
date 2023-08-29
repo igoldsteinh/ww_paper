@@ -1,3 +1,5 @@
+# calculate mean standard deviation of concentrations
+# this number is used when simulation data
 library(tidyverse)
 library(jsonlite)
 library(httr)
