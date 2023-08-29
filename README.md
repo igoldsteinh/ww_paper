@@ -3,6 +3,7 @@
 This repository has all code needed to recreate the analyses conducted in the paper Semiparametric Inference of Effective Reproduction Number Dynamics from Wastewater Pathogen Surveillance Data. 
 Models were fit in `Julia`, while simulation of synthetic data, and visualization of results was done in `R`. 
 To set up the `Julia` project, follow the instructions [here](https://pkgdocs.julialang.org/v1/environments/#Using-someone-else's-project).
+If you want to execute this code using a different version of `Julia` than originally used, delete the [Manifest.toml](https://github.com/igoldsteinh/ww_paper/blob/main/Manifest.toml) file.
 [`R`](https://github.com/igoldsteinh/concRt) and [`Julia`](https://github.com/igoldsteinh/concRt.jl) packages which implement the models described in the paper are also available. 
 All results files needed to reproduce the figures are in the repo, individual simulation level results are excluded for the sake of storage.
 
@@ -45,10 +46,10 @@ When summarising results from multiple simulations, [summarise_eirrc_closed.R](h
 Similarly named files exist for all models used in the paper. 
 
 ## Simulation name key
-When executing scripts, the `sim` (or `snum`) parameter controls what simulation is being used, the `seed` (or `seed_val`) parameter controls the seed and also the specific data set used. 
+When executing scripts, the `sim` parameter controls what simulation is being used, the `seed` parameter controls the seed and also the specific data set used. 
 For simulations, we used values of `seed` from 1 to 100. 
 For the analysis of the Los Angeles wastewater data, `seed=1`. 
-Here is a key translating the values of `sim`
+Here is a key translating the values of `sim`:
 * `sim=1` = `Baseline`
 * `sim=3` = `10-rep`
 * `sim=4` = `3-mean`
@@ -63,7 +64,8 @@ Here is a key translating the values of `sim`
 We do not speak of simulations 2 and 7. 
 
 ## Model name key
-The model names used in the code are not the same as those used in the paper, here is a key
+The model names used in the code are not the same as those used in the paper. 
+Here is a key:
 * `eirrc_closed` = `EIRR-ww`
 * `eir_cases` = `EIR-cases`
 * `seir_cases` = `SEIR-cases`
