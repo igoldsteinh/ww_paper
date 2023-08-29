@@ -50,25 +50,21 @@ Next, choose what data set you want to fit the model to.
 This is decided through the `sim` and `seed` variables. `sim=1`, `seed=1` means "fit to data set 1 from scenario 1". 
 The `seed` variable also decides what seed is used when the model is run. For the paper, for each simulation, we fit the model with seeds 1 to 100. 
 If `sim="real"` the Los Angeles wastewater data set is used, to replicate the analysis from the paper, set `seed=1`. 
-The `sim` setting also determines what model priors are used, the parameters of the priors are stored in separate files in the `src` folder. 
+The `sim` and `seed` settings also determines what model priors are used, the parameters of the priors are stored in separate files in the `src` folder. 
 The meanings of `sim` are as follows:
 \begin{itemize}
 \item 
 \end{itemize}
-* sim=1: Baseline simulation scenario
-* sim=3: 10 replicates--EIRR-ww (10)
-* sim=4: mean of 3 replicates--EIRR-ww (3 mean)
-* sim=5: mean of 10 replicates-- EIRR-ww (10 mean)
-* sim=6: 1 replicate--EIRR-ww (1)
-* sim=8: lambda centered at 0.8--Low Prop
-* sim=9: E and I iniital compartments centered low--Low Init
-* sim=10: E and I iniital compartments centered high--High Init
-* sim="real": fit Los Angeles JWPCP wastewater data
-* sim="ODE": fit to simulated data with half-day frequency to compare to an 
-
-
-ODE based version of the model
-We do not speak of simulations 2 and 7. 
+* `sim=1` = `Baseline`
+* `sim=3` = `10-rep`
+* `sim=4` = `3-mean`
+* `sim=5` = `10-mean`
+* `sim=6` = `1-rep`
+* `sim=8` = `Low Prop`
+* `sim=9` = `Low Init`
+* `sim=10` = `High Init`
+* `sim="real"` = `Los Angeles JWPCP wastewater data`
+* `sim="ODE"` = `Baseline data observed every 12 hours`
 
 ```{julia}
 sim = "real"
