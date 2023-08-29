@@ -134,9 +134,23 @@ param_callback = PresetTimeCallback(change_times, param_affect_β_IFR!, save_pos
 
 # testing purely the matrix exponential 
 alpha = alphas[1]
-my_fixed_alpha = fixed_alpha_closed_soln(outs_tmp, times,  grid_size, t0, alpha, init_conds, gamma, nu, eta)
+@btime my_fixed_alpha = fixed_alpha_closed_soln(outs_tmp, times,  grid_size, t0, alpha, init_conds, gamma, nu, eta)
 
-ode_fixed_alpha = solve(prob, Tsit5(), saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
+prob = ODEProblem(eirr_ode!,
+u0,
+(0.0, maximum(times)),
+[alphas[1], gamma, nu, eta])
+
+@btime ode_fixed_alpha = solve(prob, Tsit5(), saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
+
+
+log_prob = ODEProblem(eirr_ode_log!,
+log.(u0),
+(0.0, maximum(times)),
+[alphas[1], gamma, nu, eta])
+
+@btime log_ode_fixed_alpha = solve(log_prob, Tsit5(), saveat = 1.0, save_start = true, verbose = false, abstol = 1e-11, reltol = 1e-8)  
+
 # testing speed on time series equal to length of real data
 dat = CSV.read("data/LA_daily_data_feb2022.csv", DataFrame)
 # for now I'm going to remove the last observation as we don't have a full week's worth of data for it

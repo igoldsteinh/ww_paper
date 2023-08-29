@@ -12,7 +12,7 @@ using ForwardDiff
 using Optim
 using Random
 using LineSearches
-using wastewater2
+using ww_paper
 
 sim =
 if length(ARGS) == 0

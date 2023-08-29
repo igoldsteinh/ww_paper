@@ -11,7 +11,7 @@ using Random
 using ForwardDiff
 using Optim
 using LineSearches
-using wastewater2
+using ww_paper
 using Logging
 using PreallocationTools
 
@@ -99,7 +99,7 @@ data_log_copies = long_dat[:, :value]
 grid_size = 1.0
 end 
 
-### 10 replicates--EIRR (10)
+### 10 replicates--EIRR-ww (10)
 if sim == 3
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
