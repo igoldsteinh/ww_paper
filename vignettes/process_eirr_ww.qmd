@@ -1,0 +1,205 @@
+---
+title: "Processing Results from the EIRR-ww model"
+author: "Isaac H Goldstein"
+date: today
+format: html
+editor: visual
+---
+
+## Overview
+
+This document shows how to use `R` code to process MCMC samples from the EIRR-ww model generated in `Julia` to create dataframes used to summarise frequentist metrics and visualize results. 
+This document combines code from `scripts/process_results/process_results_eirrc_closed.R` and `scripts/visualize_results/visualize_fit_to_LA.R`.
+
+## Load libraries, choose simulation and seed
+
+For a list of the meanings of the possible scenarios, see `vignettes/fit_eirr_ww.qmd`. 
+This document defaults to assuming `sim="real` and `seed=1` as in the previous vignette.
+
+```{r}
+#| output: false
+library(tidyverse)
+library(tidybayes)
+library(posterior)
+library(fs)
+library(GGally)
+library(gridExtra)
+library(cowplot)
+library(scales)
+library(epidemia)
+source(here::here("src/wastewater_functions.R"))
+snum = "real"
+seed_val = 1
+
+# a hack for dealing with re-using scenario 1 data
+repeat_scenario1s = c(3,4,5,6,7,8,9,10, 12, "frw")
+repeat_scenario41s = c(411, 4111)
+
+if (snum %in% repeat_scenario1s) {
+  scenario_snum = 1
+} else if (snum %in% repeat_scenario41s) {
+  scenario_snum = 41
+} else {
+  scenario_snum = snum
+}
+
+
+```
+
+## load posterior samples, calculate mcmc diagnostics
+
+```{r}
+gq_address <- paste0("vignettes/generated_quantities_scenario", 
+                     snum, 
+                     "_seed", 
+                     seed_val,
+                     ".csv")
+
+posterior_samples <- read_csv(here::here(gq_address)) %>%
+  rename(.iteration = iteration,
+         .chain = chain) %>%
+  as_draws()
+
+
+subset_samples <- subset_draws(posterior_samples)
+
+mcmc_summary <- summarise_draws(subset_samples)
+
+```
+
+## create long format mcmc samples
+This code creates two dataframes: one with the mcmc samples for non-time-varying parameters, the other quantiles of the time-varying parameters. 
+
+```{r}
+posterior_gq_samples_all <- subset_samples  %>%
+  pivot_longer(-c(.iteration, .chain)) %>%
+  select( name, value)
+
+
+posterior_fixed_samples <- make_fixed_posterior_samples(posterior_gq_samples_all)
+
+posterior_timevarying_quantiles <- make_timevarying_posterior_quantiles(posterior_gq_samples_all)
+
+```
+
+## create posterior predictive quantiles
+This code creates quantiles for the posterior predictive for each day there was observed data
+
+```{r}
+post_pred_address <- paste0("vignettes/posterior_predictive_scenario",
+                            snum,
+                            "_seed",
+                            seed_val,
+                            ".csv")
+eirr_post_pred <- read_csv(here::here(post_pred_address))
+
+if (snum != "real" & snum != "uci" & snum!= "uci_region1" & snum != "uci_region2" & snum != "uci_region3") {
+  if (snum != 12 & scenario_snum != 41) {
+    simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_fitted_genecount_obsdata.csv")
+    
+    simdata <- read_csv(here::here(simdata_address)) %>%
+      dplyr::filter(seed == seed_val)
+    
+  } else if (snum == 12) {
+    simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_lump2data_seiirr_100sims.csv")
+    
+    simdata <- read_csv(here::here(simdata_address)) %>%
+      dplyr::filter(seed == seed_val)
+    
+  } else if (scenario_snum == 41) {
+    simdata <- read_csv(here::here("data", "sim_data", "scenario41_fitted_obsdata.csv")) 
+  }
+
+} else if (snum == "real") {
+  simdata_address <- "data/LA_daily_data_feb2022.csv"
+
+  simdata <- read_csv(here::here(simdata_address))
+
+} else if (snum == "uci") {
+
+  simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data.csv"))
+  
+} else if (snum == "uci_region1") {
+  
+  simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region1.csv"))
+  
+} else if (snum == "uci_region2") {
+  
+  simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region2.csv"))
+  
+} else if (snum == "uci_region3") {
+  
+  simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region3.csv"))
+  
+}
+
+if (snum == 3) {
+  ten_sim_val = TRUE
+} else {
+  ten_sim_val = FALSE
+}
+
+if (snum == 4) {
+  three_mean_val = TRUE
+} else {
+  three_mean_val = FALSE
+}
+
+eirr_post_pred_intervals <- make_post_pred_intervals(eirr_post_pred, simdata, ten_sim = ten_sim_val, three_mean = three_mean_val)
+```
+
+## Visualizing the posterior of Rt
+Once the time-varying quantiles have been created, we can visualize them. 
+In this vignette, we visualize the quantiles of Rt for Los Angeles, CA. 
+
+```{r}
+# first read in the data
+
+real_data <- read_csv(here::here("data/LA_daily_data_feb2022.csv"))
+
+# generate crosswalk between model time and actual date
+
+real_data$epi_week[real_data$year == 2022] <- real_data$epi_week[real_data$year == 2022] + 52
+date_week_crosswalk <- real_data %>% 
+  dplyr::select(date, epi_week, new_time) %>%
+  mutate(time = epi_week - 27)
+
+# then we filter the time-varying quantiles dataframe for the Rt quantiles and visualize
+rt_quantiles_eirr <- posterior_timevarying_quantiles %>%
+  filter(name == "rt_t_values") %>%
+  left_join(date_week_crosswalk, by = "time") %>%
+  dplyr::select(time, date, epi_week, value, .lower, .upper, .width,.point, .interval) 
+
+fill_date = as.Date("2021-10-11")
+fill_week = 41
+
+rt_quantiles_eirr$date[is.na(rt_quantiles_eirr$date)] <- fill_date
+rt_quantiles_eirr$epi_week[is.na(rt_quantiles_eirr$epi_week)] <- fill_week
+# visualize results
+# all credit to Damon Bayer for plot functions 
+my_theme <- list(
+  scale_fill_brewer(name = "Credible Interval Width",
+                    labels = ~percent(as.numeric(.))),
+  guides(fill = guide_legend(reverse = TRUE)),
+  theme_bw(),
+  theme(legend.position = "bottom"))
+
+
+
+
+eirrc_realdata_rt_plot_seed1 <- rt_quantiles_eirr %>%
+  ggplot(aes(date, value, ymin = .lower, ymax = .upper)) +
+  geom_lineribbon() +
+  scale_y_continuous("Rt", label = comma, breaks = c(0:5), limits = c(0,5)) +
+  scale_x_date(name = "Date", date_breaks = "month") +
+  ggtitle("EIRR-ww Posterior Rt") +
+  my_theme + 
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = c(0.4, 0.75),
+        text = element_text(size = 18),
+        legend.background = element_blank())
+
+
+eirrc_realdata_rt_plot_seed1
+
+```

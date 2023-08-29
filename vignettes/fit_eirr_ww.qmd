@@ -1,0 +1,341 @@
+---
+title: "Fitting the EIRR-ww model"
+author: "Isaac H Goldstein"
+date: today
+format:
+  html:
+    code-fold: true
+jupyter: julia-1.8
+execute: 
+  eval: false
+---
+
+## Overview
+This document contains all julia code needed to generate outputs from the EIRR-ww model. 
+It combines the files `scripts/fit_models/fit_eirrc_closed.jl` and `scripts/generate_quantities/eirrc_closed_generate_pp_and_gq.jl`.
+The document `vignettes/process_eirr_ww.qmd` provides the `R` code needed to create dataframes of posterior summaries used in visualizations. 
+
+First, load required `Julia` libraries
+```{julia}
+using DrWatson
+using Revise
+using JLD2
+using FileIO
+using CSV
+using DataFrames
+using Turing
+using DifferentialEquations
+using LogExpFunctions
+using Random
+using ForwardDiff
+using Optim
+using LineSearches
+using ww_paper
+using Logging
+using PreallocationTools
+
+Logging.disable_logging(Logging.Warn)
+```
+
+## Set number of chains and desired posterior draws
+Note: the model automatically discards `n_samples` as burn-in, that is, when `n_samples=10`, 20 samples are generated, the latter half is kept as the posterior samples.
+```{julia}
+## Control Parameters
+n_samples = 10 #to recreate the analysis in the paper, set to 250
+n_chains = 1 #to recreate the anaylsis in the paper, set to 4
+```
+
+## Choosing a data set to fit
+Next, choose what data set you want to fit the model to. 
+This is decided through the `sim` and `seed` variables. `sim=1`, `seed=1` means "fit to data set 1 from scenario 1". 
+The `seed` variable also decides what seed is used when the model is run. For the paper, for each simulation, we fit the model with seeds 1 to 100. 
+If `sim="real"` the Los Angeles wastewater data set is used, to replicate the analysis from the paper, set `seed=1`. 
+The `sim` setting also determines what model priors are used, the parameters of the priors are stored in separate files in the `src` folder. 
+The meanings of `sim` are as follows:
+\begin{itemize}
+\item 
+\end{itemize}
+* sim=1: Baseline simulation scenario
+* sim=3: 10 replicates--EIRR-ww (10)
+* sim=4: mean of 3 replicates--EIRR-ww (3 mean)
+* sim=5: mean of 10 replicates-- EIRR-ww (10 mean)
+* sim=6: 1 replicate--EIRR-ww (1)
+* sim=8: lambda centered at 0.8--Low Prop
+* sim=9: E and I iniital compartments centered low--Low Init
+* sim=10: E and I iniital compartments centered high--High Init
+* sim="real": fit Los Angeles JWPCP wastewater data
+* sim="ODE": fit to simulated data with half-day frequency to compare to an 
+
+
+ODE based version of the model
+We do not speak of simulations 2 and 7. 
+
+```{julia}
+sim = "real"
+seed = 1
+
+### Baseline scenario
+if sim == 1
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+long_dat = filter(:value => value -> value > 0, long_dat)
+# long_dat = filter(:value => value -> value < 16, long_dat)
+data_log_copies = long_dat[:, :value]
+grid_size = 1.0
+end 
+
+
+### compare with ODE model 
+if sim == "ODE"
+  all_dat = CSV.read(projectdir("data/sim_data/ODE_comp_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+long_dat = filter(:value => value -> value > 0, long_dat)
+# long_dat = filter(:value => value -> value < 16, long_dat)
+data_log_copies = long_dat[:, :value]
+grid_size = 0.5
+end 
+
+
+
+if sim == "real"
+  dat = CSV.read(projectdir("data/LA_daily_data_feb2022.csv"), DataFrame)
+  # for now I'm going to remove the last observation as we don't have a full week's worth of data for it
+  dat = filter(:year_day => year_day -> year_day < 423, dat)
+  ## Define Priors
+include(projectdir("src", string("prior_constants_eirr_closed_LAdata", "_seed", seed, ".jl"))) 
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+long_dat = filter(:value => value -> value > 0, long_dat)
+data_log_copies = long_dat[:, :value]
+grid_size = 1.0
+end 
+
+### 10 replicates--EIRR-ww (10)
+if sim == 3
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+
+subset_dat = dat[:, [:new_time, 
+                     :log_gene_copies1, 
+                     :log_gene_copies2, 
+                     :log_gene_copies3, 
+                     :log_gene_copies4, 
+                     :log_gene_copies5, 
+                     :log_gene_copies6, 
+                     :log_gene_copies7,
+                     :log_gene_copies8,
+                     :log_gene_copies9,
+                     :log_gene_copies10]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, 
+                                         :log_gene_copies2, 
+                                         :log_gene_copies3, 
+                                         :log_gene_copies4, 
+                                         :log_gene_copies5, 
+                                         :log_gene_copies6, 
+                                         :log_gene_copies7,
+                                         :log_gene_copies8,
+                                         :log_gene_copies9,
+                                         :log_gene_copies10])
+long_dat = filter(:value => value -> value > 0, long_dat)
+data_log_copies = long_dat[:, :value]
+end 
+
+### mean of 3 replicates--EIRR (3 mean)
+if sim == 4
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+
+subset_dat = dat[:, [:new_time, :log_mean_copiesthree]]
+long_dat = subset_dat
+data_log_copies = long_dat[:, :log_mean_copiesthree]
+end 
+
+### mean of 10 replicates-- EIRR (10 mean)
+if sim == 5
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+
+subset_dat = dat[:, [:new_time, :log_mean_copiesten]]
+long_dat = subset_dat
+data_log_copies = long_dat[:, :log_mean_copiesten]
+end 
+
+### 1 replicate--EIRR (1)
+if sim == 6
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1]]
+long_dat = subset_dat
+data_log_copies = long_dat[:, :log_gene_copies1]
+end 
+
+### lambda centered at 0.8--Low Prop
+if sim == 8
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario8.jl"))
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+long_dat = filter(:value => value -> value > 0, long_dat)
+data_log_copies = long_dat[:, :value]
+
+end 
+
+### E and I iniital compartments centered low--Low Init
+if sim == 9
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario9.jl"))
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+long_dat = filter(:value => value -> value > 0, long_dat)
+data_log_copies = long_dat[:, :value]
+
+end 
+
+### E and I iniital compartments centered high--High Init
+if sim == 10
+  all_dat = CSV.read(projectdir("data/sim_data/scenario1_fitted_genecount_obsdata.csv"), DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+## Define Priors
+include(projectdir("src/prior_constants_eirr_closed_scenario10.jl"))
+
+subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+long_dat = filter(:value => value -> value > 0, long_dat)
+data_log_copies = long_dat[:, :value]
+
+end 
+```
+
+Next define the observation times, the times when $R_{t}$ changes, and the index of the observation times, which is used internally by the model function. 
+```{julia}
+obstimes = long_dat[:, :new_time]
+obstimes = convert(Vector{Float64}, obstimes)
+
+# pick the change times 
+if maximum(obstimes) % 7 == 0
+  param_change_max = maximum(obstimes) - 7
+else 
+  param_change_max = maximum(obstimes)
+end 
+param_change_times = collect(7:7.0:param_change_max)
+full_time_series = collect(minimum(obstimes):grid_size:maximum(obstimes))
+outs_tmp = dualcache(zeros(6,length(full_time_series)), 10)
+
+index = zeros(length(obstimes))
+for i in 1:length(index)
+    time = obstimes[i]
+    index[i] = indexin(round(Int64,time), full_time_series)[1]
+end 
+```
+
+Next load the model, which takes two files, one defining the closed form solution to the system of ODES, and the other defining the model in the Turing. 
+```{julia}
+## Define closed form solution
+include(projectdir("src/newnew_closed_soln_eirr_withincid.jl"))
+
+## Load Model
+include(projectdir("src/new_bayes_eirrc_closed.jl"))
+
+my_model = new_bayes_eirrc_closed!(
+    outs_tmp, 
+    data_log_copies,
+    obstimes, 
+    param_change_times,
+    grid_size,
+    index)
+```
+
+To sample from the posterior, we first generate initial values which are the MAP estimates of the model plus some noise. 
+We find the MAP from 10 starting plces and choose the best of the 10 possible MAPs.
+
+```{julia}
+Random.seed!(seed)
+
+MAP_init = optimize_many_MAP(my_model, 10, 1, true)[1]
+
+Random.seed!(seed)
+MAP_noise = vcat(randn(length(MAP_init) - 1, n_chains), transpose(zeros(n_chains)))
+MAP_noise = [MAP_noise[:,i] for i in 1:size(MAP_noise,2)]
+
+init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
+```
+
+Finally, fit the model: 
+```{julia}
+Random.seed!(seed)
+posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, 4, discard_initial = n_samples, init_params = init)
+```
+
+The next step is to center the results (most parameters in the raw results are non-centered) and generate samples to estimate quantiles from the posterior predictive:
+
+```{julia}
+  missing_log_copies = repeat([missing], length(data_log_copies))
+  
+  my_model_forecast_missing = new_bayes_eirrc_closed!(
+    outs_tmp, 
+    missing_log_copies,
+    obstimes,
+    param_change_times,
+    grid_size,
+    index)
+  
+# sometimes there NAs in the final posterior, this removes those samples
+indices_to_keep = .!isnothing.(generated_quantities(my_model, posterior_samples));
+
+posterior_samples_randn = ChainsCustomIndex(posterior_samples, indices_to_keep);
+
+# posterior predictive output
+Random.seed!(seed)
+predictive_randn = predict(my_model_forecast_missing, posterior_samples_randn)
+
+# properly scaled posterior output
+Random.seed!(seed)
+gq_randn = get_gq_chains(my_model, posterior_samples_randn);
+
+CSV.write(projectdir("vignettes", string("generated_quantities", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(gq_randn))
+CSV.write(projectdir("vignettes", string("posterior_predictive", "_scenario", sim, "_seed", seed,  ".csv")), DataFrame(predictive_randn))
+
+posterior_df = DataFrame(posterior_samples)
+CSV.write(projectdir("vignettes", string("posterior_df", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(posterior_samples))
+```
+
+To sample from the prior, use the following code:
+```{julia}
+Random.seed!(seed)
+prior_samples = sample(my_model, Prior(), MCMCThreads(), 400, n_chains)
+    
+indices_to_keep = .!isnothing.(generated_quantities(my_model, prior_samples))
+prior_samples_randn = ChainsCustomIndex(prior_samples, indices_to_keep)
+    
+Random.seed!(seed)
+prior_predictive_randn = predict(my_model_forecast_missing, prior_samples_randn)
+    
+Random.seed!(seed)
+prior_gq_randn = get_gq_chains(my_model, prior_samples_randn)
+```
