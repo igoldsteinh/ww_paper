@@ -6,27 +6,27 @@ library(fs)
 source("src/wastewater_functions.R")
 
 args <- commandArgs(trailingOnly=TRUE)
-snum <- as.integer(args[1])
+sim <- as.integer(args[1])
 
 dir_create(path("results", "seirr_student", "mcmc_summaries"))
 
 if (length(args) == 0) {
-  snum = "own"
-  seed_val = 2
+  sim = "own"
+  seed = 2
 } else {
-  snum <- as.integer(args[1])
-  seed_val <- as.integer(args[2])
+  sim <- as.integer(args[1])
+  seed <- as.integer(args[2])
   
 }
 
-priors_only = snum == 0
+priors_only = sim == 0
 
 # a hack for dealing with re-using scenario 1 data
 repeat_scenario1s = c(3, "alt_prior", "fixed", "frw")
-if (snum %in% repeat_scenario1s) {
-  scenario_snum = 1
+if (sim %in% repeat_scenario1s) {
+  scenario_sim = 1
 } else {
-  scenario_snum = snum
+  scenario_sim = sim
 }
 
 
@@ -34,7 +34,7 @@ if (snum %in% repeat_scenario1s) {
 # priors only -------------------------------------------------------------
 if(priors_only == TRUE) {
 
-  priorname <- paste0("prior_generated_quantities_scenario", snum, ".csv")
+  priorname <- paste0("prior_generated_quantities_scenario", sim, ".csv")
   prior_gq_samples_all <- read_csv(here::here("results",
                                                         "seirr_student",
                                                         priorname)) %>%
@@ -48,9 +48,9 @@ if(priors_only == TRUE) {
   
   prior_timevarying_quantiles <- make_timevarying_prior_quantiles(prior_gq_samples_all)
   
-  prior_samp_name <- paste0("prior_samples_scenario", snum , ".csv")
-  prior_timevarying_name <- paste0("prior_timevaryingquantiles_scenario", snum, ".csv")
-  prior_quant_name <- paste0("prior_quantiles_scenario", snum , ".csv")
+  prior_samp_name <- paste0("prior_samples_scenario", sim , ".csv")
+  prior_timevarying_name <- paste0("prior_timevaryingquantiles_scenario", sim, ".csv")
+  prior_quant_name <- paste0("prior_quantiles_scenario", sim , ".csv")
   write_csv(priors, here::here("results", "seirr_student", prior_samp_name))
   write_csv(prior_quantiles, here::here("results", "seirr_student", prior_quant_name))
   write_csv(prior_timevarying_quantiles, here::here("results", "seirr_student", prior_timevarying_name))
@@ -63,9 +63,9 @@ if(priors_only == TRUE) {
 # posterior ---------------------------------------------------------------
 # calculate MCMC diagnostics after burnin
 gq_address <- paste0("results/seirr_student/generated_quantities/generated_quantities_scenario", 
-                     snum, 
+                     sim, 
                      "_seed", 
-                     seed_val,
+                     seed,
                      ".csv")
 
 posterior_samples <- read_csv(gq_address) %>%
@@ -82,16 +82,16 @@ subset_samples <- subset_draws(posterior_samples)
 mcmc_summary <- summarise_draws(subset_samples)
 
 mcmc_summary_address <- paste0("results/seirr_student/mcmc_summaries/mcmc_summary_scenario", 
-                               snum, 
+                               sim, 
                                "_seed",
-                               seed_val,
+                               seed,
                                ".csv")
 write_csv(mcmc_summary, mcmc_summary_address)
 # lp trace plot -----------------------------------------------------------
 lp_df <-read_csv(here::here("results", "seirr_student", "generated_quantities", paste0("posterior_df_scenario",
-                                                                                     snum, 
+                                                                                     sim, 
                                                                                      "_seed",
-                                                                                     seed_val,
+                                                                                     seed,
                                                                                      ".csv"))) 
 
 
@@ -101,7 +101,7 @@ trace_plot <- lp_df %>%
   theme_bw() + 
   ggtitle("SEIRR LP Trace")
 
-ggsave(here::here("results", "seirr_student", "mcmc_summaries", paste0("trace_scenario", snum, "_seed", seed_val, ".png" )), trace_plot, width = 5, height = 5)
+ggsave(here::here("results", "seirr_student", "mcmc_summaries", paste0("trace_scenario", sim, "_seed", seed, ".png" )), trace_plot, width = 5, height = 5)
 
 
 # create long format fixed samples and time-varying quantiles -----------------
@@ -113,9 +113,9 @@ posterior_gq_samples_all <- subset_samples %>%
 posterior_fixed_samples <- make_fixed_posterior_samples(posterior_gq_samples_all)
 
 fixed_samples_address <- paste0("results/seirr_student/generated_quantities/posterior_fixed_samples_scenario",
-                                snum, 
+                                sim, 
                                 "_seed",
-                                seed_val,
+                                seed,
                                 ".csv")
 
 write_csv(posterior_fixed_samples, fixed_samples_address)
@@ -126,9 +126,9 @@ posterior_timevarying_quantiles <- make_timevarying_posterior_quantiles(posterio
 
 
 timevarying_quantiles_address <- paste0("results/seirr_student/generated_quantities/posterior_timevarying_quantiles_scenario",
-                                        snum, 
+                                        sim, 
                                         "_seed",
-                                        seed_val,
+                                        seed,
                                         ".csv")
 
 write_csv(posterior_timevarying_quantiles, timevarying_quantiles_address)
@@ -140,18 +140,18 @@ rm(posterior_gq_samples_all)
 
 # create posterior predictive quantiles -----------------------------------
 post_pred_address <- paste0("results/seirr_student/posterior_predictive/posterior_predictive_scenario",
-                            snum, 
+                            sim, 
                             "_seed",
-                            seed_val,
+                            seed,
                             ".csv")
 seirr_post_pred <- read_csv(post_pred_address)
 
-simdata_address <-  paste0("data/sim_data/scenario", scenario_snum, "_fitted_genecount_obsdata.csv")
+simdata_address <-  paste0("data/sim_data/scenario", scenario_sim, "_fitted_genecount_obsdata.csv")
 
 simdata <- read_csv(simdata_address) %>%
-  dplyr::filter(seed == seed_val)
+  dplyr::filter(seed == seed)
 
-if (snum == 3) {
+if (sim == 3) {
   ten_sim_val = TRUE
 } else {
   ten_sim_val = FALSE
@@ -161,9 +161,9 @@ seirr_post_pred_intervals <- make_post_pred_intervals(seirr_post_pred, simdata, 
 
 
 post_pred_interval_address <- paste0("results/seirr_student/posterior_predictive/posterior_predictive_intervals_scenario",
-                              snum, 
+                              sim, 
                               "_seed",
-                              seed_val,
+                              seed,
                               ".csv")
 
 write_csv(seirr_post_pred_intervals, post_pred_interval_address)

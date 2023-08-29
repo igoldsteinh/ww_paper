@@ -30,9 +30,9 @@ my_theme <- list(
   theme())
 
 
-seed_val = 1
+seed = 1
 seirr_scenario1_rt_plot <- seirr_rt_scenario1 %>%
-  filter(seed == seed_val) %>%
+  filter(seed == seed) %>%
   ggplot(aes(time, value, ymin = .lower, ymax = .upper)) +
   geom_lineribbon() +
   geom_point(aes(time, true_rt), color = "coral1") + 
@@ -48,21 +48,21 @@ seirr_scenario1_rt_plot <- seirr_rt_scenario1 %>%
 
 
 # swap for eirrc fit ------------------------------------------------------
-scenario_snum = 1
-snum = 1
-full_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_full_genecount_obsdata.csv")
+scenario_sim = 1
+sim = 1
+full_simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_full_genecount_obsdata.csv")
 
 full_simdata <- read_csv(full_simdata_address) %>% filter(seed == 1) %>% rename("true_rt" = "Rt",
                                                                                 "r0" = "R0")
-fitted_simdata_address <-  paste0("data/sim_data/scenario", scenario_snum, "_fitted_genecount_obsdata.csv")
+fitted_simdata_address <-  paste0("data/sim_data/scenario", scenario_sim, "_fitted_genecount_obsdata.csv")
 
 fitted_simdata <- read_csv(fitted_simdata_address)
 max_time <- max(fitted_simdata$time)
 
 timevarying_quantiles <- read_csv(paste0("results/eirrc_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
-                                         snum,
+                                         sim,
                                          "_seed",
-                                         seed_val,
+                                         seed,
                                          ".csv")) 
 
 
@@ -92,7 +92,7 @@ eirr_scenario1_rt_plot <- eirr_rt_scenario1 %>%
 
 # back to normal things ---------------------------------------------------
 seir_scenario1_rt_plot <- seir_rt_scenario1 %>%
-  filter(seed == seed_val) %>%
+  filter(seed == seed) %>%
   ggplot(aes(time, value, ymin = .lower, ymax = .upper)) +
   geom_lineribbon() +
   geom_point(aes(time, true_rt), color = "coral1") + 
@@ -106,7 +106,7 @@ seir_scenario1_rt_plot <- seir_rt_scenario1 %>%
   ylab(TeX('$R_{t}$')) 
   
 eir_scenario1_rt_plot <- eir_rt_scenario1 %>%
-  filter(seed == seed_val) %>%
+  filter(seed == seed) %>%
   mutate(Truth = "") %>%
   ggplot(aes(time, value, ymin = .lower, ymax = .upper)) +
   geom_lineribbon() +
@@ -211,13 +211,13 @@ ggsave(here::here("figures", "scenario1_example_rt_plot.pdf"), combined_plot, wi
 
 # visualize scenario data -------------------------------------------------
 
-seed_val = 1
+seed = 1
 scenario1_simdata <- read_csv("data/sim_data/scenario1_fitted_genecount_obsdata.csv") %>%
-  filter(seed == seed_val)
+  filter(seed == seed)
 scenario1_truecurve <- read_csv(here::here("data", "sim_data", "scenario1_truecurve.csv"))
 
 scenario1_casedata <- read_csv("data/sim_data/scenario1_fitted_cases_obsdata.csv") %>%
-  filter(seed == seed_val)
+  filter(seed == seed)
 
 
 start_time <- min(scenario1_simdata$time)
@@ -380,12 +380,12 @@ true_frame <- data.frame(name = fixed_names, true_value = true_vals)
 eirr_scenario1_fixed_posterior_samples <- read_csv(here::here("results",
                                                               "eirrc_closed",
                                                               "generated_quantities",
-                                                              paste0("posterior_fixed_samples_scenario", snum, "_seed", seed_val, ".csv"))) %>%
+                                                              paste0("posterior_fixed_samples_scenario", sim, "_seed", seed, ".csv"))) %>%
   left_join(true_frame, by = "name") %>%
   mutate(type = "posterior") %>%
   filter(name != ".draw")
 
-eirr_prior_samples <- read_csv(here::here("results", "eirrc_closed", paste0("prior_samples_scenario", snum, "_seed", seed_val, ".csv"))) %>%
+eirr_prior_samples <- read_csv(here::here("results", "eirrc_closed", paste0("prior_samples_scenario", sim, "_seed", seed, ".csv"))) %>%
   mutate(type = "prior") %>%
   left_join(true_frame, by = "name")
 
@@ -407,7 +407,7 @@ ggsave(here::here("figures", "scenario1_fixedparamplot.pdf"), eirr_scenario1_fix
 eirr_scenario1_post_pred_intervals <- read_csv(here::here("results",
                                                           "eirrc_closed",
                                                           "posterior_predictive",
-                                                          paste0("posterior_predictive_intervals_scenario", snum, "_seed", seed_val, ".csv")))
+                                                          paste0("posterior_predictive_intervals_scenario", sim, "_seed", seed, ".csv")))
 
 true_data <- scenario1_simdata %>%
   dplyr::select(new_time, 
@@ -452,9 +452,9 @@ my_theme <- list(
   theme())
 
 
-seed_val = 1
+seed = 1
 huisman_scenario1_rt_plot <- huisman_rt_scenario1 %>%
-  filter(seed == seed_val) %>%
+  filter(seed == seed) %>%
   mutate(time = time - min(time) + 1) %>%
   ggplot(aes(time, median_R_mean, ymin = median_R_lowHPD, ymax = median_R_highHPD)) +
   geom_lineribbon() +

@@ -11,14 +11,14 @@ source(here::here("src", "wastewater_functions.R"))
 
 # read in LA data ---------------------------------------------------------
 
-seed_val = 1
-snum = "real"
+seed = 1
+sim = "real"
 
 real_data <- read_csv("data/LA_daily_data_feb2022.csv")
 
 
-snum = "real"
-seed_val = 1
+sim = "real"
+seed = 1
 date_week_crosswalk <- real_data %>% 
   dplyr::select(date, epi_week, new_time) %>%
   mutate(time = epi_week - 27)
@@ -68,9 +68,9 @@ date_week_crosswalk <- real_data %>%
 
 # EIR ---------------------------------------------------------------------
 timevarying_quantiles_eir <- read_csv(paste0("results/eir_cases/generated_quantities/posterior_timevarying_quantiles_scenario",
-                                         snum,
+                                         sim,
                                          "_seed",
-                                         seed_val,
+                                         seed,
                                          ".csv")) 
 
 
@@ -133,14 +133,14 @@ huisman_realdata_rt_plot <- la_huisman_rt %>%
 
 
 # EIRRC --------------------------------------------------------------------
-seed_val = 1
-snum = "real"
+seed = 1
+sim = "real"
 
 
 timevarying_quantiles <- read_csv(paste0("results/eirrc_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
-                                         snum,
+                                         sim,
                                          "_seed",
-                                         seed_val,
+                                         seed,
                                          ".csv")) 
 
 
@@ -348,9 +348,9 @@ daily_case_data <- read_csv(here::here("data", "LA_daily_case_data.csv"))
 # relative detection ------------------------------------------------------
 
 gq_address <- paste0("results/eirrc_closed/generated_quantities/generated_quantities_scenario", 
-                     snum, 
+                     sim, 
                      "_seed", 
-                     seed_val,
+                     seed,
                      ".csv")
 
 posterior_samples <- read_csv(gq_address) 
