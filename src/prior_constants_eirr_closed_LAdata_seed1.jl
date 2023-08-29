@@ -1,4 +1,4 @@
-# eirr prior parameters
+# EIRR-ww prior parameters for fit to LA data
 const gamma_sd = 0.01
 const gamma_mean =log(1/4)
 const nu_sd = 0.2

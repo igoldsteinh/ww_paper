@@ -1,4 +1,4 @@
-# eirr prior parameters
+# EIRR-ww prior parameters
 # scenario 9, misspecify E and I, and R1 to be centered at 0.75% of true values
 const gamma_sd = 0.2
 const gamma_mean =log(1/4)

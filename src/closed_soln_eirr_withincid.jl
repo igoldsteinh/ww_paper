@@ -1,8 +1,7 @@
-# closed form solution for eirr model 
+# closed form solution for EIRRC model (inflexible, only works at daily timescale)
 using ForwardDiff
 using PreallocationTools
-# note this produces Nans when alpha = nu 
-# I'm hoping this can never happen irl but we'll have to see when we test it out
+
 function power(a,b)
   a^b
 end 

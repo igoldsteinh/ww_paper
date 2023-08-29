@@ -1,4 +1,4 @@
- # seirr ode function        
+ # SEIRR ode function        
  function seirr_ode_log!(du, u, p, t)
     # S,E,I R1 is recovered but emitting, R2 is recovered and not emitting (done)
     (S, E, I, R1, R2, C) = exp.(u)
@@ -23,7 +23,7 @@
       du[3] = (progression - progression_R1) / I # I
       du[4] = (progression_R1 - progression_R2) / R1 # R1
       du[5] = progression_R2 / R2# R2
-      du[6] = infection/C 
+      du[6] = infection/C # C
     end
     nothing
   end

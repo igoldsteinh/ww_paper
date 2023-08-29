@@ -1,4 +1,5 @@
-### Utilities ###
+### Huisman Utility functions ###
+# Originally from https://github.com/covid-19-Re/shiny-dailyRe/tree/master/app/otherScripts
 filterRegions <- function(df, thresholdConfirmedCases = 500, thresholdHospitalizedPatients = 300, thresholdDeaths = 200) {
   regionsIncluded <- df %>%
     filter(data_type == "Confirmed cases") %>%

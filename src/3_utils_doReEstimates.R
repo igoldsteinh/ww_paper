@@ -1,3 +1,4 @@
+# Huisman code originally from https://github.com/covid-19-Re/shiny-dailyRe/tree/master/app/otherScripts
 ### Apply EpiEstim R estimation method to 'incidenceData' timeseries with 'dates' the dates associated
 ##
 ## 'estimateOffsetting' is the number of days the estimates are to be shifted towards the past

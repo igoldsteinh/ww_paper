@@ -1,3 +1,4 @@
+# Turing model for SEIR-cases model
 using LinearAlgebra
 prob = ODEProblem{true}(seir_ode_log!,
 zeros(5),
@@ -24,19 +25,11 @@ ones(3))
     # Transformations
     gamma = exp(gamma_non_centered * gamma_sd + gamma_mean)
     nu = exp(nu_non_centered * nu_sd + nu_mean)
-    # gamma = 1.75
-    # nu = 1.0
-
     rho_case = logistic(rho_case_non_centered * rho_case_sd + rho_case_mean)
-  
     phi_cases = exp(phi_non_centered * phi_sd + phi_mean)
-  
-  
-    sigma_R0 = exp(sigma_R0_non_centered * sigma_R0_sd + sigma_R0_mean)
-  
+    sigma_R0 = exp(sigma_R0_non_centered * sigma_R0_sd + sigma_R0_mean)  
     r0_init_non_centered = R0_params_non_centered[1]
     r0_init = exp(r0_init_non_centered * r0_init_sd + r0_init_mean)
-    # r0_init = 0.8
     beta_init = r0_init * nu
   
   
@@ -86,26 +79,14 @@ ones(3))
     
     total_E2I = sol_reg_scale_array[5, 2:end] - sol_reg_scale_array[5, 1:(end-1)]
     cases_mean = total_E2I .* rho_case
-  
+    # Likelihood
     for i in 1:l_copies
-      # index = obstimes[i] # index is unnecessary when we're saving only at the right times
       data_cases[i] ~ NegativeBinomial2(max(cases_mean[i], 0.0), phi_cases)
     end
   
     # Generated quantities
     S = sol_reg_scale_array[1, :]
-    r0_t_values_with_init = beta_t_values_with_init / nu
-    # R0_full_values = zeros(Real, obstimes[end] +1)
-    # # shifted_change_times = param_change_times .+ shift
-    # # ok here's the idea 
-    # # Rt is actually a function of the S compartment, it changes subtly as S changes, even though R0 is flat for a particular week
-    # # so for reach flat week of R0, we should still get 7 different values of Rt because of the changes in S
-    # # r0_t_values_with_init = ones(length(param_change_times) + 1)
-    # for i in 1:(obstimes[end] + 1)
-    #     # print(floor(Int64, i/7))
-    #     R0_full_values[i] = r0_t_values_with_init[floor(Int64, i/7) + 1]
-    # end 
-    
+    r0_t_values_with_init = beta_t_values_with_init / nu    
     rt_t_values = r0_t_values_with_init .* S[1:(end-1)] / popsize
   
     return (

@@ -1,4 +1,4 @@
-# closed solution EIR model
+# closed form solution for EIR model
 using PreallocationTools
 using DrWatson
 using DifferentialEquations
@@ -108,38 +108,3 @@ function eir_closed_solution!(outs_tmp, times, change_times, t0, alphas, init_co
     outs_matrix = hcat(first_column, outs_matrix)
     return(outs_matrix)
   end 
-
-
-# # compare with the ode solver
-# include(projectdir("src/eir_ode_log.jl"))
-
-# times =[1:1.0:20.0;]
-# alphas = [1.0,2.0,3.0]
-# alphas_no_init = [2,3]
-# change_times = [7.0,14.0]
-# t0 = 0.0
-# gamma = 1/4
-# nu = 1/7
-# eta = 1/18
-# init_conds = [1.0,1.0,1.0, 1.0]
-# u0 = [1.0, 1.0, 1.0, 1.0]
-# outs_tmp = dualcache(zeros(5,length(times)))
-
-# prob = ODEProblem(eir_ode_log!,
-# log.(u0),
-# (0.0, times[end]),
-# [alphas[1], gamma, nu])
-
-# function param_affect_β_IFR!(integrator)
-# ind_t = searchsortedfirst(change_times, integrator.t) # Find the index of param_change_times that contains the current timestep
-# integrator.p[1] = alphas_no_init[ind_t] # Replace β with a new value from β_t_values
-# end
-
-# param_callback = PresetTimeCallback(change_times, param_affect_β_IFR!, save_positions = (false, false))
-
-# # Solve the ODE at intervals of 1.0, could also solve at obstimes
-# sol = solve(prob, Tsit5(), callback = param_callback, saveat = 1.0, save_start = true, verbose = false, abstol = 1e-9, reltol = 1e-6)  
-
-# exp_sol = exp.(sol)
-
-# eir_closed_solution!(outs_tmp, times, change_times, 0.0, alphas, init_conds, gamma, nu)

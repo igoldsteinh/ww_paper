@@ -1,8 +1,7 @@
-# closed form solution for eirr model 
+# Closed form solution for EIRRC model with flexible resolution (daily, half-daily etc.)
 using ForwardDiff
 using PreallocationTools
-# note this produces Nans when alpha = nu 
-# I'm hoping this can never happen irl but we'll have to see when we test it out
+
 function power(a,b)
   a^b
 end 
@@ -201,7 +200,6 @@ end
 function newnew_eirrc_closed_solution!(outs_tmp, times, change_times, grid_size, t0, alphas, init_conds, gamma, nu, eta) 
   num_alphas = length(alphas)
   stop_times = vcat(change_times, times[end])
-  # print(stop_times)
   start_times = vcat(times[1], change_times .+ grid_size)
   outs_matrix = get_tmp(outs_tmp, [alphas[1], gamma, nu, eta])
   current_init_conds = init_conds
@@ -220,7 +218,6 @@ function newnew_eirrc_closed_solution!(outs_tmp, times, change_times, grid_size,
     for j in new_indices
       new_time = current_times[j - new_indices[1] + 1]
       t = new_time - current_init_time
-      # print(t)
       @inbounds begin 
       outs_matrix[1, round(Int64, j)] = new_time
 
@@ -391,7 +388,6 @@ function newnew_eirrc_closed_solution!(outs_tmp, times, change_times, grid_size,
 
       end 
     end 
-    # print(new_indices)
     init_index = maximum(new_indices) + 1
     current_init_conds = outs_matrix[2:6,round(Int64, maximum(new_indices))]
     current_init_time = outs_matrix[1, round(Int64, maximum(new_indices))]

@@ -1,3 +1,4 @@
+# Julia utility functions
 module ww_paper
 
 using Distributions

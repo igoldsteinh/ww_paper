@@ -1,4 +1,4 @@
-#bayesian alpha model eirr
+# Turing model for EIRR-ww model
 using LinearAlgebra
 using ForwardDiff
 using NaNMath
@@ -17,31 +17,22 @@ using NaNMath
   eta_non_centered ~ Normal() # rate to Rd
   rho_gene_non_centered ~ Normal() # gene detection rate
   tau_non_centered ~ Normal() # standard deviation for log scale data
-  lambda_non_centered ~ Normal() # percentage of emissions from the I vs Re compartment
+  lambda_non_centered ~ Normal() # percentage of emissions from the I vs R1 compartment
   df ~ Gamma(df_shape, df_scale)
 
   # Transformations
   gamma = exp(gamma_non_centered * gamma_sd + gamma_mean)
   nu = exp(nu_non_centered * nu_sd + nu_mean)
   eta = exp(eta_non_centered * eta_sd + eta_mean)
-
   rho_gene = exp(rho_gene_non_centered * rho_gene_sd + rho_gene_mean)
-
   tau = exp(tau_non_centered * tau_sd + tau_mean)
   lambda = logistic(lambda_non_centered * lambda_sd + lambda_mean)
-
   sigma_rt_non_centered = rt_params_non_centered[1]
-
   sigma_rt = exp(sigma_rt_non_centered * sigma_rt_sd + sigma_rt_mean)
-
   rt_init_non_centered = rt_params_non_centered[2]
-
   rt_init = exp(rt_init_non_centered * rt_init_sd + rt_init_mean)
-  # rt_init = 0.945
   alpha_init = rt_init * nu
-
   log_rt_steps_non_centered = rt_params_non_centered[3:end]
-
   I_init = I_init_non_centered * I_init_sd + I_init_mean
   R1_init = R1_init_non_centered * R1_init_sd + R1_init_mean
   E_init = E_init_non_centered * E_init_sd + E_init_mean
@@ -51,21 +42,16 @@ using NaNMath
   alpha_t_values_no_init = exp.(log(rt_init) .+ cumsum(vec(log_rt_steps_non_centered) * sigma_rt)) * nu
   alpha_t_values_with_init = vcat(alpha_init, alpha_t_values_no_init)
 
+  # Solve the ODE 
   sol_reg_scale_array = new_eirrc_closed_solution!(outs_tmp, 1:maximum(obstimes), param_change_times, 0.0, alpha_t_values_with_init, u0, gamma, nu, eta)
-  # print(" alpha is ")
-  # print(ForwardDiff.value(alpha_t_values_with_init))
-  # print(" I is ")
-  # print(ForwardDiff.value(sol_reg_scale_array[3, 2:end]))
-  # print(" R1 is ")
-  # print(ForwardDiff.value(sol_reg_scale_array[4, 2:end]))
+  
   log_genes_mean = NaNMath.log.(sol_reg_scale_array[3, 2:end] .* lambda + (1 - lambda) .* sol_reg_scale_array[4, 2:end]) .+ log(rho_gene) # first entry is the initial conditions, we want 2:end
   incid = sol_reg_scale_array[6, 2:end] - sol_reg_scale_array[6, 1:(end-1)]
-
+  # Likelihood 
   for i in 1:l_copies
     index = obstimes[i] # what time in the ode matches the obs time?
     data_log_copies[i] ~ GeneralizedTDist(log_genes_mean[round(Int64,index)], tau, df) 
-    # data_log_copies[i] ~ Normal(log_genes_mean[round(Int64,index)], tau) 
-end
+  end
 
   # Generated quantities
   rt_t_values_with_init = alpha_t_values_with_init/ nu

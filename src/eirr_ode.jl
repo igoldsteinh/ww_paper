@@ -1,4 +1,4 @@
-# eirr ode for the alpha model 
+# EIRRC ODE not on log scale
 function eirr_ode!(du, u, p, t)
     # S,E,I R1 is recovered but emitting, R2 is recovered and not emitting (done)
     (E, I, R1, R2, C) = u
@@ -19,9 +19,9 @@ function eirr_ode!(du, u, p, t)
     @inbounds begin
       du[1] = (infection - progression) # E
       du[2] = (progression - progression_R1)# I
-      du[3] = (progression_R1 - progression_R2) # Re
-      du[4] = progression_R2 # Rd
-      du[5] = progression #keeping track of cumulative cases
+      du[3] = (progression_R1 - progression_R2) # R1
+      du[4] = progression_R2 # R2
+      du[5] = progression # keeping track of cumulative cases
     end
     nothing
   end

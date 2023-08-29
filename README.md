@@ -9,8 +9,8 @@ All results files needed to reproduce the figures are in the repo, individual si
 
 ## Navigation
 ```
-├── data                          <- Both processed real and simulated data
-│   ├── sim_data                  <- Simulated data
+├── data                          <- Processed real and simulated data
+│   └── sim_data                  <- Simulated data
 │
 ├── figures                       <- Paper figures
 │

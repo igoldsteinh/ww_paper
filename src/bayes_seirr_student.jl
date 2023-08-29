@@ -1,3 +1,4 @@
+# Turing model for SEIRR-ww model
 using LinearAlgebra
 using ForwardDiff
 prob = ODEProblem(seirr_ode_log!,
@@ -8,7 +9,6 @@ ones(4))
 
 @model function bayes_seirr_student(data_log_copies, obstimes, param_change_times, extra_ode_precision, prob, abs_tol, rel_tol)
     # Calculate number of observed datapoints timepoints
-    # shift = 1 # shift should always be one because ode indexes by 0 but julia indexes by 1, so that S[1] = S(0) in the ODE solution
     l_copies = length(obstimes)
     l_param_change_times = length(param_change_times)
   
@@ -29,27 +29,18 @@ ones(4))
     gamma = exp(gamma_non_centered * gamma_sd + gamma_mean)
     nu = exp(nu_non_centered * nu_sd + nu_mean)
     eta = exp(eta_non_centered * eta_sd + eta_mean)
-  
     rho_gene = exp(rho_gene_non_centered * rho_gene_sd + rho_gene_mean)
-  
     τ = exp(τ_non_centered * tau_sd + tau_mean)
     lambda = logistic(lambda_non_centered * lambda_sd + lambda_mean)
-  
     sigma_R0_non_centered = R0_params_non_centered[1]
-  
     sigma_R0 = exp(sigma_R0_non_centered * sigma_R0_sd + sigma_R0_mean)
-  
     r0_init_non_centered = R0_params_non_centered[2]
-  
     r0_init = exp(r0_init_non_centered * r0_init_sd + r0_init_mean)
     beta_init = r0_init * nu
-  
     log_R0_steps_non_centered = R0_params_non_centered[3:end]
-  
     S_SEIR1 = logistic(S_SEIR1_non_centered * S_SEIR1_sd + S_SEIR1_mean)
     I_EIR1 = logistic(I_EIR1_non_centered * I_EIR1_sd + I_EIR1_mean)
     R1_ER1 = logistic(R1_ER1_non_centered * R1_ER1_sd + R1_ER1_mean)
-  
     S_init = S_SEIR1 * active_pop
     I_init = max(I_EIR1 * (active_pop - S_init), 1) # Make sure at least 1 Infectious
     R1_init = max(R1_ER1 * (active_pop - S_init - I_init), 1) # Make sure at least 1 Infection
@@ -92,11 +83,11 @@ ones(4))
     sol_reg_scale_array = exp.(Array(sol))
   
   
-    # cases_pos_mean = (exp.(α_t_values_with_init) .* sol_new_cases / popsize) ./ (expm1.(α_t_values_with_init) .* sol_new_cases / popsize .+ 1)
   
     log_genes_mean = log.(sol_reg_scale_array[3,2:end] .* lambda + (1 - lambda) .* sol_reg_scale_array[4, 2:end]) .+ log(rho_gene) # first entry is the initial conditions, we want 2:end
     new_cases = sol_reg_scale_array[6, 2:end] - sol_reg_scale_array[6, 1:(end-1)]
-  
+    
+    # Likelihood
     for i in 1:l_copies
       index = obstimes[i] # what time in the ode matches the obs time?
       data_log_copies[i] ~ GeneralizedTDist(log_genes_mean[round(Int64,index)], τ, df) 
@@ -106,20 +97,12 @@ ones(4))
     S = sol_reg_scale_array[1, :]
     r0_t_values_with_init = beta_t_values_with_init / nu
     R0_full_values = zeros(Real, round(Int64,obstimes[end]))
-    # shifted_change_times = param_change_times .+ shift
     # ok here's the idea 
     # Rt is actually a function of the S compartment, it changes subtly as S changes, even though R0 is flat for a particular week
     # so for reach flat week of R0, we should still get 7 different values of Rt because of the changes in S
     # r0_t_values_with_init = ones(length(param_change_times) + 1)
     for i in 1:(round(Int64,obstimes[end]))
-        # print(floor(Int64, i/7))
         R0_full_values[i] = r0_t_values_with_init[floor(Int64, (i-1)/7) + 1]
-
-        # if (i == round(Int64, obstimes[end]))
-        # print(i)
-        # print(floor(Int64, (i-1)/7) + 1)
-        # print(ForwardDiff.value(R0_full_values[i]))
-        # end 
     end 
     
     # there are too many Rt values if we use all of S b/c S[1] is 0

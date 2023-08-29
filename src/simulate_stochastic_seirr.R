@@ -1,3 +1,4 @@
+# Functions for simulating data 
 library(fields)
 library(tidyverse)
 # stochastic seirr --------------------------------------------------------
@@ -55,12 +56,7 @@ sim_SEIRR <- function(N, I_init, beta, gamma, nu, eta) {
     
     # next stop shed
     next_stopshed <- min(stopshed_times, na.rm = TRUE)
-    
-    # print(infec_time)
-    # print(next_recover)
-    # print(next_stopshed)
-    # print(next_infectious)
-    # check what kind of event happens
+
     if (t + infec_time < min(next_recover, next_stopshed, next_infectious, na.rm = TRUE)) {
       # infection occurs
       E <- E + 1
@@ -116,13 +112,6 @@ sim_SEIRR <- function(N, I_init, beta, gamma, nu, eta) {
       times <- append(times, next_stopshed)
       t <- next_stopshed
     }
-
-    # print("time")
-    # print(times)
-    # print("type")
-    # print(type)
-    # print("labels")
-    # print(labels)
   }
   
   
@@ -156,8 +145,6 @@ sim_SEIRR_nonconst <- function(N, I_init, E_init, beta_init, beta_vec, change_po
   
   I_types = rep(2, I)
   
-  # I don't know how to do this in a way for R1 that makes sense
-  # skip for now, point it out later
   # create initial infectious, recover and stop shedding times
   beta_t = beta_init
   t <- 0;
@@ -207,12 +194,7 @@ sim_SEIRR_nonconst <- function(N, I_init, E_init, beta_init, beta_vec, change_po
     
     # next stop shed
     next_stopshed <- min(stopshed_times, na.rm = TRUE)
-    
-    # print(infec_time)
-    # print(next_recover)
-    # print(next_stopshed)
-    # print(next_infectious)
-    # check what kind of event happens
+
     if (next_cp < min(next_recover, next_stopshed, next_infectious, t+ infec_time, na.rm = TRUE)) {
       
       index = which(change_points == next_cp)
@@ -290,13 +272,6 @@ sim_SEIRR_nonconst <- function(N, I_init, E_init, beta_init, beta_vec, change_po
       states = rbind(states, new_states)
       
     }
-    
-    # print("time")
-    # print(times)
-    # print("type")
-    # print(type)
-    # print("labels")
-    # print(labels)
   }
   
   
@@ -344,7 +319,6 @@ calc_individ_counts <- function(t) {
     prediction <- 0
   } else {
     prediction <- 10^(rnorm(1, mean_log10_prediction, sd = 1.09)) # should be 1.09
-    # prediction <- 10^(mean_log10_prediction) # 
   }
   
   return(prediction)
@@ -418,14 +392,6 @@ create_individ_data <- function(sims) {
 
 
 # function for finding the gene counts across many simulations ----------------
-# specify simulation parameters
-# gamma_val = gamma_vec[i]
-# nu_val = nu_vec[i]
-# eta_val = eta_vec[i]
-# N = 1000
-# I_init = 5
-# num_sims = 1
-# beta_val = 2*nu
 sim_and_calc_genes <- function(N, I_init, beta, gamma, nu, eta, num_sims) {
   seed = sample.int(num_sims)
   # set up output lists
@@ -507,14 +473,6 @@ simulate_case_data <- function(true_E2I_counts, seed, rho, phi) {
 
 
 # simulate agent-based seirr ----------------------------------------------
-# for sanity checking 
-# pop_size = 1000
-# r0 = 1.5
-# nu = 1/7
-# beta = (r0 * nu)/pop_size
-# gamma = 1/4
-# eta = 1/18
-# I_init = 50
 
 sim_agent_SEIRR <- function(pop_size, I_init, beta, gamma, nu, eta) {
   # setting up initial states and frames
@@ -595,9 +553,6 @@ sim_agent_SEIRR <- function(pop_size, I_init, beta, gamma, nu, eta) {
 
 
 # create daily data from agent model --------------------------------------
-# res <- sim_agent_SEIRR(pop_size, I_init, beta, gamma, nu, eta)
-
-
 create_daily_from_agent <- function(res) {
   day_data <- data.frame(res) %>%
     rename("time" = "X1") %>%

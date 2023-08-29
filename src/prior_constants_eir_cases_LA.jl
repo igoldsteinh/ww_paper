@@ -1,4 +1,4 @@
-# eir prior parameters
+# EIR-cases prior parameters for fit to LA data
 const gamma_sd = 0.2
 const gamma_mean = log(7/4) 
 const nu_sd = 0.2

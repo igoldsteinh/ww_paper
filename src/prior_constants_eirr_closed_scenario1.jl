@@ -1,4 +1,4 @@
-# eirr prior parameters
+# EIRR-ww prior parameters for baseline scenario
 const gamma_sd = 0.2
 const gamma_mean =log(1/4)
 const nu_sd = 0.2

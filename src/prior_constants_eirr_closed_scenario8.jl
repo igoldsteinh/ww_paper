@@ -1,4 +1,4 @@
-# eirr prior parameters
+# EIRR-ww prior parameters
 # scenario 8, misspecify prior for lambda to be centered at 0.8
 const gamma_sd = 0.2
 const gamma_mean =log(1/4)

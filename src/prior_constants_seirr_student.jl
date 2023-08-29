@@ -1,4 +1,4 @@
-
+# SEIRR-ww prior parameters
 const gamma_sd = 0.2
 const gamma_mean =log(1/4)
 const nu_sd = 0.2
