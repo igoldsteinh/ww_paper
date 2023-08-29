@@ -18,7 +18,7 @@ All results files needed to reproduce the figures are in the repo, individual si
 │
 ├── results                       <- Model outputs, organized by model, and then by output type
 │   │                                Example for the EIRR-ww model (eirrc) is shown
-│   │                                Structure is the same for all other models
+│   │                                Structure is the same for main models
 │   └── eirrc                     <- Summaries of simulation results go here
 │        ├── generated_quantities <- correctly scaled posteriors, quantiles and mcmc samples
 │        ├── posterior_predictive <- posterior predictive mcmc samples and quantiles
