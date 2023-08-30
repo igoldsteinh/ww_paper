@@ -63,11 +63,11 @@ instantiate
 If you kept the `Manifest.toml`, the exact `Julia` package versions used to generate the paper results will be downloaded. 
 If you did not, possibly newer versions of the packages will be downloaded instead. 
 It would be surprising if newer versions of the packages led to different results. 
-More information is available in the [Environments documentation](https://pkgdocs.julialang.org/v1/environments/#Using-someone-else's-project).
+More information on `Julia` environments is available in the [Environments documentation](https://pkgdocs.julialang.org/v1/environments/#Using-someone-else's-project).
 
 ## Model fitting workflow
 The [vignettes folder](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two Quarto vignettes which condense the model fitting workflow into one [`Julia` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/fit_eirr_ww.qmd) and one [`R` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/process_eirr_ww.qmd) that demonstrate how to fit the EIRR-ww model to the Los Angeles wastewater data. 
-We recommend starting with these vignettes, as they provide more detail than the original scripts.
+We recommend starting with these vignettes, as they provide more detailed explanations of the code than the original scripts.
 
 The original workflow for the main models involves multiple files. As an example, to generate results from the the EIRR-ww model, [fit_eirrc_closed.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_eirrc_closed.jl) is used to fit the model, then [eirrc_closed_generate_pp_and_gq.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/generate_quantities/eirrc_closed_generate_pp_and_gq.jl) to re-scale the posterior and generate posterior predictive values, finally [process_results_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/process_results_eirrc_closed.R) creates tidy versions of the posterior and posterior predictive summaries.
 When summarising results from multiple simulations, [summarise_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/summarise_eirrc_closed.R) creates summary outputs. 
