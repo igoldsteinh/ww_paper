@@ -49,7 +49,6 @@ state_data = create_daily_data(testing[[2]]) %>%
 write_csv(individ_data, here::here("data", "sim_data", "scenario1_individ_data.csv"))
 write_csv(state_data, here::here("data", "sim_data", "scenario1_truecurve.csv"))
 
-
 # plot the data -----------------------------------------------------------
 
 plot_rt = state_data %>% 
@@ -66,7 +65,6 @@ plot_states <- state_data %>%
 # creating true gene count data ------------------------------------------------------
 # write_csv(individ_data, here::here("data", "sim_data", "scenario1_individ_data.csv"))
 # individ_data = read_csv(here::here("data", "sim_data", "scenario1_individ_data.csv"))
-
 
 wide_format = individ_data %>% group_by(labels) %>% 
   arrange(labels, type) %>%
@@ -90,7 +88,6 @@ plot_E2I <- true_E2I_data %>%
   geom_point()
 
 plot_E2I
-
 
 # create simulated case data ----------------------------------------------
 obs_start = max(which(r0_vec == 0.9)) 
@@ -126,7 +123,6 @@ write_csv(true_E2I_data, here::here("data", "sim_data", "scenario1_truecasecount
 write_csv(case_data, here::here("data", "sim_data", "scenario1_full_cases_obsdata.csv"))
 write_csv(final_case_data, here::here("data", "sim_data", "scenario1_fitted_cases_obsdata.csv"))
 
-
 # create true RNA count data ----------------------------------------------
 true_count_data = map(times, ~calc_total_gene_counts(wide_format, time = .x, N = N)) %>%
   bind_rows()
@@ -149,9 +145,6 @@ final_obs_data = map(obs_data, ~.x %>%
 
 
 # make a copy of state data 
-# state_data = read_csv(here::here("data", "sim_data", "scenario41_truecurve.csv"))
-# write_csv(state_data, here::here("data", "sim_data", "scenario1_truecurve.csv"))
-# state_data = read_csv( here::here("data", "sim_data", "scenario1_truecurve.csv"))
 
 full_obs_data <- map(obs_data, ~.x %>%
   left_join(state_data, by = c("time" = "integer_day")) %>%
@@ -171,8 +164,6 @@ final_obs_data <- final_obs_data %>%
 write_csv(obs_true_data, here::here("data", "sim_data", "scenario1_truegenecounts.csv"))
 write_csv(full_obs_data, here::here("data", "sim_data", "scenario1_full_genecount_obsdata.csv"))
 write_csv(final_obs_data, here::here("data", "sim_data", "scenario1_fitted_genecount_obsdata.csv"))
-
-
 
 # create overdisp data ----------------------------------------------------
 true_E2I_data <- true_E2I_data %>% filter(time >= obs_start & time <= obs_end)
@@ -194,7 +185,6 @@ final_case_data = case_data %>%
 
 write_csv(final_case_data, here::here("data", "sim_data", "scenario1_overdisp.csv"))
 
-
 # initial conditions ------------------------------------------------------
 # state_data = read_csv(here::here("data", "sim_data", "scenario1_truecurve.csv"))
 
@@ -208,7 +198,7 @@ obs_true_data = true_count_data %>% filter(time >= obs_start & time <= obs_end)
 
 obs_data = simulate_gene_data(obs_true_data, 
                               seed = 1, 
-                              rho = exp(-16), # we should choose rho so that we're in the ballpark of the real data I think 
+                              rho = exp(-16),
                               t_sd = 0.5,
                               t_df = 2.99)
 # take every other day 
@@ -216,8 +206,6 @@ final_obs_data = obs_data %>%
                  mutate(new_time = time - obs_start + 1,
                         everyother = new_time %% 2 == 1) %>%
                  filter(everyother == TRUE)
-
-
 
 state_data <- state_data %>% dplyr::select(-time)
 full_obs_data <- obs_data %>% 

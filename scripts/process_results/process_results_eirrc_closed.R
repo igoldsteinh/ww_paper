@@ -7,7 +7,6 @@ source("src/wastewater_functions.R")
 
 args <- commandArgs(trailingOnly=TRUE)
 
-
 if (length(args) == 0) {
   sim = 1
   seed = 1
@@ -17,11 +16,9 @@ if (length(args) == 0) {
   
 }
 
-
 dir_create(path("results", "eirrc_closed", "mcmc_summaries"))
 
 priors_only = sim == 0
-
 
 # a hack for dealing with re-using scenario 1 data
 repeat_scenario1s = c(3,4,5,6,7,8,9,10, 12, "frw")
@@ -34,7 +31,6 @@ if (sim %in% repeat_scenario1s) {
 } else {
   scenario_sim = sim
 }
-
 
 # priors only -------------------------------------------------------------
 if(priors_only == TRUE) {
@@ -63,9 +59,7 @@ if(priors_only == TRUE) {
   quit()
 }
 
-
 # posterior ---------------------------------------------------------------
-
 
 # calculate MCMC diagnostics after burnin
 gq_address <- paste0("results/eirrc_closed/generated_quantities/generated_quantities_scenario", 
@@ -130,7 +124,6 @@ rm(posterior_fixed_samples)
 
 posterior_timevarying_quantiles <- make_timevarying_posterior_quantiles(posterior_gq_samples_all)
 
-
 timevarying_quantiles_address <- paste0("results/eirrc_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
                                         sim,
                                         "_seed",
@@ -142,7 +135,6 @@ write_csv(posterior_timevarying_quantiles, timevarying_quantiles_address)
 rm(posterior_timevarying_quantiles)
 
 rm(posterior_gq_samples_all)
-
 
 # create posterior predictive quantiles -----------------------------------
 post_pred_address <- paste0("results/eirrc_closed/posterior_predictive/posterior_predictive_scenario",
@@ -191,10 +183,6 @@ if (sim != "real" & sim != "uci" & sim!= "uci_region1" & sim != "uci_region2" & 
   simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region3.csv"))
   
 }
-
-
-
-
 
 if (sim == 3) {
   ten_sim_val = TRUE

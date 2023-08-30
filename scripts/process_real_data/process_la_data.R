@@ -1,7 +1,7 @@
 # this file is for processing la data for use in julia ode model
-
 library(tidyverse)
 library(lubridate)
+
 # here the counts are in copies/L
 raw_dat <- read_csv(here::here("data", "ladata_2021_2022.csv"))
 
@@ -56,8 +56,8 @@ LA_dat <- dat %>%
 
 LA_dat[is.na(LA_dat)] <- -1
 
-# filter out 8/23 which is a dumb day
-# and filter our 7/7 which also seems dumb
+# filter out 8/23 which is a weird day
+# and filter our 7/7 which also seems weird
 # filter out 7/11 which has a note saying its below LOD
 LA_dat <- LA_dat %>% filter(date != "2021-08-23") %>% filter(date != "2021-07-07") %>% filter(date != "2021-07-011")
 
@@ -101,8 +101,6 @@ write_csv(week_data, "LA_week_data.csv")
 
 
 # Initial conditons for LA ------------------------------------------------
-
-
 # rough rule of thumb for initial conditions
 # S = (popsize - # vaccinated) / 2
 #        E = Number of observed cases in the previous 2 weeks * 4 * 1 / 3
@@ -111,7 +109,7 @@ write_csv(week_data, "LA_week_data.csv")
 
 popsize = 4.8E6
 # http://publichealth.lacounty.gov/media/Coronavirus/vaccine/vaccine-dashboard.htm
-# VM says about 60% of pop was back to being susceptible
+# About 60% of pop was back to being susceptible
 S = (popsize - 0.4 * popsize)
 
 # http://dashboard.publichealth.lacounty.gov/covid19_surveillance_dashboard/

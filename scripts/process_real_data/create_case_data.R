@@ -1,3 +1,4 @@
+# file for creating LA case data
 library(tidyverse)
 library(ckanr)
 library(lubridate)
@@ -51,7 +52,6 @@ weekly_data <- cases %>%
 
 write_csv(weekly_data, here::here("data", "LA_weekly_case_data.csv"))
             
-
 
 # create data to use with EIR ---------------------------------------------
 weekly_data <- read_csv(here::here("data", "LA_weekly_case_data.csv"))

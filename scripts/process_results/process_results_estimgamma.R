@@ -1,5 +1,4 @@
 # process results of rt-estim-gamma
-
 library(tidyverse)
 library(rstan)
 library(tidybayes)
@@ -20,7 +19,6 @@ data <- read_csv(here::here("data", "LA_EIR_data.csv"))
 data <- data %>%
   rename("time" = "new_week")
 
-
 trace <- rstan::traceplot(posterior, pars = "lp__") +
   ggtitle("lp traceplot")
 
@@ -29,13 +27,10 @@ ggsave(here::here("results", "estimgamma", str_c("scenario", sim, "_trace", ".pd
        width = 5, 
        height = 5)
 
-
-
 rt_posterior = summarise_realdata_rt_estimgamma(posterior,
                                  data,
                                  1,
                                  include_chains= c(1,2,3))
-
 
 # visualize results
 # all credit to Damon Bayer for plot functions 
@@ -45,9 +40,6 @@ my_theme <- list(
   guides(fill = guide_legend(reverse = TRUE)),
   theme_minimal_grid(),
   theme(legend.position = "bottom"))
-
-
-
 
 estimgamma_ladata_plot <- rt_posterior %>%
   ggplot(aes(max_date, rt_median, ymin = .lower, ymax = .upper)) +
@@ -62,10 +54,7 @@ estimgamma_ladata_plot <- rt_posterior %>%
 estimgamma_ladata_plot
 write_csv(rt_posterior, here::here("results", "estimgamma", paste0("rt_posterior_sim", sim, ".csv")))
 
-
-
 # alt prior ---------------------------------------------------------------
-
 file_name <- "LA_estimgamma_posterior_alt.rds"
 alt_county_posterior <- read_rds(here::here("results", "estimgamma", file_name))
 
@@ -82,13 +71,10 @@ ggsave(here::here("results", "estimgamma", str_c("scenario", sim, "_trace", ".pd
        width = 5, 
        height = 5)
 
-
-
 rt_posterior = summarise_realdata_rt_estimgamma(alt_county_posterior,
                                                 data,
                                                 1,
                                                 include_chains= c(1,2,3))
-
 
 # visualize results
 # all credit to Damon Bayer for plot functions 
@@ -98,9 +84,6 @@ my_theme <- list(
   guides(fill = guide_legend(reverse = TRUE)),
   theme_minimal_grid(),
   theme(legend.position = "bottom"))
-
-
-
 
 estimgamma_ladata_plot <- rt_posterior %>%
   ggplot(aes(max_date, rt_median, ymin = .lower, ymax = .upper)) +
@@ -113,4 +96,5 @@ estimgamma_ladata_plot <- rt_posterior %>%
   theme(axis.text.x = element_text(angle = 90)) 
 
 estimgamma_ladata_plot
+
 write_csv(rt_posterior, here::here("results", "estimgamma", paste0("rt_posterior_sim", sim, ".csv")))

@@ -59,13 +59,12 @@ n_chains = 4
 if sim == 1
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-data_log_copies = long_dat[:, :value]
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  data_log_copies = long_dat[:, :value]
 
-## Define Priors
-include(projectdir("src/prior_constants_seirr_student.jl"))
-
+  ## Define Priors
+  include(projectdir("src/prior_constants_seirr_student.jl"))
 end 
 
 
@@ -135,19 +134,7 @@ MAP_noise = [MAP_noise[:,i] for i in 1:size(MAP_noise,2)]
 init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 
 Random.seed!(seed)
-# posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples)
 
 posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples, init_params = init)
 
 wsave(resultsdir("seirr_student", "posterior_samples", string("posterior_samples_scenario", sim, "_seed", seed, ".jld2")), @dict posterior_samples)
-
-# posterior_summary = summarize(posterior_samples)
-# posterior_summary.nt.parameters
-# @code_warntype my_model.f(
-#     my_model,
-#     Turing.VarInfo(my_model),
-#     Turing.SamplingContext(
-#         Random.GLOBAL_RNG, Turing.SampleFromPrior(), Turing.DefaultContext(),
-#     ),
-#     my_model.args...,
-# )

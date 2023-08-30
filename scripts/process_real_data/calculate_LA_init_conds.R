@@ -13,7 +13,7 @@ library(lubridate)
 
 popsize = 4.8E6
 # http://publichealth.lacounty.gov/media/Coronavirus/vaccine/vaccine-dashboard.htm
-# VM says about 60% of pop was back to being susceptible
+# About 60% of pop was back to being susceptible
 S = (popsize - 0.4 * popsize)
 
 # http://dashboard.publichealth.lacounty.gov/covid19_surveillance_dashboard/
@@ -156,8 +156,6 @@ E = sum(cases_lasttwo) * 200 * 4/11 * 0.48
 I = sum(cases_lasttwo) * 200 * 7/11 * 0.48
 R1 = sum(cases_extra24) * 200 * 0.48
 R2 = popsize - S - E - I - R1
-
-
 
 
 # now calculate rho given these values ------------------------------------

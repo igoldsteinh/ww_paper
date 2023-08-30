@@ -40,11 +40,9 @@ wide_format = individ_data %>% group_by(labels) %>%
 
 times = seq(from = 2, to = floor(max(individ_data$t)), by = 0.5)
 
-
 # create true RNA count data ----------------------------------------------
 true_count_data = map(times, ~calc_total_gene_counts(wide_format, time = .x, N = N)) %>%
   bind_rows()
-
 
 # simulate multiple data sets from the true values (Scenario 1)------------------------
 obs_start = max(which(r0_vec == 0.9)) 

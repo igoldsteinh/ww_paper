@@ -32,13 +32,11 @@ end
 
 priors_only = sim == 0
 
-print(priors_only)
 if priors_only
   sim = 1
   seed = 1
 end
 
-print(sim)
 mkpath(resultsdir("seirr_student", "generated_quantities"))
 mkpath(resultsdir("seirr_student", "posterior_predictive"))
 
@@ -48,10 +46,9 @@ mkpath(resultsdir("seirr_student", "posterior_predictive"))
 if sim == 1
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-data_log_copies = long_dat[:, :value]
-
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  data_log_copies = long_dat[:, :value]
 end 
 
 obstimes = long_dat[:, :new_time]
@@ -63,8 +60,6 @@ else
 end 
 param_change_times = collect(7:7.0:param_change_max)
   
-  
-
 ## Define Priors
 include(projectdir("src/prior_constants_seirr_student.jl"))
 
@@ -83,17 +78,16 @@ my_model = bayes_seirr_student(
   1e-9,
   1e-6)
 
-
-  missing_log_copies = repeat([missing], length(data_log_copies))
+missing_log_copies = repeat([missing], length(data_log_copies))
   
-  my_model_forecast_missing = bayes_seirr_student(
-    missing_log_copies,
-    obstimes,
-    param_change_times,
-    true,
-    prob,
-    1e-9,
-    1e-6)
+my_model_forecast_missing = bayes_seirr_student(
+  missing_log_copies,
+  obstimes,
+  param_change_times,
+  true,
+  prob,
+  1e-9,
+  1e-6)
   
 
 if priors_only
@@ -115,7 +109,7 @@ if priors_only
     CSV.write(resultsdir("seirr_student", string("prior_generated_quantities_scenario", sim, ".csv")), DataFrame(prior_gq_randn))
     
     
-        exit()
+    exit()
 end
 
 posterior_samples = load(resultsdir("seirr_student", "posterior_samples", string("posterior_samples", "_scenario", sim, "_seed", seed, ".jld2")))["posterior_samples"]
@@ -124,7 +118,6 @@ indices_to_keep = .!isnothing.(generated_quantities(my_model, posterior_samples)
 
 posterior_samples_randn = ChainsCustomIndex(posterior_samples, indices_to_keep);
 
-
 Random.seed!(seed)
 predictive_randn = predict(my_model_forecast_missing, posterior_samples_randn)
 CSV.write(resultsdir("seirr_student", "posterior_predictive", string("posterior_predictive", "_scenario", sim, "_seed", seed,  ".csv")), DataFrame(predictive_randn))
@@ -132,8 +125,6 @@ CSV.write(resultsdir("seirr_student", "posterior_predictive", string("posterior_
 Random.seed!(seed)
 gq_randn = get_gq_chains(my_model, posterior_samples_randn);
 CSV.write(resultsdir("seirr_student", "generated_quantities", string("generated_quantities", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(gq_randn))
-
-
 
 posterior_df = DataFrame(posterior_samples)
 CSV.write(resultsdir("seirr_student", "generated_quantities", string("posterior_df", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(posterior_samples))

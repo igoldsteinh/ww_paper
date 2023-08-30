@@ -62,15 +62,14 @@ n_chains = 4
 if sim == 1
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
 
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-long_dat = filter(:value => value -> value > 0, long_dat)
-# long_dat = filter(:value => value -> value < 16, long_dat)
-data_log_copies = long_dat[:, :value]
-grid_size = 1
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
+  grid_size = 1
 end 
 
 
@@ -78,28 +77,26 @@ end
 if sim == "ODE"
   all_dat = CSV.read("data/sim_data/ODE_comp_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
 
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-long_dat = filter(:value => value -> value > 0, long_dat)
-# long_dat = filter(:value => value -> value < 16, long_dat)
-data_log_copies = long_dat[:, :value]
-grid_size = 0.5
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
+  grid_size = 0.5
 end 
 
 if sim == "ODE_long"
   all_dat = CSV.read("data/sim_data/ODElong_comp_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenarioodelong.jl"))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenarioodelong.jl"))
 
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-long_dat = filter(:value => value -> value > 0, long_dat)
-# long_dat = filter(:value => value -> value < 16, long_dat)
-data_log_copies = long_dat[:, :value]
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
 end 
 
 
@@ -108,101 +105,99 @@ if sim == "real"
   # for now I'm going to remove the last observation as we don't have a full week's worth of data for it
   dat = filter(:year_day => year_day -> year_day < 423, dat)
   ## Define Priors
-include(projectdir("src", string("prior_constants_eirr_closed_LAdata", "_seed", seed, ".jl"))) 
+  include(projectdir("src", string("prior_constants_eirr_closed_LAdata", "_seed", seed, ".jl"))) 
 
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-long_dat = filter(:value => value -> value > 0, long_dat)
-data_log_copies = long_dat[:, :value]
-
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
 end 
 
 ### 10 replicates--EIRR (10)
 if sim == 3
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
 
-subset_dat = dat[:, [:new_time, 
-                     :log_gene_copies1, 
-                     :log_gene_copies2, 
-                     :log_gene_copies3, 
-                     :log_gene_copies4, 
-                     :log_gene_copies5, 
-                     :log_gene_copies6, 
-                     :log_gene_copies7,
-                     :log_gene_copies8,
-                     :log_gene_copies9,
-                     :log_gene_copies10]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, 
-                                         :log_gene_copies2, 
-                                         :log_gene_copies3, 
-                                         :log_gene_copies4, 
-                                         :log_gene_copies5, 
-                                         :log_gene_copies6, 
-                                         :log_gene_copies7,
-                                         :log_gene_copies8,
-                                         :log_gene_copies9,
-                                         :log_gene_copies10])
-long_dat = filter(:value => value -> value > 0, long_dat)
-data_log_copies = long_dat[:, :value]
+  subset_dat = dat[:, [:new_time, 
+                      :log_gene_copies1, 
+                      :log_gene_copies2, 
+                      :log_gene_copies3, 
+                      :log_gene_copies4, 
+                      :log_gene_copies5, 
+                      :log_gene_copies6, 
+                      :log_gene_copies7,
+                      :log_gene_copies8,
+                      :log_gene_copies9,
+                      :log_gene_copies10]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, 
+                                          :log_gene_copies2, 
+                                          :log_gene_copies3, 
+                                          :log_gene_copies4, 
+                                          :log_gene_copies5, 
+                                          :log_gene_copies6, 
+                                          :log_gene_copies7,
+                                          :log_gene_copies8,
+                                          :log_gene_copies9,
+                                          :log_gene_copies10])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
 end 
 
 ### mean of 3 replicates--EIRR (3 mean)
 if sim == 4
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
 
-subset_dat = dat[:, [:new_time, :log_mean_copiesthree]]
-long_dat = subset_dat
-data_log_copies = long_dat[:, :log_mean_copiesthree]
+  subset_dat = dat[:, [:new_time, :log_mean_copiesthree]]
+  long_dat = subset_dat
+  data_log_copies = long_dat[:, :log_mean_copiesthree]
 end 
 
 ### mean of 10 replicates-- EIRR (10 mean)
 if sim == 5
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
 
-subset_dat = dat[:, [:new_time, :log_mean_copiesten]]
-long_dat = subset_dat
-data_log_copies = long_dat[:, :log_mean_copiesten]
+  subset_dat = dat[:, [:new_time, :log_mean_copiesten]]
+  long_dat = subset_dat
+  data_log_copies = long_dat[:, :log_mean_copiesten]
 end 
 
 ### 1 replicate--EIRR (1)
 if sim == 6
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
-
-subset_dat = dat[:, [:new_time, :log_gene_copies1]]
-long_dat = subset_dat
-data_log_copies = long_dat[:, :log_gene_copies1]
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario1.jl"))
+  
+  subset_dat = dat[:, [:new_time, :log_gene_copies1]]
+  long_dat = subset_dat
+  data_log_copies = long_dat[:, :log_gene_copies1]
 end 
 
 ### lambda centered at 0.8--Low Prop
 if sim == 8
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario8.jl"))
-
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-long_dat = filter(:value => value -> value > 0, long_dat)
-data_log_copies = long_dat[:, :value]
-
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario8.jl"))
+  
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
 end 
 
 ### E and I iniital compartments centered low--Low Init
 if sim == 9
-  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
-  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
+dat = subset(all_dat, :seed => ByRow(x -> x == seed))
 ## Define Priors
 include(projectdir("src/prior_constants_eirr_closed_scenario9.jl"))
 
@@ -217,19 +212,17 @@ end
 if sim == 10
   all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-## Define Priors
-include(projectdir("src/prior_constants_eirr_closed_scenario10.jl"))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario10.jl"))
 
-subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
-long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
-long_dat = filter(:value => value -> value > 0, long_dat)
-data_log_copies = long_dat[:, :value]
-
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
 end 
 
 
 obstimes = long_dat[:, :new_time]
-# obstimes = convert(Vector{Float64}, obstimes)
 
 # pick the change times 
 if maximum(obstimes) % 7 == 0
@@ -297,5 +290,3 @@ init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 Random.seed!(seed)
 posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, 4, discard_initial = n_samples, init_params = init)
 
-
-# wsave(resultsdir("eirr", "posterior_samples", string("posterior_samples_scenario", sim, ".jld2")), @dict posterior_samples)

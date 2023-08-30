@@ -7,8 +7,6 @@ library(scales)
 library(epidemia)
 source(here::here("src", "wastewater_functions.R"))
 
-
-
 # read in LA data ---------------------------------------------------------
 
 seed = 1
@@ -16,13 +14,11 @@ sim = "real"
 
 real_data <- read_csv("data/LA_daily_data_feb2022.csv")
 
-
 sim = "real"
 seed = 1
 date_week_crosswalk <- real_data %>% 
   dplyr::select(date, epi_week, new_time) %>%
   mutate(time = epi_week - 27)
-
 
 # visualized data ----------------------------------------------------------
 ww_data_plot <- real_data %>% 
@@ -58,9 +54,6 @@ combined_data_plot
 
 ggsave(here::here("figures", "LA_data_jul21_feb22.pdf"), combined_data_plot, width = 10, height = 4)
 
-
-
-
 real_data$epi_week[real_data$year == 2022] <- real_data$epi_week[real_data$year == 2022] + 52
 date_week_crosswalk <- real_data %>% 
   dplyr::select(date, epi_week, new_time) %>%
@@ -93,9 +86,6 @@ my_theme <- list(
   theme_bw()+
   theme(legend.position = "bottom"))
 
-
-
-
 eir_realdata_rt_plot_seed1 <- rt_quantiles_eir %>%
   ggplot(aes(date, value, ymin = .lower, ymax = .upper)) +
   geom_lineribbon() +
@@ -107,9 +97,7 @@ eir_realdata_rt_plot_seed1 <- rt_quantiles_eir %>%
         legend.position = "none",
         text = element_text(size = 18)) 
 
-
 eir_realdata_rt_plot_seed1
-
 
 # Huisman -----------------------------------------------------------------
 la_huisman_rt <- read_csv(here::here("results", "huisman", "huisman_la_rt_quantiles.csv"))
@@ -131,18 +119,15 @@ huisman_realdata_rt_plot <- la_huisman_rt %>%
         ,
         text = element_text(size = 18)) 
 
-
 # EIRRC --------------------------------------------------------------------
 seed = 1
 sim = "real"
-
 
 timevarying_quantiles <- read_csv(paste0("results/eirrc_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
                                          sim,
                                          "_seed",
                                          seed,
                                          ".csv")) 
-
 
 rt_quantiles_eirr <- timevarying_quantiles %>%
   filter(name == "rt_t_values") %>%
@@ -163,9 +148,6 @@ my_theme <- list(
   theme_bw(),
   theme(legend.position = "bottom"))
 
-
-
-
 eirrc_realdata_rt_plot_seed1 <- rt_quantiles_eirr %>%
   ggplot(aes(date, value, ymin = .lower, ymax = .upper)) +
   geom_lineribbon() +
@@ -177,7 +159,6 @@ eirrc_realdata_rt_plot_seed1 <- rt_quantiles_eirr %>%
         legend.position = c(0.4, 0.75),
         text = element_text(size = 18),
         legend.background = element_blank())
-
 
 eirrc_realdata_rt_plot_seed1
 
@@ -214,7 +195,6 @@ estimnormal_posterior_rt <-
   ) %>%
   dplyr::select(time, name, value, .lower, .upper, .width, method)
 
-
 plot_data <- dat %>% 
   left_join(estimnormal_posterior_rt, by = "time")
 
@@ -229,7 +209,6 @@ fill_week = 41
 
 rt_posterior$date[is.na(rt_posterior$date)] <- fill_date
 rt_posterior$epi_week[is.na(rt_posterior$epi_week)] <- fill_week
-
 
 estimnormal_ladata_plot <- rt_posterior %>%
   ggplot(aes(date, value, ymin = .lower, ymax = .upper)) +
@@ -253,7 +232,6 @@ data <- read_csv(here::here("data", "LA_EIR_data.csv"))
 data <- data %>%
   rename("time" = "new_week")
 
-
 trace <- rstan::traceplot(posterior, pars = "lp__") +
   ggtitle("lp traceplot")
 
@@ -263,12 +241,10 @@ rt_posterior = summarise_realdata_rt_estimgamma(posterior,
                                                 1,
                                                 include_chains= c(1,2,3))
 
-
 # visualize results
 # all credit to Damon Bayer for plot functions 
 
 real_data <- read_csv("data/LA_daily_data_feb2022.csv")
-
 
 rt_posterior = rt_posterior %>%
   dplyr::select(-date) %>%
@@ -289,9 +265,6 @@ my_theme <- list(
   theme_bw(),
   theme(legend.position = "bottom"))
 
-
-
-
 estimgamma_ladata_plot <- rt_posterior %>%
   ggplot(aes(date, rt_median, ymin = .lower, ymax = .upper)) +
   geom_lineribbon() +
@@ -305,7 +278,6 @@ estimgamma_ladata_plot <- rt_posterior %>%
         text = element_text(size = 18)) 
 
 estimgamma_ladata_plot
-
 
 # paper main plot  --------------------------------------------------------
 main_plot <- huisman_realdata_rt_plot + eir_realdata_rt_plot_seed1 + eirrc_realdata_rt_plot_seed1
@@ -327,8 +299,6 @@ appendix_plot <- (app_eir + app_eirr) / (estimgamma_ladata_plot + estimnormal_la
 
 ggsave(here::here("figures", "app_real_plot.pdf"), appendix_plot, width = 10, height = 10)
 
-
-
 # WNAR presentation plot --------------------------------------------------
 WNAR_estimgamma <- estimgamma_ladata_plot + ggtitle("LA Posterior Rt (Cases)") 
 WNAR_eirr <- eirrc_realdata_rt_plot_seed1 + ggtitle("LA Posterior Rt (Wastewater)")
@@ -339,11 +309,9 @@ WNAR_case_plot <- WNAR_estimgamma + WNAR_eir
 ggsave(here::here("figures", "WNAR_real_plot.pdf"), WNAR_plot, width = 10, height = 6)
 ggsave(here::here("figures", "WNAR_case_plot.pdf"), WNAR_case_plot, width = 10.5, height = 6)
 
-
 # calculate case detection rate from incidence ----------------------------
 
 daily_case_data <- read_csv(here::here("data", "LA_daily_case_data.csv"))
-
 
 # relative detection ------------------------------------------------------
 
@@ -357,7 +325,6 @@ posterior_samples <- read_csv(gq_address)
 
 max_iteration = max(posterior_samples$.iteration)
 min_iteration = round(max_iteration/2)
-
 
 posterior_gq_samples_all <- posterior_samples  %>%
   pivot_longer(-c(iteration, chain))
@@ -381,8 +348,6 @@ C_vals <- timevarying_posterior %>% filter(name == "C") %>%
          rel_change = detect/prev_detect,
          daily_incidence = value - lag(value)
   )
-
-
 
 # lets do this at a weekly scale tho
 weekly_rel_change <- C_vals %>%
@@ -494,7 +459,6 @@ plot_incid_quantiles <- weekly_incid_quantiles %>%
   theme(axis.text.x = element_text(angle = 90),
         legend.position = c(0.25, 0.75),
         legend.background = element_blank()) 
-
 
 case_plus_rho <- plot_weekly_detect + plot_rho_quantiles  
 ggsave(here::here("figures", "la_case_detect.pdf"), case_plus_rho, width = 12, height = 4)

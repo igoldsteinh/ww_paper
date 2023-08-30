@@ -11,25 +11,24 @@ source("src/wastewater_functions.R")
 
 args <- commandArgs(trailingOnly=TRUE)
 
-
 if (length(args) == 0) {
-  snum = 1
+  sim = 1
 } else {
-  snum <- as.integer(args[1])
+  sim <- as.integer(args[1])
 }
 
 repeat_scenario1s = c(3,4,5,6,7,8,9,10, 12)
-if (snum %in% repeat_scenario1s) {
-  scenario_snum = 1
+if (sim %in% repeat_scenario1s) {
+  scenario_sim = 1
 } else {
-  scenario_snum = snum
+  scenario_sim = sim
 }
 
 # read in data and results ---------------------------------------------------------
 num_sims = 100
-seed_vals = 1:num_sims
-full_stan_diag <- map(seed_vals, ~read_csv(paste0("results/eirr_closed/mcmc_summaries/mcmc_summary_scenario", 
-                                                             snum, 
+seed = 1:num_sims
+full_stan_diag <- map(seed, ~read_csv(paste0("results/eirr_closed/mcmc_summaries/mcmc_summary_scenario", 
+                                                             sim, 
                                                              "_seed",
                                                              .x,
                                                              ".csv"))) %>%
@@ -43,13 +42,13 @@ full_stan_diag <- map(seed_vals, ~read_csv(paste0("results/eirr_closed/mcmc_summ
             min_ess_tail = min(ess_tail),
             max_ess_tail = max(ess_tail))
 
-write_csv(full_stan_diag, here::here("results", "eirr_closed", paste0("eirr_scenario", snum,  "_allseeds_stan_diag.csv")))
+write_csv(full_stan_diag, here::here("results", "eirr_closed", paste0("eirr_scenario", sim,  "_allseeds_stan_diag.csv")))
 # create final rt frame ---------------------------------------------------
-if (snum != 12) {
-  full_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_full_genecount_obsdata.csv")
+if (sim != 12) {
+  full_simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_full_genecount_obsdata.csv")
   
-} else if (snum == 12) {
-  full_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_fulldata_seiirr.rds")
+} else if (sim == 12) {
+  full_simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_fulldata_seiirr.rds")
   
 }
 full_simdata <- read_csv(full_simdata_address) %>% filter(seed == 1) %>% rename("true_rt" = "Rt")
@@ -58,13 +57,13 @@ full_simdata <- read_csv(full_simdata_address) %>% filter(seed == 1) %>% rename(
 # but then based on how we choose to space apart observations (every two days, every seven etc)
 # there is a max observed time in the data set, we should not judge the model beyond the fitted data (for now)
 # this time should be the same across models (it will be the same for the case models even though they're slightly different)
-fitted_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_fitted_genecount_obsdata.csv")
+fitted_simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_fitted_genecount_obsdata.csv")
 
 fitted_simdata <- read_csv(fitted_simdata_address)
 max_time <- max(fitted_simdata$time)
 
-timevarying_quantiles <- map(seed_vals, ~read_csv(paste0("results/eirr_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
-                                                                    snum,
+timevarying_quantiles <- map(seed, ~read_csv(paste0("results/eirr_closed/generated_quantities/posterior_timevarying_quantiles_scenario",
+                                                                    sim,
                                                                     "_seed",
                                                                     .x,
                                                                     ".csv"))) 
@@ -89,8 +88,8 @@ I_quantiles <- timevarying_quantiles %>%
   ) %>%
   bind_rows(.id = "seed")
 
-write_csv(rt_quantiles, here::here("results", "eirr_closed", paste0("eirr_scenario", snum,  "_allseeds_rt_quantiles.csv")))
-write_csv(I_quantiles, here::here("results", "eirr_closed", paste0("eirr_scenario", snum,  "_allseeds_prevI_quantiles.csv")))
+write_csv(rt_quantiles, here::here("results", "eirr_closed", paste0("eirr_scenario", sim,  "_allseeds_rt_quantiles.csv")))
+write_csv(I_quantiles, here::here("results", "eirr_closed", paste0("eirr_scenario", sim,  "_allseeds_prevI_quantiles.csv")))
 
 # visualize results
 # all credit to Damon Bayer for plot functions 
@@ -109,11 +108,11 @@ make_rt_plot <- function(seed_val) {
     geom_point(aes(time, true_rt), color = "coral1") + 
     scale_y_continuous("Rt", label = comma) +
     scale_x_continuous(name = "Time") +
-    ggtitle(str_c("EIRR Posterior Rt Scenario ", snum, " Seed ", seed_val)) +
+    ggtitle(str_c("EIRR Posterior Rt Scenario ", sim, " Seed ", seed_val)) +
     my_theme
 }
 
-ggsave2(filename = here::here("results", "eirr_closed", paste0("eirr_rt_plots_scenario", snum, ".pdf")),
+ggsave2(filename = here::here("results", "eirr_closed", paste0("eirr_rt_plots_scenario", sim, ".pdf")),
         plot = rt_quantiles %>%
           distinct(seed) %>%
           arrange(seed) %>%

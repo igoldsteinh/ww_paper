@@ -22,13 +22,10 @@ gamma_vec = rlnorm(num_sims, log(1/4), 0.2)
 nu_vec = rlnorm(num_sims,log(1/7), 0.2)
 eta_vec = rlnorm(num_sims,log(1/18), 0.2)
 for (i in 1:1000) {
-  
   gamma = gamma_vec[i]
   nu = nu_vec[i]
   eta = eta_vec[i]
   
-  # print(gamma)
-  print(i)
   counts[[i]] = sim_and_calc_genes(N = 1000, 
                                    I_init = 5, 
                                    beta = 2 * nu, 

@@ -7,7 +7,6 @@ source("src/wastewater_functions.R")
 
 args <- commandArgs(trailingOnly=TRUE)
 
-
 if (length(args) == 0) {
   sim = 1
   seed = 2
@@ -16,7 +15,6 @@ if (length(args) == 0) {
   seed <- as.integer(args[2])
   
 }
-
 
 dir_create(path("results", "eir_cases", "mcmc_summaries"))
 
@@ -65,10 +63,7 @@ max_iteration = max(posterior_samples$.iteration)
 min_iteration = round(max_iteration/2)
 
 
-subset_samples <- subset_draws(posterior_samples, 
-                               # iteration = min_iteration:max_iteration, 
-                               #chain = 1:4
-                               )
+subset_samples <- subset_draws(posterior_samples)
 
 mcmc_summary <- summarise_draws(subset_samples)
 
@@ -127,7 +122,6 @@ write_csv(posterior_timevarying_quantiles, timevarying_quantiles_address)
 rm(posterior_timevarying_quantiles)
 
 rm(posterior_gq_samples_all)
-
 
 # # create posterior predictive quantiles -----------------------------------
 post_pred_address <- paste0("results/eir_cases/posterior_predictive/posterior_predictive_scenario",

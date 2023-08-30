@@ -61,27 +61,23 @@ include(projectdir("src/bayes_eir_cases.jl"))
 ## Load Data
 # choose sim 
 if sim == 1
-    all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
-    overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
-    const phi_sd = overdisp_priors[1, :sd] 
-    const phi_mean = overdisp_priors[1, :mean]
-    dat = subset(all_dat, :seed => ByRow(x -> x == seed))
-
-## Define Priors
-include(projectdir("src/prior_constants_eir_cases.jl"))
-
+  all_dat = CSV.read("data/sim_data/scenario1_fitted_cases_obsdata.csv", DataFrame)
+  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
+  const phi_sd = overdisp_priors[1, :sd] 
+  const phi_mean = overdisp_priors[1, :mean]
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eir_cases.jl"))
 end 
 
 if sim == "real"
- all_dat = CSV.read("data/LA_EIR_data.csv", DataFrame)
- dat = all_dat
- overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
- const phi_sd = overdisp_priors[1, :sd] 
- const phi_mean = overdisp_priors[1, :mean]
-
- ## Define Priors
-include(projectdir("src/prior_constants_eir_cases_LA.jl"))
-
+  all_dat = CSV.read("data/LA_EIR_data.csv", DataFrame)
+  dat = all_dat
+  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
+  const phi_sd = overdisp_priors[1, :sd] 
+  const phi_mean = overdisp_priors[1, :mean]
+  ## Define Priors
+  include(projectdir("src/prior_constants_eir_cases_LA.jl"))
 end 
 
 

@@ -29,8 +29,6 @@ if (sim %in% repeat_scenario1s) {
   scenario_sim = sim
 }
 
-
-
 # priors only -------------------------------------------------------------
 if(priors_only == TRUE) {
 
@@ -57,8 +55,6 @@ if(priors_only == TRUE) {
   
   quit()
 }
-
-
 
 # posterior ---------------------------------------------------------------
 # calculate MCMC diagnostics after burnin
@@ -103,7 +99,6 @@ trace_plot <- lp_df %>%
 
 ggsave(here::here("results", "seirr_student", "mcmc_summaries", paste0("trace_scenario", sim, "_seed", seed, ".png" )), trace_plot, width = 5, height = 5)
 
-
 # create long format fixed samples and time-varying quantiles -----------------
 posterior_gq_samples_all <- subset_samples %>%
   pivot_longer(-c(.iteration, .chain, .draw)) %>%
@@ -137,7 +132,6 @@ rm(posterior_timevarying_quantiles)
 
 rm(posterior_gq_samples_all)
 
-
 # create posterior predictive quantiles -----------------------------------
 post_pred_address <- paste0("results/seirr_student/posterior_predictive/posterior_predictive_scenario",
                             sim, 
@@ -158,7 +152,6 @@ if (sim == 3) {
 }
 
 seirr_post_pred_intervals <- make_post_pred_intervals(seirr_post_pred, simdata, ten_sim = ten_sim_val)
-
 
 post_pred_interval_address <- paste0("results/seirr_student/posterior_predictive/posterior_predictive_intervals_scenario",
                               sim, 

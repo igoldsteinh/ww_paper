@@ -69,10 +69,7 @@ max_iteration = max(posterior_samples$.iteration)
 min_iteration = round(max_iteration/2)
 
 
-subset_samples <- subset_draws(posterior_samples, 
-                               # iteration = min_iteration:max_iteration, 
-                               #chain = 1:4
-                               )
+subset_samples <- subset_draws(posterior_samples)
 
 mcmc_summary <- summarise_draws(subset_samples)
 

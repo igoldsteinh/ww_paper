@@ -39,11 +39,6 @@ end
 mkpath(resultsdir("seir_cases", "generated_quantities"))
 mkpath(resultsdir("seir_cases", "posterior_predictive"))
 
-if sim == 11 | sim == 1111
-fixed = true 
-else 
-fixed = false 
-end 
 
 ## Load Data
 # choose sim 
@@ -89,14 +84,14 @@ my_model = bayes_seir_cases(
   1e-6)
 
 
-  missing_cases = repeat([missing], length(data_cases))
+missing_cases = repeat([missing], length(data_cases))
   
-  my_model_forecast_missing = bayes_seir_cases(
-    missing_cases,
-    obstimes,
-    param_change_times,
-    true,
-    prob,
+my_model_forecast_missing = bayes_seir_cases(
+  missing_cases,
+  obstimes,
+  param_change_times,
+  true,
+  prob,
   1e-9,
   1e-6)
 
@@ -119,7 +114,7 @@ if priors_only
     CSV.write(resultsdir("seir_cases", string("prior_generated_quantities_scenario", sim, ".csv")), DataFrame(prior_gq_randn))
     
     
-        exit()
+    exit()
 end
 
 posterior_samples = load(resultsdir("seir_cases", "posterior_samples", string("posterior_samples", "_scenario", sim, "_seed", seed, ".jld2")))["posterior_samples"][:, :, 1:4]
@@ -127,7 +122,6 @@ posterior_samples = load(resultsdir("seir_cases", "posterior_samples", string("p
 indices_to_keep = .!isnothing.(generated_quantities(my_model, posterior_samples));
 
 posterior_samples_randn = ChainsCustomIndex(posterior_samples, indices_to_keep);
-
 
 Random.seed!(1234)
 predictive_randn = predict(my_model_forecast_missing, posterior_samples_randn)

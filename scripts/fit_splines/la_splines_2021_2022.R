@@ -103,7 +103,6 @@ norm_fitted_plot <- norm_fitted_graph_data %>%
   ylab("Log Counts")+
   xlab("Date")+
   geom_point(aes(x = date, y = log_values), color = "Red") +
-  #ylim(c(.4, 2.5))+
   scale_fill_brewer(name = "Credible Interval Width") +
   theme(legend.position = "None")+
   ggtitle("Norm Spline (not posterior predictive)") 
@@ -178,7 +177,6 @@ student_fitted_plot <- student_fitted_graph_data %>%
   ylab("Log Counts")+
   xlab("Date")+
   geom_point(aes(x = date, y = log_values), color = "Red") +
-  #ylim(c(.4, 2.5))+
   scale_fill_brewer(name = "Credible Interval Width") +
   theme(legend.position = "None")+
   ggtitle("Student Spline (not posterior predictive)") 
@@ -190,7 +188,6 @@ compare_posterior_spline <- student_fitted_plot + norm_fitted_plot
 # case spline
 ca_data <- read_csv(here::here("data", "covid19cases_test.csv"))
 
-# we need to be dumb and scale by the pop size in the simulation
 # assume la has 10 million
 # then the sim has 100K so we need to know the kappa at 0.01 of cases
 la_case_data <- create_weekly_data(ca_data, 

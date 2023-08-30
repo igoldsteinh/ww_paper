@@ -10,7 +10,6 @@ library(latex2exp)
 
 source("src/simulate_stochastic_seirr.R")
 
-
 # our sim 
 pop_size = 100
 r0 = 1.5
@@ -38,7 +37,6 @@ our_daily <- create_daily_data(our_sim[[2]])
 agent_sim <- sim_agent_SEIRR(pop_size, I_init = I_init, beta = beta_indiv, gamma = gamma, nu = nu, eta = eta)
 
 agent_daily <- create_daily_from_agent(agent_sim)
-
 
 # visualize ---------------------------------------------------------------
 truecurve <- our_daily %>% 
@@ -87,7 +85,6 @@ agent_epi_curve <- agentcurve %>%
 compare <- agent_epi_curve + epi_curve
 
 compare
-
 
 # lets do it for 100 ------------------------------------------------------
 num_sims = 10000
@@ -194,7 +191,6 @@ avg_compare <- avgmy_curve + avgagent_curve + plot_layout(guides = "collect")
 
 avg_compare
 
-
 # calculate regular gillespie states --------------------------------------
 num_sims = 10000
 gillespiesims = vector(mode='list', length=num_sims)
@@ -233,9 +229,6 @@ avggillespie = allgillespie %>%
   mean_qi(.width = c(0.5, 0.8, 0.95))   %>%
   rename(Compartment = name) 
 
-
-
-
 level_list <- c("S", "E", "I", "R1")
 
 avggillespie$Compartment <- factor(avggillespie$Compartment, levels=level_list)
@@ -251,11 +244,9 @@ avggillespie_curve <- avggillespie %>%
   my_theme + 
   theme(text = element_text(size = 18)) 
 
-
 full_compare <- avg_compare + avggillespie_curve + plot_layout(guides = "collect")
 
 full_compare
-
 
 # compare by compartment --------------------------------------------------
 allmy <- allmy %>% dplyr::select(id, integer_day, S, E, I, R1) %>% mutate(engine = "Mine")
@@ -399,10 +390,6 @@ for (i in 1:num_sims) {
   my_conc[[i]] = obs_data
   
 }
-
-
-
-
 
 # agent engine ------------------------------------------------------------
 num_sims = 10000

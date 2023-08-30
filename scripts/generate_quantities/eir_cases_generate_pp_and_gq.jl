@@ -50,21 +50,19 @@ if sim == 1
   const phi_mean = overdisp_priors[1, :mean]
   dat = subset(all_dat, :seed => ByRow(x -> x == seed))
 
-## Define Priors
-include(projectdir("src/prior_constants_eir_cases.jl"))
-
+  ## Define Priors
+  include(projectdir("src/prior_constants_eir_cases.jl"))
 end 
 
 if sim == "real"
-all_dat = CSV.read("data/LA_EIR_data.csv", DataFrame)
-dat = all_dat
-overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
-const phi_sd = overdisp_priors[1, :sd] 
-const phi_mean = overdisp_priors[1, :mean]
+  all_dat = CSV.read("data/LA_EIR_data.csv", DataFrame)
+  dat = all_dat
+  overdisp_priors = CSV.read(datadir("sim_data", string("overdisp_priors_sim", sim, ".csv")), DataFrame)
+  const phi_sd = overdisp_priors[1, :sd] 
+  const phi_mean = overdisp_priors[1, :mean]
 
-## Define Priors
-include(projectdir("src/prior_constants_eir_cases_LA.jl"))
-
+  ## Define Priors
+  include(projectdir("src/prior_constants_eir_cases_LA.jl"))
 end 
 
 
@@ -121,7 +119,7 @@ if priors_only
     CSV.write(resultsdir("eir_cases", string("prior_generated_quantities_scenario", sim, "_seed", seed, ".csv")), DataFrame(prior_gq_randn))
     
     
-        exit()
+    exit()
 end
 
 posterior_samples = load(resultsdir("eir_cases", "posterior_samples", string("posterior_samples_scenario", sim, "_seed", seed, ".jld2")))["posterior_samples"][:, :, 1:4]
@@ -145,6 +143,6 @@ CSV.write(resultsdir("eir_cases", "generated_quantities", string("posterior_df",
 # these arbitrary values can cause numerical errors which cause the whole script to fail 
 # to fix the problem, just change the seed, this will change the initial values turing uses 
 
-Random.seed!(seed)
-predictive_randn = predict(my_model_forecast_missing, posterior_samples_randn)
-CSV.write(resultsdir("eir_cases", "posterior_predictive", string("posterior_predictive", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(predictive_randn))
+# Random.seed!(seed)
+# predictive_randn = predict(my_model_forecast_missing, posterior_samples_randn)
+# CSV.write(resultsdir("eir_cases", "posterior_predictive", string("posterior_predictive", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(predictive_randn))

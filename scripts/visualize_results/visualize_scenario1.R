@@ -8,7 +8,6 @@ library(scales)
 library(latex2exp)
 source(here::here("src", "wastewater_functions.R"))
 
-
 # scenario 1 --------------------------------------------------------------
 # read in data, lets just look at 80% CI
 seirr_rt_scenario1 <- read_csv(here::here("results", "seirr_student", "seirr_scenario1_allseeds_rt_quantiles.csv")) %>% 
@@ -29,7 +28,6 @@ my_theme <- list(
   theme_bw(),
   theme())
 
-
 seed = 1
 seirr_scenario1_rt_plot <- seirr_rt_scenario1 %>%
   filter(seed == seed) %>%
@@ -44,8 +42,6 @@ seirr_scenario1_rt_plot <- seirr_rt_scenario1 %>%
   ylab(TeX('$R_{t}$')) +
   theme(legend.position = "none",
         text = element_text(size = 18))
-
-
 
 # swap for eirrc fit ------------------------------------------------------
 scenario_sim = 1
@@ -65,7 +61,6 @@ timevarying_quantiles <- read_csv(paste0("results/eirrc_closed/generated_quantit
                                          seed,
                                          ".csv")) 
 
-
 eirr_rt_scenario1 <- timevarying_quantiles %>%
   filter(name == "rt_t_values") %>%
   rename(week = time) %>%
@@ -73,7 +68,6 @@ eirr_rt_scenario1 <- timevarying_quantiles %>%
   dplyr::select(week,time, new_time, true_rt, value, .lower, .upper, .width,.point, .interval) %>%
   filter(time <= max_time,
          week >= 0)
-
 
 eirr_scenario1_rt_plot <- eirr_rt_scenario1 %>%
   ggplot(aes(time, value, ymin = .lower, ymax = .upper)) +
@@ -88,7 +82,6 @@ eirr_scenario1_rt_plot <- eirr_rt_scenario1 %>%
         legend.background = element_rect(fill = "transparent"),
         text = element_text(size = 18)) +
   ylab(TeX('$R_{t}$')) 
-
 
 # back to normal things ---------------------------------------------------
 seir_scenario1_rt_plot <- seir_rt_scenario1 %>%
@@ -120,7 +113,6 @@ eir_scenario1_rt_plot <- eir_rt_scenario1 %>%
         text = element_text(size = 18)) +
   ylab(TeX('$R_{t}$')) 
   
-
 point_plot <- eir_rt_scenario1 %>% 
                 mutate(Truth = " ") %>%
   ggplot() +
@@ -206,9 +198,6 @@ combined_plot <- (seirr_scenario1_rt_plot + eirr_scenario1_rt_plot) /
 
 ggsave(here::here("figures", "scenario1_example_rt_plot.pdf"), combined_plot, width = 14, height =10)
                  
-
-
-
 # visualize scenario data -------------------------------------------------
 
 seed = 1
@@ -218,7 +207,6 @@ scenario1_truecurve <- read_csv(here::here("data", "sim_data", "scenario1_truecu
 
 scenario1_casedata <- read_csv("data/sim_data/scenario1_fitted_cases_obsdata.csv") %>%
   filter(seed == seed)
-
 
 start_time <- min(scenario1_simdata$time)
 end_time <- max(scenario1_simdata$time)
@@ -282,10 +270,8 @@ rt_plot <- scenario1_truecurve %>%
 
 scenario1_sim_plot_paper <- (epi_curve + rt_plot) / (gene_plot + case_plot)
 scenario1_sim_plot_paper
-# ggsave(here::here("figures", "scenario1_sim_plot.png"), scenario1_sim_plot, width = 6, height = 10)
 
 ggsave(here::here("figures", "scenario1_sim_plot_paper.pdf"), scenario1_sim_plot_paper, width = 11, height = 11)
-
 
 # presentation plot -------------------------------------------------------
 eirr_scenario1_rt_plot <- eirr_rt_scenario1 %>%
@@ -306,7 +292,6 @@ eirr_scenario1_rt_plot <- eirr_rt_scenario1 %>%
 presentation_plot <- epi_curve / gene_plot / eirr_scenario1_rt_plot
 ggsave(here::here("figures", "scenario1_presentationplot.pdf"), presentation_plot, width = 8, height = 10)
 
-
 # compartment plot --------------------------------------------------------
 true_E2I_data <- read_csv(here::here("data", "sim_data", "scenario1_truecasecounts.csv")) %>% 
                  mutate(new_time = time - min(time) + 1) %>% 
@@ -321,8 +306,6 @@ scenario1_true_trajectory <- full_simdata %>% dplyr::select(E, I , R1, new_time)
   bind_rows(true_E2I_data)
 
 traj_names <- c("E", "I", "R1", "Incidence")
-
-
 
 timevarying_quantiles$name[timevarying_quantiles$name == "incid"] = "Incidence"
 posterior_trajectory <- timevarying_quantiles %>%
@@ -401,7 +384,6 @@ eirr_scenario1_fixed_param_plot
 
 ggsave(here::here("figures", "scenario1_fixedparamplot.pdf"), eirr_scenario1_fixed_param_plot, width = 10, height = 10)
 
-
 # posterior predictive ----------------------------------------------------
 
 eirr_scenario1_post_pred_intervals <- read_csv(here::here("results",
@@ -426,7 +408,6 @@ posterior_predictive_plot <- eirr_scenario1_post_pred_intervals %>%
   geom_point(mapping = aes(x = new_time, y = log_gene_copies2), color = "coral1") +
   geom_point(mapping = aes(x = new_time, y = log_gene_copies3), color = "coral1") +
   scale_fill_brewer(name = "Credible Interval Width") +
-  # scale_fill_manual(values=c("skyblue1", "skyblue2", "skyblue3"), name="fill") +
   theme_bw() + 
   ggtitle("EIRR Scenario 1 Posterior Predictive") +
   xlab("Time") +
@@ -436,9 +417,7 @@ posterior_predictive_plot <- eirr_scenario1_post_pred_intervals %>%
 posterior_predictive_plot
 ggsave(here::here("figures", "scenario1_posteriorpredictive.pdf"), posterior_predictive_plot, width = 8, height = 5)
 
-
 # huisman visualization ---------------------------------------------------
-
 
 # scenario 1 --------------------------------------------------------------
 # read in data, lets just look at 80% CI
@@ -466,4 +445,3 @@ huisman_scenario1_rt_plot <- huisman_rt_scenario1 %>%
   ylab(TeX('$R_{t}$')) +
   theme(legend.position = "none",
         text = element_text(size = 18))
-
