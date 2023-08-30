@@ -28,19 +28,19 @@ library(cowplot)
 library(scales)
 library(epidemia)
 source(here::here("src/wastewater_functions.R"))
-snum = "real"
-seed_val = 1
+sim = "real"
+seed = 1
 
 # a hack for dealing with re-using scenario 1 data
 repeat_scenario1s = c(3,4,5,6,7,8,9,10, 12, "frw")
 repeat_scenario41s = c(411, 4111)
 
-if (snum %in% repeat_scenario1s) {
-  scenario_snum = 1
-} else if (snum %in% repeat_scenario41s) {
-  scenario_snum = 41
+if (sim %in% repeat_scenario1s) {
+  scenario_sim = 1
+} else if (sim %in% repeat_scenario41s) {
+  scenario_sim = 41
 } else {
-  scenario_snum = snum
+  scenario_sim = sim
 }
 
 
@@ -50,9 +50,9 @@ if (snum %in% repeat_scenario1s) {
 
 ```{r}
 gq_address <- paste0("vignettes/generated_quantities_scenario", 
-                     snum, 
+                     sim, 
                      "_seed", 
-                     seed_val,
+                     seed,
                      ".csv")
 
 posterior_samples <- read_csv(here::here(gq_address)) %>%
@@ -87,59 +87,59 @@ This code creates quantiles for the posterior predictive for each day there was 
 
 ```{r}
 post_pred_address <- paste0("vignettes/posterior_predictive_scenario",
-                            snum,
+                            sim,
                             "_seed",
-                            seed_val,
+                            seed,
                             ".csv")
 eirr_post_pred <- read_csv(here::here(post_pred_address))
 
-if (snum != "real" & snum != "uci" & snum!= "uci_region1" & snum != "uci_region2" & snum != "uci_region3") {
-  if (snum != 12 & scenario_snum != 41) {
-    simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_fitted_genecount_obsdata.csv")
+if (sim != "real" & sim != "uci" & sim!= "uci_region1" & sim != "uci_region2" & sim != "uci_region3") {
+  if (sim != 12 & scenario_sim != 41) {
+    simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_fitted_genecount_obsdata.csv")
     
     simdata <- read_csv(here::here(simdata_address)) %>%
-      dplyr::filter(seed == seed_val)
+      dplyr::filter(seed == seed)
     
-  } else if (snum == 12) {
-    simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_lump2data_seiirr_100sims.csv")
+  } else if (sim == 12) {
+    simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_lump2data_seiirr_100sims.csv")
     
     simdata <- read_csv(here::here(simdata_address)) %>%
-      dplyr::filter(seed == seed_val)
+      dplyr::filter(seed == seed)
     
-  } else if (scenario_snum == 41) {
+  } else if (scenario_sim == 41) {
     simdata <- read_csv(here::here("data", "sim_data", "scenario41_fitted_obsdata.csv")) 
   }
 
-} else if (snum == "real") {
+} else if (sim == "real") {
   simdata_address <- "data/LA_daily_data_feb2022.csv"
 
   simdata <- read_csv(here::here(simdata_address))
 
-} else if (snum == "uci") {
+} else if (sim == "uci") {
 
   simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data.csv"))
   
-} else if (snum == "uci_region1") {
+} else if (sim == "uci_region1") {
   
   simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region1.csv"))
   
-} else if (snum == "uci_region2") {
+} else if (sim == "uci_region2") {
   
   simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region2.csv"))
   
-} else if (snum == "uci_region3") {
+} else if (sim == "uci_region3") {
   
   simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region3.csv"))
   
 }
 
-if (snum == 3) {
+if (sim == 3) {
   ten_sim_val = TRUE
 } else {
   ten_sim_val = FALSE
 }
 
-if (snum == 4) {
+if (sim == 4) {
   three_mean_val = TRUE
 } else {
   three_mean_val = FALSE

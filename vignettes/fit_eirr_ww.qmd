@@ -38,7 +38,7 @@ Logging.disable_logging(Logging.Warn)
 ```
 
 ## Set number of chains and desired posterior draws
-Note: the model automatically discards `n_samples` as burn-in, that is, when `n_samples=10`, 20 samples are generated, the latter half is kept as the posterior samples.
+Note: the model automatically discards `n_samples` as burn-in, that is, when `n_samples=10`, 20 samples are generated, the latter half is kept as the final mcmc samples.
 ```{julia}
 ## Control Parameters
 n_samples = 10 #to recreate the analysis in the paper, set to 250
@@ -250,7 +250,7 @@ for i in 1:length(index)
 end 
 ```
 
-Next load the model, which takes two files, one defining the closed form solution to the system of ODES, and the other defining the model in the Turing. 
+Next load the model, which takes two files, one defining the closed form solution to the system of ODES, and the other defining the model in Turing. 
 ```{julia}
 ## Define closed form solution
 include(projectdir("src/newnew_closed_soln_eirr_withincid.jl"))
@@ -267,7 +267,8 @@ my_model = new_bayes_eirrc_closed!(
     index)
 ```
 
-To sample from the posterior, we first generate initial values which are the MAP estimates of the model plus some noise. 
+To sample from the posterior, we first generate initial values which are the MAP estimates of the model plus some Gaussian noise. 
+Note the model is non-centered, so all parameters but for one are on the scale of a standard normal random variable. 
 We find the MAP from 10 starting plces and choose the best of the 10 possible MAPs.
 
 ```{julia}
@@ -301,7 +302,7 @@ The next step is to center the results (most parameters in the raw results are n
     grid_size,
     index)
   
-# sometimes there NAs in the final posterior, this removes those samples
+# sometimes there are NAs in the final posterior, this removes those samples
 indices_to_keep = .!isnothing.(generated_quantities(my_model, posterior_samples));
 
 posterior_samples_randn = ChainsCustomIndex(posterior_samples, indices_to_keep);
@@ -317,6 +318,7 @@ gq_randn = get_gq_chains(my_model, posterior_samples_randn);
 CSV.write(projectdir("vignettes", string("generated_quantities", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(gq_randn))
 CSV.write(projectdir("vignettes", string("posterior_predictive", "_scenario", sim, "_seed", seed,  ".csv")), DataFrame(predictive_randn))
 
+# this dataframe is saved in order to later visualize traces of the log likelihood 
 posterior_df = DataFrame(posterior_samples)
 CSV.write(projectdir("vignettes", string("posterior_df", "_scenario", sim, "_seed", seed, ".csv")), DataFrame(posterior_samples))
 ```
