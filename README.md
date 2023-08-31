@@ -67,7 +67,7 @@ When executing code from this repo, be mindful of your project directory; the `J
 If you are executing code outside of this project, the packages you installed as part of the environment will not be available. 
 
 ## Quarto and Julia
-The [vignettes folder](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two Quarto vignettes which condense the model fitting workflow into one [`Julia` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/fit_eirr_ww.qmd) and one [`R` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/process_eirr_ww.qmd) that demonstrate how to fit the EIRR-ww model to the Los Angeles wastewater data. 
+The [vignettes folder](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two Quarto vignettes which condense the model fitting workflow into one [`Julia` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/fit_eirr_ww.qmd) that demonstrate how to fit the EIRR-ww model to the Los Angeles wastewater data via MCMC and one [`R` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/process_eirr_ww.qmd) that uses the saved `csv` files produced by the `fit_eirr_ww.qmd` vignette to visualize the saved MCMC results. 
 We recommend starting with these vignettes, as they provide more detailed explanations of the code than the original scripts.
 
 To execute the vignettes, we recommend using the IDE [VS Code](https://code.visualstudio.com) with the [`Julia`](https://code.visualstudio.com/docs/languages/julia) and [Quarto](https://quarto.org/docs/tools/vscode.html) extensions. 
