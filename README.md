@@ -109,11 +109,34 @@ Here is a key:
 * `estimgamma` = `Rt-estim-gamm`
 * `eirr` = `EIRR-ww with ODE solver` 
 
-## Stan and Epidemia
-We utilize multiple `Stan` models in this project. Installation instructions for `Stan` are available [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
-We also use the [`Epidema` package](https://imperialcollegelondon.github.io/epidemia/index.html) to construct a model which estimates Rt from cases for the sake of comparison. `Epidemia` is only available on Github. 
+## Fitting the Huisman model
+To fit the Huisman model use [fit_huisman.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_huisman.R). To visualize the results, use the code in [visualize_fit_to_LA_data.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/visualize_results/visualize_fit_to_LA.R) and [visualize_frequentist_metrics.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/visualize_results/visualize_frequentist_metrics.R). 
+
+You'll need to install some packages, use the code below to do so:
+```
+install.packages(c("tidyverse",
+                   "lubridate",
+                   "patchwork",
+                   "viridis",
+                   "EpiEstim",
+                   "zoo",
+                   "tidybayes"))
+```
+## Fitting Epidemia and Rt-estim-gamma models
+To fit the Epidemia and Rt-estim-gamma model, use [fit_epidemia.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_epidemia.R) and [fit_estimgamma.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_estimgamma.R) visualize the results using [visualize_fit_to_LA_data.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/visualize_results/visualize_fit_to_LA.R).
+Again, you'll need specialized packages to run these models. 
+Both models are written in `Stan`, installation instructions for `rstan` are available [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
+We also use the [`Epidema` package](https://imperialcollegelondon.github.io/epidemia/index.html), which is only available on Github. 
+
 The following code installs `Epidemia`. 
 ```
 #install.packages("devtools")
 devtools::install_github("ImperialCollegeLondon/epidemia")
+```
+To install other needed packages, use the code below:
+```
+install.packages(c("brms",
+                   "truncnorm",
+                   "sdprisk",
+                   "rstanarm"))
 ```

@@ -12,18 +12,18 @@ args <- commandArgs(trailingOnly=TRUE)
 
 
 if (length(args) == 0) {
-  snum = 1
-  seed_val = 1
-  scenario_snum = snum
+  sim = 1
+  seed = 1
+  scenario_sim = sim
 } else {
-  snum <- as.integer(args[1])
-  seed_val <- as.integer(args[2])
+  sim <- as.integer(args[1])
+  seed <- as.integer(args[2])
   
 }
 
 all_data <- read_csv("data/sim_data/scenario1_fitted_genecount_obsdata.csv")
 
-data <- all_data %>% filter(seed == seed_val)
+data <- all_data %>% filter(seed == seed)
 
 start_time <- min(data$time)
 
@@ -33,7 +33,7 @@ fake_date_zero <- ymd("20220109")
 
 fake_dates <- seq.Date(fake_date_zero, length.out = 133, by = "day")
 
-full_simdata_address <- paste0("data/sim_data/scenario", scenario_snum, "_full_genecount_obsdata.csv")
+full_simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_full_genecount_obsdata.csv")
 
 full_simdata <- read_csv(full_simdata_address) %>% filter(seed == 1) %>% rename("true_rt" = "Rt",
                                                                                 "r0" = "R0")
@@ -46,8 +46,8 @@ full_simdata <- cbind(full_simdata, date = fake_dates)
 rt_quantiles <- NULL
 # attach results to data ---------------------------------------------
 for (i in 1:100){
-  seed_val = i
-  data <- all_data %>% filter(seed == seed_val)
+  seed = i
+  data <- all_data %>% filter(seed == seed)
   
   scenario1_huisman_rt <- calculate_huisman_rt(data, sim = TRUE, mean_si = 11, std_si = sqrt(65))
   
@@ -56,7 +56,7 @@ for (i in 1:100){
     right_join(full_simdata, by = "date") %>%
     dplyr::select(date,time, true_rt, median_R_mean, median_R_highHPD, median_R_lowHPD) %>% 
     drop_na() %>% 
-    mutate(seed = seed_val)
+    mutate(seed = seed)
   
   rt_quantiles <- bind_rows(rt_quantiles, sim_rt_quantiles)
   

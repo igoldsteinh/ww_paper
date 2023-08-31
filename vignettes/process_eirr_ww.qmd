@@ -8,28 +8,29 @@ editor: visual
 
 ## Overview
 
-This document shows how to use `R` code to process MCMC samples from the EIRR-ww model generated in `Julia` to create dataframes used to summarise frequentist metrics and visualize results. 
-This document combines code from `scripts/process_results/process_results_eirrc_closed.R` and `scripts/visualize_results/visualize_fit_to_LA.R`.
+This document shows how to use `R` code to process MCMC samples from the EIRR-ww model generated in `Julia` to create dataframes used to summarise frequentist metrics and visualize results. This document combines code from `scripts/process_results/process_results_eirrc_closed.R` and `scripts/visualize_results/visualize_fit_to_LA.R`.
 
 ## Install libraries
-```{r}
+
+```{# {r}
+#| eval: false
 install.packages(c("tidyverse", 
-                   "tidybayes",
-                   "posterior",
-                   "fs", 
-                   "GGally",
-                   "gridExtra",
-                   "cowplot",
-                   "scales",
-                   "lubridate",
-                   "viridis",
-                   "EpiEstim",
-                   "zoo"))
+                    "tidybayes",
+                    "posterior",
+                    "fs", 
+                    "GGally",
+                    "gridExtra",
+                    "cowplot",
+                    "scales",
+                    "lubridate",
+                    "viridis",
+                    "EpiEstim",
+                    "zoo"))
 ```
+
 ## Load libraries, choose simulation and seed
 
-For a list of the meanings of the possible scenarios, see `vignettes/fit_eirr_ww.qmd`. 
-This document defaults to assuming `sim="real` and `seed=1` as in the previous vignette.
+For a list of the meanings of the possible scenarios, see `vignettes/fit_eirr_ww.qmd`. This document defaults to assuming `sim="real` and `seed=1` as in the previous vignette.
 
 ```{r}
 #| output: false
@@ -82,7 +83,8 @@ mcmc_summary <- summarise_draws(subset_samples)
 ```
 
 ## create long format mcmc samples
-This code creates two dataframes: one with the mcmc samples for non-time-varying parameters, the other quantiles of the time-varying parameters. 
+
+This code creates two dataframes: one with the mcmc samples for non-time-varying parameters, the other quantiles of the time-varying parameters.
 
 ```{r}
 posterior_gq_samples_all <- subset_samples  %>%
@@ -97,6 +99,7 @@ posterior_timevarying_quantiles <- make_timevarying_posterior_quantiles(posterio
 ```
 
 ## create posterior predictive quantiles
+
 This code creates quantiles for the posterior predictive for each day there was observed data
 
 ```{r}
@@ -163,8 +166,8 @@ eirr_post_pred_intervals <- make_post_pred_intervals(eirr_post_pred, simdata, te
 ```
 
 ## Visualizing the posterior of Rt
-Once the time-varying quantiles have been created, we can visualize them. 
-In this vignette, we visualize the quantiles of Rt for Los Angeles, CA. 
+
+Once the time-varying quantiles have been created, we can visualize them. In this vignette, we visualize the quantiles of Rt for Los Angeles, CA.
 
 ```{r}
 # first read in the data
