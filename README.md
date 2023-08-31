@@ -1,6 +1,6 @@
 # ww_paper
 
-This repository has all code needed to recreate the analyses conducted in the paper Semiparametric Inference of Effective Reproduction Number Dynamics from Wastewater Pathogen Surveillance Data. 
+This repository has all code needed to recreate the analyses conducted in the paper [Semiparametric Inference of Effective Reproduction Number Dynamics from Wastewater Pathogen Surveillance Data](https://arxiv.org/abs/2308.15770). 
 Models were fit in `Julia`, while simulation of synthetic data, and visualization of results was done in `R`. 
 To set up the `Julia` project, follow the instructions [here](https://pkgdocs.julialang.org/v1/environments/#Using-someone-else's-project).
 [`R`](https://github.com/igoldsteinh/concRt) and [`Julia`](https://github.com/igoldsteinh/concRt.jl) packages which implement the models described in the paper are also available. 
@@ -70,7 +70,7 @@ If you are executing code outside of this project, the packages you installed as
 The [vignettes folder](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two Quarto vignettes which condense the model fitting workflow into one [`Julia` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/fit_eirr_ww.qmd) and one [`R` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/process_eirr_ww.qmd) that demonstrate how to fit the EIRR-ww model to the Los Angeles wastewater data. 
 We recommend starting with these vignettes, as they provide more detailed explanations of the code than the original scripts.
 
-To execute the vignettes, we recommend using the IDE [VS Code](https://code.visualstudio.com) with the (Julia)[https://code.visualstudio.com/docs/languages/julia] and (Quarto)[https://quarto.org/docs/tools/vscode.html] extensions. 
+To execute the vignettes, we recommend using the IDE [VS Code](https://code.visualstudio.com) with the [Julia](https://code.visualstudio.com/docs/languages/julia) and [Quarto](https://quarto.org/docs/tools/vscode.html) extensions. 
 Additional information on compiling Julia Quarto files is available [here](https://quarto.org/docs/computations/julia.html). 
 You can also run each chunk of Julia code by copy pasting it into the REPL.
 
@@ -111,7 +111,7 @@ Here is a key:
 * `eirr` = `EIRR-ww with ODE solver` 
 
 ## Stan and Epidemia
-We utilize multiple `Stan` multiples in this project. Installation instructions for `Stan` are available [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
+We utilize multiple `Stan` models in this project. Installation instructions for `Stan` are available [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
 We also use the [`Epidema` package](https://imperialcollegelondon.github.io/epidemia/index.html) to construct a model which estimates Rt from cases for the sake of comparison. `Epidemia` is only available on Github. 
 The following code installs `Epidemia`. 
 ```
