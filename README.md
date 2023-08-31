@@ -67,12 +67,12 @@ When executing code from this repo, be mindful of your project directory; the `J
 If you are executing code outside of this project, the packages you installed as part of the environment will not be available. 
 
 ## Quarto and Julia
-The [vignettes folder](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two Quarto vignettes which condense the model fitting workflow into one [`Julia` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/fit_eirr_ww.qmd) that demonstrate how to fit the EIRR-ww model to the Los Angeles wastewater data via MCMC and one [`R` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/process_eirr_ww.qmd) that uses the saved `csv` files produced by the `fit_eirr_ww.qmd` vignette to visualize the saved MCMC results. 
+The [vignettes folder](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two Quarto vignettes which condense the model fitting workflow into one [`Julia` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/fit_eirr_ww.qmd) that demonstrates how to fit the EIRR-ww model to the Los Angeles wastewater data via MCMC and one [`R` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/process_eirr_ww.qmd) that uses the results of the `Julia` vignette to visualize the saved MCMC results. 
 We recommend starting with these vignettes, as they provide more detailed explanations of the code than the original scripts.
 
 To execute the vignettes, we recommend using the IDE [VS Code](https://code.visualstudio.com) with the [`Julia`](https://code.visualstudio.com/docs/languages/julia) and [Quarto](https://quarto.org/docs/tools/vscode.html) extensions. 
 Additional information on compiling `Julia` Quarto files is available [here](https://quarto.org/docs/computations/julia.html). 
-You can also run each chunk of `Julia` code by copy pasting it into the REPL (the inteactive Julia environment that opens when you type `julia` in the terminal).
+You can also run each chunk of `Julia` code by copy pasting it into the REPL (the interactive Julia environment that opens when you type `julia` in the terminal).
 
 ## Model fitting workflow
 The original workflow for the main models involves multiple files. As an example, to generate results from the the EIRR-ww model, use [fit_eirrc_closed.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_eirrc_closed.jl) to fit the model, then [eirrc_closed_generate_pp_and_gq.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/generate_quantities/eirrc_closed_generate_pp_and_gq.jl) to re-scale the posterior and generate posterior predictive values, finally [process_results_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/process_results_eirrc_closed.R) creates tidy versions of the posterior and posterior predictive summaries.
@@ -124,7 +124,6 @@ install.packages(c("tidyverse",
 ```
 ## Fitting Epidemia and Rt-estim-gamma models
 To fit the Epidemia and Rt-estim-gamma model, use [fit_epidemia.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_epidemia.R) and [fit_estimgamma.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_estimgamma.R) visualize the results using [visualize_fit_to_LA_data.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/visualize_results/visualize_fit_to_LA.R).
-Again, you'll need specialized packages to run these models. 
 Both models are written in `Stan`, installation instructions for `rstan` are available [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
 We also use the [`Epidema` package](https://imperialcollegelondon.github.io/epidemia/index.html), which is only available on Github. 
 
