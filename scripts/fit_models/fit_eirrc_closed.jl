@@ -45,7 +45,7 @@ mkpath(resultsdir("eirrc_closed"))
 mkpath(resultsdir("eirrc_closed", "posterior_samples"))
 
 ## Control Parameters
-n_samples = 250
+n_samples = 10
 n_chains = 4
 
 
@@ -260,7 +260,7 @@ MAP_noise = [MAP_noise[:,i] for i in 1:size(MAP_noise,2)]
 init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 
 Random.seed!(seed)
-posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, 4, discard_initial = n_samples, init_params = init)
+posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples, init_params = init)
 
 wsave(resultsdir("eirrc_closed", "posterior_samples", string("posterior_samples_scenario", sim, "_seed", seed, ".jld2")), @dict posterior_samples)
 

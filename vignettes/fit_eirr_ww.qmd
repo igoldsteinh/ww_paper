@@ -286,7 +286,7 @@ init = repeat([MAP_init], n_chains) .+ 0.05 * MAP_noise
 Finally, fit the model: 
 ```{julia}
 Random.seed!(seed)
-posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, 4, discard_initial = n_samples, init_params = init)
+posterior_samples = sample(my_model, NUTS(), MCMCThreads(), n_samples, n_chains, discard_initial = n_samples, init_params = init)
 ```
 
 The next step is to center the results (most parameters in the raw results are non-centered) and generate samples to estimate quantiles from the posterior predictive:
