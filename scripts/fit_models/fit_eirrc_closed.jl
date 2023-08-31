@@ -127,6 +127,7 @@ if sim == 3
                                           :log_gene_copies10])
   long_dat = filter(:value => value -> value > 0, long_dat)
   data_log_copies = long_dat[:, :value]
+  grid_size = 1.0
 end 
 
 ### mean of 3 replicates--EIRR (3 mean)
@@ -151,6 +152,7 @@ if sim == 5
   subset_dat = dat[:, [:new_time, :log_mean_copiesten]]
   long_dat = subset_dat
   data_log_copies = long_dat[:, :log_mean_copiesten]
+  grid_size = 1.0
 end 
 
 ### 1 replicate--EIRR (1)
@@ -163,6 +165,7 @@ if sim == 6
   subset_dat = dat[:, [:new_time, :log_gene_copies1]]
   long_dat = subset_dat
   data_log_copies = long_dat[:, :log_gene_copies1]
+  grid_size = 1.0
 end 
 
 ### lambda centered at 0.8--Low Prop
@@ -176,6 +179,7 @@ if sim == 8
   long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
   long_dat = filter(:value => value -> value > 0, long_dat)
   data_log_copies = long_dat[:, :value]
+  grid_size = 1.0
 end 
 
 ### E and I iniital compartments centered low--Low Init
@@ -189,6 +193,7 @@ if sim == 9
   long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
   long_dat = filter(:value => value -> value > 0, long_dat)
   data_log_copies = long_dat[:, :value]
+  grid_size = 1.0
 end 
 
 ### E and I iniital compartments centered high--High Init
@@ -202,6 +207,7 @@ if sim == 10
   long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
   long_dat = filter(:value => value -> value > 0, long_dat)
   data_log_copies = long_dat[:, :value]
+  grid_size = 1.0
 end 
 
 

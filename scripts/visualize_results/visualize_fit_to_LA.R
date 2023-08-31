@@ -6,7 +6,7 @@ library(cowplot)
 library(scales)
 library(epidemia)
 source(here::here("src", "wastewater_functions.R"))
-
+source(here::here("src", "rt_estim_gamma_functions.R"))
 # read in LA data ---------------------------------------------------------
 
 seed = 1

@@ -11,7 +11,7 @@ library(cowplot)
 library(gridExtra)
 
 source("src/wastewater_functions.R")
-
+source("src/rt_estim_gamma_functins.R")
 file_name <- "LA_estimgamma_posterior.rds"
 posterior <- read_rds(here::here("results", "estimgamma", file_name))
 

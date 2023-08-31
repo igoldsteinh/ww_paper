@@ -64,11 +64,18 @@ If you kept the `Manifest.toml`, the exact `Julia` package versions used to gene
 If you did not, possibly newer versions of the packages will be downloaded instead. 
 It would be surprising if newer versions of the packages led to different results. 
 More information on `Julia` environments is available in the [Environments documentation](https://pkgdocs.julialang.org/v1/environments/#Using-someone-else's-project).
+When executing code from this repo, be mindful of your project directory; the `Julia` environment is specific to the project. 
+If you are executing code outside of this project, the packages you installed as part of the environment will not be available. 
 
-## Model fitting workflow
+## Quarto and Julia
 The [vignettes folder](https://github.com/igoldsteinh/ww_paper/tree/main/vignettes) has two Quarto vignettes which condense the model fitting workflow into one [`Julia` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/fit_eirr_ww.qmd) and one [`R` vignette](https://github.com/igoldsteinh/ww_paper/blob/main/vignettes/process_eirr_ww.qmd) that demonstrate how to fit the EIRR-ww model to the Los Angeles wastewater data. 
 We recommend starting with these vignettes, as they provide more detailed explanations of the code than the original scripts.
 
+To execute the vignettes, we recommend using the IDE [VS Code](https://code.visualstudio.com) with the (Julia)[https://code.visualstudio.com/docs/languages/julia] and (Quarto)[https://quarto.org/docs/tools/vscode.html] extensions. 
+Additional information on compiling Julia Quarto files is available [here](https://quarto.org/docs/computations/julia.html). 
+
+## Quarto Vignettes
+## Model fitting workflow
 The original workflow for the main models involves multiple files. As an example, to generate results from the the EIRR-ww model, [fit_eirrc_closed.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_eirrc_closed.jl) is used to fit the model, then [eirrc_closed_generate_pp_and_gq.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/generate_quantities/eirrc_closed_generate_pp_and_gq.jl) to re-scale the posterior and generate posterior predictive values, finally [process_results_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/process_results_eirrc_closed.R) creates tidy versions of the posterior and posterior predictive summaries.
 When summarising results from multiple simulations, [summarise_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/summarise_eirrc_closed.R) creates summary outputs. 
 Similarly named files exist for all models used in the paper. 
@@ -102,3 +109,12 @@ Here is a key:
 * `epidemia` = `Epidemia`
 * `estimgamma` = `Rt-estim-gamm`
 * `eirr` = `EIRR-ww with ODE solver` 
+
+## Stan and Epidemia
+We utilize multiple `Stan` multiples in this project. Installation instructions for `Stan` are available [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
+We also use the (`Epidema` package)[https://imperialcollegelondon.github.io/epidemia/index.html] to construct a model which estimates Rt from cases for the sake of comparison. `Epidemia` is only available on Github. 
+The following code installs `Epidemia`. 
+```
+#install.packages("devtools")
+devtools::install_github("ImperialCollegeLondon/epidemia")
+```

@@ -6,7 +6,7 @@ library(patchwork)
 library(EpiEstim)
 library(lubridate)
 source("src/wastewater_functions.R")
-
+source("src/rt_estim_gamma_functions.R")
 options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
 

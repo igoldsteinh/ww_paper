@@ -11,6 +11,21 @@ editor: visual
 This document shows how to use `R` code to process MCMC samples from the EIRR-ww model generated in `Julia` to create dataframes used to summarise frequentist metrics and visualize results. 
 This document combines code from `scripts/process_results/process_results_eirrc_closed.R` and `scripts/visualize_results/visualize_fit_to_LA.R`.
 
+## Install libraries
+```{r}
+install.packages(c("tidyverse", 
+                   "tidybayes",
+                   "posterior",
+                   "fs", 
+                   "GGally",
+                   "gridExtra",
+                   "cowplot",
+                   "scales",
+                   "lubridate",
+                   "viridis",
+                   "EpiEstim",
+                   "zoo"))
+```
 ## Load libraries, choose simulation and seed
 
 For a list of the meanings of the possible scenarios, see `vignettes/fit_eirr_ww.qmd`. 
@@ -26,7 +41,6 @@ library(GGally)
 library(gridExtra)
 library(cowplot)
 library(scales)
-library(epidemia)
 source(here::here("src/wastewater_functions.R"))
 sim = "real"
 seed = 1
