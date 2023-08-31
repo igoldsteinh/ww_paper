@@ -3,7 +3,6 @@
 This repository has all code needed to recreate the analyses conducted in the paper Semiparametric Inference of Effective Reproduction Number Dynamics from Wastewater Pathogen Surveillance Data. 
 Models were fit in `Julia`, while simulation of synthetic data, and visualization of results was done in `R`. 
 To set up the `Julia` project, follow the instructions [here](https://pkgdocs.julialang.org/v1/environments/#Using-someone-else's-project).
-If you want to execute this code using a different version of `Julia` than originally used, delete the [Manifest.toml](https://github.com/igoldsteinh/ww_paper/blob/main/Manifest.toml) file.
 [`R`](https://github.com/igoldsteinh/concRt) and [`Julia`](https://github.com/igoldsteinh/concRt.jl) packages which implement the models described in the paper are also available. 
 All results files needed to reproduce the figures are in the repo, individual simulation results are excluded for the sake of storage.
 
@@ -64,7 +63,7 @@ If you kept the `Manifest.toml`, the exact `Julia` package versions used to gene
 If you did not, possibly newer versions of the packages will be downloaded instead. 
 It would be surprising if newer versions of the packages led to different results. 
 More information on `Julia` environments is available in the [Environments documentation](https://pkgdocs.julialang.org/v1/environments/#Using-someone-else's-project).
-When executing code from this repo, be mindful of your project directory; the `Julia` environment is specific to the project. 
+When executing code from this repo, be mindful of your project directory; the `Julia` package versions are specific to the project environment. 
 If you are executing code outside of this project, the packages you installed as part of the environment will not be available. 
 
 ## Quarto and Julia
@@ -112,7 +111,7 @@ Here is a key:
 
 ## Stan and Epidemia
 We utilize multiple `Stan` multiples in this project. Installation instructions for `Stan` are available [here](https://github.com/stan-dev/rstan/wiki/RStan-Getting-Started).
-We also use the (`Epidema` package)[https://imperialcollegelondon.github.io/epidemia/index.html] to construct a model which estimates Rt from cases for the sake of comparison. `Epidemia` is only available on Github. 
+We also use the [`Epidema` package](https://imperialcollegelondon.github.io/epidemia/index.html) to construct a model which estimates Rt from cases for the sake of comparison. `Epidemia` is only available on Github. 
 The following code installs `Epidemia`. 
 ```
 #install.packages("devtools")
