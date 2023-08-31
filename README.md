@@ -72,10 +72,11 @@ We recommend starting with these vignettes, as they provide more detailed explan
 
 To execute the vignettes, we recommend using the IDE [VS Code](https://code.visualstudio.com) with the (Julia)[https://code.visualstudio.com/docs/languages/julia] and (Quarto)[https://quarto.org/docs/tools/vscode.html] extensions. 
 Additional information on compiling Julia Quarto files is available [here](https://quarto.org/docs/computations/julia.html). 
+You can also run each chunk of Julia code by copy pasting it into the REPL.
 
 ## Quarto Vignettes
 ## Model fitting workflow
-The original workflow for the main models involves multiple files. As an example, to generate results from the the EIRR-ww model, [fit_eirrc_closed.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_eirrc_closed.jl) is used to fit the model, then [eirrc_closed_generate_pp_and_gq.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/generate_quantities/eirrc_closed_generate_pp_and_gq.jl) to re-scale the posterior and generate posterior predictive values, finally [process_results_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/process_results_eirrc_closed.R) creates tidy versions of the posterior and posterior predictive summaries.
+The original workflow for the main models involves multiple files. As an example, to generate results from the the EIRR-ww model, use [fit_eirrc_closed.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/fit_models/fit_eirrc_closed.jl) to fit the model, then [eirrc_closed_generate_pp_and_gq.jl](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/generate_quantities/eirrc_closed_generate_pp_and_gq.jl) to re-scale the posterior and generate posterior predictive values, finally [process_results_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/process_results_eirrc_closed.R) creates tidy versions of the posterior and posterior predictive summaries.
 When summarising results from multiple simulations, [summarise_eirrc_closed.R](https://github.com/igoldsteinh/ww_paper/blob/main/scripts/process_results/summarise_eirrc_closed.R) creates summary outputs. 
 Similarly named files exist for all models used in the paper. 
 
