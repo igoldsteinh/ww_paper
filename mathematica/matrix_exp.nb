@@ -1,0 +1,3093 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    135940,       3085]
+NotebookOptionsPosition[    133007,       3025]
+NotebookOutlinePosition[    133472,       3043]
+CellTagsIndexPosition[    133429,       3040]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.877730729159338*^9, 3.8777307421275353`*^9}, {
+   3.8777307788458147`*^9, 3.8777308746643224`*^9}, {3.8777309172022905`*^9, 
+   3.8777309318567443`*^9}, {3.877730975048706*^9, 3.877730979919942*^9}, {
+   3.877731064891955*^9, 3.8777310664629827`*^9}, 
+   3.8777341122651653`*^9},ExpressionUUID->"361027a8-881a-45d3-913e-\
+8f7db609272c"],
+
+Cell[BoxData[
+ RowBox[{"mat", " ", "=", " ", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "gamma"}], ",", " ", "alpha", ",", " ", "0", ",", " ", 
+       "0"}], "}"}], ",", " ", "\[IndentingNewLine]", "\t   ", 
+     RowBox[{"{", 
+      RowBox[{"gamma", ",", " ", 
+       RowBox[{"-", "nu"}], ",", " ", "0", ",", " ", "0"}], "}"}], ",", " ", 
+     "\[IndentingNewLine]", "\t   ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "nu", ",", " ", 
+       RowBox[{"-", "eta"}], ",", " ", "0"}], "}"}], ",", " ", 
+     "\[IndentingNewLine]", "\t    ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "0", ",", " ", "eta", ",", " ", "0"}], "}"}]}], 
+    "}"}], "//", "MatrixForm"}]}]], "Input",
+ CellChangeTimes->{{3.8777307532374334`*^9, 3.8777307532374334`*^9}, 
+   3.877730852026648*^9, {3.8777309402280555`*^9, 3.8777309449180503`*^9}, {
+   3.877731044275075*^9, 3.877731046456108*^9}, 
+   3.891357420415584*^9},ExpressionUUID->"9d82e54e-ebec-4cb2-8053-\
+eb118787d891"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"-", "gamma"}], "alpha", "0", "0"},
+     {"gamma", 
+      RowBox[{"-", "nu"}], "0", "0"},
+     {"0", "nu", 
+      RowBox[{"-", "eta"}], "0"},
+     {"0", "0", "eta", "0"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Input",
+ CellChangeTimes->{{3.8777340894510794`*^9, 
+  3.8777340894510794`*^9}},ExpressionUUID->"ad2f3bb1-d1df-4f10-87e1-\
+5100646c8280"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"MatrixExp", "[", 
+   RowBox[{
+    TagBox[
+     RowBox[{"(", "\[NoBreak]", GridBox[{
+        {
+         RowBox[{"-", "gamma"}], "alpha", "0", "0"},
+        {"gamma", 
+         RowBox[{"-", "nu"}], "0", "0"},
+        {"0", "nu", 
+         RowBox[{"-", "eta"}], "0"},
+        {"0", "0", "eta", "0"}
+       },
+       GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+       GridBoxSpacings->{"Columns" -> {
+           Offset[0.27999999999999997`], {
+            Offset[0.7]}, 
+           Offset[0.27999999999999997`]}, "Rows" -> {
+           Offset[0.2], {
+            Offset[0.4]}, 
+           Offset[0.2]}}], "\[NoBreak]", ")"}],
+     Function[BoxForm`e$, 
+      MatrixForm[BoxForm`e$]]], "t"}], " ", "]"}], "//", " ", 
+  "MatrixForm"}]], "Input",
+ CellChangeTimes->{{3.877730969490344*^9, 3.877730969490344*^9}, {
+   3.8777310084629555`*^9, 3.8777310179970255`*^9}, {3.8777310557295856`*^9, 
+   3.8777310573768516`*^9}, {3.877731089019458*^9, 3.8777311230462213`*^9}, {
+   3.877731167477816*^9, 3.8777311907033463`*^9}, 
+   3.87773409523352*^9},ExpressionUUID->"152720dd-3638-4dcd-aaf2-\
+d595b2af32f0"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"gamma", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "alpha"}], " ", "gamma"}], "+", 
+              RowBox[{"alpha", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "nu"}], ")"}]}]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "gamma"}], "-", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "gamma"}], ")"}], " ", 
+               "gamma"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "+", "nu", "-", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}]}], ")"}]}], 
+        RowBox[{
+         RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+         RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "gamma"}], "-", "nu", "-", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "3"}], " ", "eta"}], "+", 
+            RowBox[{"3", " ", "gamma"}], "+", 
+            RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"gamma", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "alpha"}], " ", "gamma"}], "+", 
+              RowBox[{"alpha", " ", 
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "nu"}], ")"}]}]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "gamma"}], "-", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "gamma"}], ")"}], " ", 
+               "gamma"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "+", "nu", "+", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}]}], ")"}]}], 
+        RowBox[{
+         RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+         RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "gamma"}], "-", "nu", "+", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "3"}], " ", "eta"}], "+", 
+            RowBox[{"3", " ", "gamma"}], "+", 
+            RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}]]}], 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", 
+            SuperscriptBox["alpha", "2"], " ", "gamma"}], "+", 
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "+", 
+           RowBox[{"alpha", " ", 
+            SuperscriptBox["gamma", "2"]}], "+", 
+           RowBox[{"alpha", " ", "eta", " ", "nu"}], "+", 
+           RowBox[{"alpha", " ", 
+            SuperscriptBox["nu", "2"]}], "+", 
+           RowBox[{"alpha", " ", "eta", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "+", 
+           RowBox[{"alpha", " ", "gamma", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "+", 
+           RowBox[{"alpha", " ", "nu", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "-", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]], 
+       "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", 
+            SuperscriptBox["alpha", "2"], " ", "gamma"}], "+", 
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "+", 
+           RowBox[{"alpha", " ", 
+            SuperscriptBox["gamma", "2"]}], "+", 
+           RowBox[{"alpha", " ", "eta", " ", "nu"}], "+", 
+           RowBox[{"alpha", " ", 
+            SuperscriptBox["nu", "2"]}], "-", 
+           RowBox[{"alpha", " ", "eta", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "-", 
+           RowBox[{"alpha", " ", "gamma", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "-", 
+           RowBox[{"alpha", " ", "nu", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "+", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]]}], 
+      "0", "0"},
+     {
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", "alpha", " ", 
+            SuperscriptBox["gamma", "2"]}], "+", 
+           RowBox[{"eta", " ", 
+            SuperscriptBox["gamma", "2"]}], "+", 
+           SuperscriptBox["gamma", "3"], "+", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{"gamma", " ", 
+            SuperscriptBox["nu", "2"]}], "+", 
+           RowBox[{"eta", " ", "gamma", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "+", 
+           RowBox[{
+            SuperscriptBox["gamma", "2"], " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "+", 
+           RowBox[{"gamma", " ", "nu", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "-", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]], 
+       "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", "alpha", " ", 
+            SuperscriptBox["gamma", "2"]}], "+", 
+           RowBox[{"eta", " ", 
+            SuperscriptBox["gamma", "2"]}], "+", 
+           SuperscriptBox["gamma", "3"], "+", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{"gamma", " ", 
+            SuperscriptBox["nu", "2"]}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "-", 
+           RowBox[{
+            SuperscriptBox["gamma", "2"], " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], "-", 
+           RowBox[{"gamma", " ", "nu", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "+", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "gamma"}], ")"}], " ", "gamma"}], 
+              "-", 
+              RowBox[{"gamma", " ", "nu"}]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "gamma"}], "-", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "nu"}], ")"}], " ", "nu"}]}], 
+             ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{"gamma", "-", "nu", "-", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}]}], ")"}]}], 
+        RowBox[{
+         RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+         RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "gamma"}], "-", "nu", "-", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "3"}], " ", "eta"}], "+", 
+            RowBox[{"3", " ", "gamma"}], "+", 
+            RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "gamma"}], ")"}], " ", "gamma"}], 
+              "-", 
+              RowBox[{"gamma", " ", "nu"}]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"alpha", " ", "gamma"}], "-", 
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{
+                 RowBox[{"-", "eta"}], "-", "nu"}], ")"}], " ", "nu"}]}], 
+             ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{"gamma", "-", "nu", "+", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}]}], ")"}]}], 
+        RowBox[{
+         RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+         RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "gamma"}], "-", "nu", "+", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "3"}], " ", "eta"}], "+", 
+            RowBox[{"3", " ", "gamma"}], "+", 
+            RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}]]}], "0", "0"},
+     {
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{"eta", " ", "t"}]], " ", "gamma", " ", "nu"}], 
+        RowBox[{
+         SuperscriptBox["eta", "2"], "-", 
+         RowBox[{"alpha", " ", "gamma"}], "+", 
+         RowBox[{"eta", " ", "gamma"}], "+", 
+         RowBox[{"eta", " ", "nu"}], "+", 
+         RowBox[{"gamma", " ", "nu"}]}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", 
+             SuperscriptBox["gamma", "2"]}], " ", "nu"}], "-", 
+           RowBox[{"gamma", " ", 
+            SuperscriptBox["nu", "2"]}], "-", 
+           RowBox[{"gamma", " ", "nu", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "-", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]], 
+       "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", 
+             SuperscriptBox["gamma", "2"]}], " ", "nu"}], "-", 
+           RowBox[{"gamma", " ", 
+            SuperscriptBox["nu", "2"]}], "+", 
+           RowBox[{"gamma", " ", "nu", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "+", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{"eta", " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            SuperscriptBox["eta", "2"], " ", "nu"}], "+", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}]}], ")"}]}], 
+        RowBox[{"eta", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           SuperscriptBox["eta", "2"], "-", 
+           RowBox[{"alpha", " ", "gamma"}], "+", 
+           RowBox[{"eta", " ", "gamma"}], "+", 
+           RowBox[{"eta", " ", "nu"}], "+", 
+           RowBox[{"gamma", " ", "nu"}]}], ")"}]}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", "alpha", " ", "gamma", " ", "nu"}], "-", 
+           RowBox[{"gamma", " ", 
+            SuperscriptBox["nu", "2"]}], "+", 
+           SuperscriptBox["nu", "3"], "+", 
+           RowBox[{
+            SuperscriptBox["nu", "2"], " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "-", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]], 
+       "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", "alpha", " ", "gamma", " ", "nu"}], "-", 
+           RowBox[{"gamma", " ", 
+            SuperscriptBox["nu", "2"]}], "+", 
+           SuperscriptBox["nu", "3"], "-", 
+           RowBox[{
+            SuperscriptBox["nu", "2"], " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "+", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]]}], 
+      FractionBox[
+       RowBox[{
+        SuperscriptBox["\[ExponentialE]", 
+         RowBox[{"eta", " ", "t"}]], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "eta"}], "+", "gamma", "+", "nu", "-", 
+          SqrtBox[
+           RowBox[{
+            RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+            SuperscriptBox["gamma", "2"], "-", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+            SuperscriptBox["nu", "2"]}]]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "eta"}], "+", "gamma", "+", "nu", "+", 
+          SqrtBox[
+           RowBox[{
+            RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+            SuperscriptBox["gamma", "2"], "-", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+            SuperscriptBox["nu", "2"]}]]}], ")"}]}], 
+       RowBox[{"4", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          SuperscriptBox["eta", "2"], "-", 
+          RowBox[{"alpha", " ", "gamma"}], "+", 
+          RowBox[{"eta", " ", "gamma"}], "+", 
+          RowBox[{"eta", " ", "nu"}], "+", 
+          RowBox[{"gamma", " ", "nu"}]}], ")"}]}]], "0"},
+     {
+      RowBox[{
+       FractionBox["nu", 
+        RowBox[{"alpha", "-", "nu"}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{"eta", " ", "t"}]], " ", "gamma", " ", "nu"}], 
+        RowBox[{
+         SuperscriptBox["eta", "2"], "-", 
+         RowBox[{"alpha", " ", "gamma"}], "+", 
+         RowBox[{"eta", " ", "gamma"}], "+", 
+         RowBox[{"eta", " ", "nu"}], "+", 
+         RowBox[{"gamma", " ", "nu"}]}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", "eta",
+          " ", "gamma", " ", "nu"}], 
+        RowBox[{
+         RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+         RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "gamma"}], "-", "nu", "-", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "3"}], " ", "eta"}], "+", 
+            RowBox[{"3", " ", "gamma"}], "+", 
+            RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", "eta",
+          " ", "gamma", " ", "nu"}], 
+        RowBox[{
+         RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+         RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+            RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", "gamma"}], "-", "nu", "+", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+              SuperscriptBox["gamma", "2"], "-", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+              SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+         RowBox[{
+          FractionBox["1", "4"], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "3"}], " ", "eta"}], "+", 
+            RowBox[{"3", " ", "gamma"}], "+", 
+            RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+         RowBox[{
+          FractionBox["1", "2"], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}]]}], 
+      RowBox[{
+       FractionBox["nu", 
+        RowBox[{"alpha", "-", "nu"}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{"eta", " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{"eta", "+", "gamma"}], ")"}], " ", "nu"}], 
+        RowBox[{
+         SuperscriptBox["eta", "2"], "-", 
+         RowBox[{"alpha", " ", "gamma"}], "+", 
+         RowBox[{"eta", " ", "gamma"}], "+", 
+         RowBox[{"eta", " ", "nu"}], "+", 
+         RowBox[{"gamma", " ", "nu"}]}]], "-", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "-", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", "eta",
+          " ", "nu", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "gamma"}], "+", "nu", "+", 
+           SqrtBox[
+            RowBox[{
+             RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+             SuperscriptBox["gamma", "2"], "-", 
+             RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+             SuperscriptBox["nu", "2"]}]]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "-", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "-", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]], 
+       "-", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{
+           FractionBox["1", "2"], " ", 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"-", "gamma"}], "-", "nu", "+", 
+             SqrtBox[
+              RowBox[{
+               RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+               SuperscriptBox["gamma", "2"], "-", 
+               RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+               SuperscriptBox["nu", "2"]}]]}], ")"}], " ", "t"}]], " ", "eta",
+          " ", "nu", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"-", "gamma"}], "+", "nu", "-", 
+           SqrtBox[
+            RowBox[{
+             RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+             SuperscriptBox["gamma", "2"], "-", 
+             RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+             SuperscriptBox["nu", "2"]}]]}], ")"}]}], 
+        RowBox[{"2", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"alpha", " ", "eta", " ", "gamma"}], "-", 
+           RowBox[{"eta", " ", "gamma", " ", "nu"}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "2"}], " ", "alpha", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "gamma"}], "-", 
+              RowBox[{"2", " ", "eta", " ", "nu"}], "+", 
+              RowBox[{"2", " ", "gamma", " ", "nu"}]}], ")"}], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"-", "gamma"}], "-", "nu", "+", 
+              SqrtBox[
+               RowBox[{
+                RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                SuperscriptBox["gamma", "2"], "-", 
+                RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                SuperscriptBox["nu", "2"]}]]}], ")"}]}], "+", 
+           RowBox[{
+            FractionBox["1", "4"], " ", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"-", "3"}], " ", "eta"}], "+", 
+              RowBox[{"3", " ", "gamma"}], "+", 
+              RowBox[{"3", " ", "nu"}]}], ")"}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "2"]}], "+", 
+           RowBox[{
+            FractionBox["1", "2"], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"-", "gamma"}], "-", "nu", "+", 
+               SqrtBox[
+                RowBox[{
+                 RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+                 SuperscriptBox["gamma", "2"], "-", 
+                 RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+                 SuperscriptBox["nu", "2"]}]]}], ")"}], "3"]}]}], ")"}]}]]}], 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         RowBox[{
+          RowBox[{"-", "alpha"}], " ", "eta", " ", "gamma"}], "+", 
+         RowBox[{"eta", " ", "gamma", " ", "nu"}]}], 
+        RowBox[{"eta", " ", "gamma", " ", 
+         RowBox[{"(", 
+          RowBox[{"alpha", "-", "nu"}], ")"}]}]], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox["\[ExponentialE]", 
+          RowBox[{"eta", " ", "t"}]], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", "eta"}], "+", "gamma", "+", "nu", "-", 
+           SqrtBox[
+            RowBox[{
+             RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+             SuperscriptBox["gamma", "2"], "-", 
+             RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+             SuperscriptBox["nu", "2"]}]]}], ")"}], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"2", " ", "eta"}], "+", "gamma", "+", "nu", "+", 
+           SqrtBox[
+            RowBox[{
+             RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+             SuperscriptBox["gamma", "2"], "-", 
+             RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+             SuperscriptBox["nu", "2"]}]]}], ")"}]}], 
+        RowBox[{"4", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           SuperscriptBox["eta", "2"], "-", 
+           RowBox[{"alpha", " ", "gamma"}], "+", 
+           RowBox[{"eta", " ", "gamma"}], "+", 
+           RowBox[{"eta", " ", "nu"}], "+", 
+           RowBox[{"gamma", " ", "nu"}]}], ")"}]}]]}], 
+      FractionBox[
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", "gamma"}], "-", "nu", "+", 
+          SqrtBox[
+           RowBox[{
+            RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+            SuperscriptBox["gamma", "2"], "-", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+            SuperscriptBox["nu", "2"]}]]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{"gamma", "+", "nu", "+", 
+          SqrtBox[
+           RowBox[{
+            RowBox[{"4", " ", "alpha", " ", "gamma"}], "+", 
+            SuperscriptBox["gamma", "2"], "-", 
+            RowBox[{"2", " ", "gamma", " ", "nu"}], "+", 
+            SuperscriptBox["nu", "2"]}]]}], ")"}]}], 
+       RowBox[{"4", " ", "gamma", " ", 
+        RowBox[{"(", 
+         RowBox[{"alpha", "-", "nu"}], ")"}]}]]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.877731144608775*^9, 3.8777311949067616`*^9},
+ CellLabel->
+  "Out[10]//MatrixForm=",ExpressionUUID->"58b14b29-bbde-40f9-99b0-\
+1f43950e6ecb"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"TeXForm", "[", 
+  TagBox[
+   RowBox[{
+    RowBox[{"MatrixExp", "[", 
+     RowBox[{
+      TagBox[
+       RowBox[{"(", "\[NoBreak]", GridBox[{
+          {
+           RowBox[{"-", "gamma"}], "alpha", "0", "0"},
+          {"gamma", 
+           RowBox[{"-", "nu"}], "0", "0"},
+          {"0", "nu", 
+           RowBox[{"-", "eta"}], "0"},
+          {"0", "0", "eta", "0"}
+         },
+         GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.7]}, 
+             Offset[0.27999999999999997`]}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}}], "\[NoBreak]", ")"}],
+       Function[BoxForm`e$, 
+        MatrixForm[BoxForm`e$]]], "t"}], " ", "]"}], "//", " ", "MatrixForm"}],
+   Function[BoxForm`e$, 
+    MatrixForm[BoxForm`e$]]], "]"}]], "Input",
+ CellChangeTimes->{{3.877731126524977*^9, 3.877731126540231*^9}, 
+   3.8777311617072215`*^9, 3.8777312331699677`*^9, {3.8777313153156996`*^9, 
+   3.8777313372973127`*^9}, {3.8777313996678705`*^9, 3.877731416944256*^9}, {
+   3.877734139386329*^9, 3.877734149229914*^9}},
+ CellLabel->"In[15]:=",ExpressionUUID->"724d2cab-5d90-49ad-b8ce-8ef78b9e0551"],
+
+Cell["\<\
+\\left(
+\\begin{array}{cccc}
+ \\frac{\\left(\\frac{1}{2} (\\alpha  \\gamma -\\gamma  (\\eta -\\gamma )) \
+\\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma +\\nu \\right)+\\gamma  (\\alpha  (\\eta -\\nu
+   )-\\alpha  \\gamma )\\right) e^{\\frac{1}{2} t \\left(-\\sqrt{4 \\alpha  \
+\\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \
+\\right)}}{\\frac{1}{4} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma \
++3 \\nu )+\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha 
+   \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta \
+ \\gamma +\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta 
+   \\gamma  \\nu }+\\frac{\\left(\\frac{1}{2} (\\alpha  \\gamma -\\gamma  \
+(\\eta -\\gamma )) \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \
+\\nu +\\nu ^2}-\\gamma +\\nu \\right)+\\gamma  (\\alpha 
+   (\\eta -\\nu )-\\alpha  \\gamma )\\right) e^{\\frac{1}{2} t \
+\\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right)}}{\\frac{1}{4} \\left(\\sqrt{4 \\alpha  \\gamma
+   +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \
+\\gamma +3 \\nu )+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2
+   \\alpha  \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu \
+)-\\alpha  \\eta  \\gamma +\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right)^3+\\eta  \\gamma  \\nu } & \\frac{\\left(\\frac{1}{2} \
+\\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}+\\gamma -\\nu \\right) (\\alpha  (\\eta -\\nu )-\\alpha  \\gamma
+   )+\\alpha  (\\alpha  \\gamma -\\gamma  (\\eta -\\gamma ))\\right) \
+e^{\\frac{1}{2} t \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \
+\\nu +\\nu ^2}-\\gamma -\\nu \\right)}}{\\frac{1}{4}
+   \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma +3 \\nu )+\\frac{1}{2} \
+\\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu
+   +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha  \\gamma +2 \\eta  \\gamma +2 \
+\\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta  \\gamma +\\frac{1}{2} \\left(-\
+\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu
+   +\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta  \\gamma  \\nu \
+}+\\frac{\\left(\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}+\\gamma -\\nu \\right) (\\alpha  (\\eta -\\nu
+   )-\\alpha  \\gamma )+\\alpha  (\\alpha  \\gamma -\\gamma  (\\eta -\\gamma \
+))\\right) e^{\\frac{1}{2} t \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right)}}{\\frac{1}{4} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma +3 \\nu \
+)+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha  \\gamma \
++2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta  \\gamma +\
+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta  \\gamma  \\nu \
+} & 0 & 0 \\\\
+ \\frac{\\left(\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma +\\nu \\right) (\\gamma  (\\eta -\\gamma \
+)-\\gamma  \\nu )+\\gamma  (\\alpha  \\gamma -\\nu  (\\eta
+   -\\nu ))\\right) e^{\\frac{1}{2} t \\left(-\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)}}{\\frac{1}{4} \
+\\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma 
+   \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma +3 \\nu \
+)+\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu \
++\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha  \\gamma +2
+   \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta  \\gamma +\
+\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu \
++\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta  \\gamma  \\nu
+   }+\\frac{\\left(\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma \
+^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma +\\nu \\right) (\\gamma  (\\eta -\\gamma \
+)-\\gamma  \\nu )+\\gamma  (\\alpha  \\gamma -\\nu 
+   (\\eta -\\nu ))\\right) e^{\\frac{1}{2} t \\left(\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)}}{\\frac{1}{4} \
+\\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2
+   \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma +3 \
+\\nu )+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \
+\\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha 
+   \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta \
+ \\gamma +\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma \
+ \\nu +\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta 
+   \\gamma  \\nu } & \\frac{\\left(\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \
+\\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}+\\gamma -\\nu \\right) (\\alpha \
+ \\gamma -\\nu  (\\eta -\\nu ))+\\alpha  (\\gamma  (\\eta
+   -\\gamma )-\\gamma  \\nu )\\right) e^{\\frac{1}{2} t \\left(-\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \
+\\right)}}{\\frac{1}{4} \\left(-\\sqrt{4 \\alpha  \\gamma
+   +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \
+\\gamma +3 \\nu )+\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma \
+^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2
+   \\alpha  \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu \
+)-\\alpha  \\eta  \\gamma +\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right)^3+\\eta  \\gamma  \\nu }+\\frac{\\left(\\frac{1}{2} \
+\\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}+\\gamma -\\nu \\right) (\\alpha  \\gamma -\\nu  (\\eta -\\nu ))+\\alpha 
+   (\\gamma  (\\eta -\\gamma )-\\gamma  \\nu )\\right) e^{\\frac{1}{2} t \
+\\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right)}}{\\frac{1}{4} \\left(\\sqrt{4 \\alpha 
+   \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \
+\\eta +3 \\gamma +3 \\nu )+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right) (-2 \\alpha  \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \
+\\nu )-\\alpha  \\eta  \\gamma +\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right)^3+\\eta  \\gamma  \\nu } & 0 & 0 \\\\
+ \\frac{\\gamma  \\nu  e^{-\\eta  t}}{-\\alpha  \\gamma +\\eta ^2-\\eta  \
+\\gamma -\\eta  \\nu +\\gamma  \\nu }+\\frac{\\left(-\\gamma  \\nu  \\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu
+   ^2}+\\gamma ^2 (-\\nu )-\\gamma  \\nu ^2\\right) e^{\\frac{1}{2} t \
+\\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right)}}{2 \\left(\\frac{1}{4} \\left(-\\sqrt{4
+   \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \
+\\right)^2 (3 \\eta +3 \\gamma +3 \\nu )+\\frac{1}{2} \\left(-\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma
+   -\\nu \\right) (-2 \\alpha  \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \
+\\gamma  \\nu )-\\alpha  \\eta  \\gamma +\\frac{1}{2} \\left(-\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma
+   -\\nu \\right)^3+\\eta  \\gamma  \\nu \\right)}+\\frac{\\left(\\gamma  \
+\\nu  \\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}+\\gamma \
+^2 (-\\nu )-\\gamma  \\nu ^2\\right) e^{\\frac{1}{2} t
+   \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right)}}{2 \\left(\\frac{1}{4} \\left(\\sqrt{4 \\alpha  \
+\\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right)^2 (3 \\eta +3 \\gamma +3 \\nu )+\\frac{1}{2} \\left(\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) \
+(-2 \\alpha  \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2
+   \\gamma  \\nu )-\\alpha  \\eta  \\gamma +\\frac{1}{2} \\left(\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \
+\\right)^3+\\eta  \\gamma  \\nu \\right)} & -\\frac{e^{-\\eta  t}
+   \\left(\\eta ^2 \\nu -\\eta  \\gamma  \\nu \\right)}{\\eta  \
+\\left(-\\alpha  \\gamma +\\eta ^2-\\eta  \\gamma -\\eta  \\nu +\\gamma  \\nu \
+\\right)}+\\frac{\\left(\\nu ^2 \\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}+2 \\alpha  \\gamma  \\nu -\\gamma  \\nu \
+^2+\\nu ^3\\right) e^{\\frac{1}{2} t \\left(-\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)}}{2
+   \\left(\\frac{1}{4} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma +3 \\nu \
+)+\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha  \\gamma \
++2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta  \\gamma +\
+\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta  \\gamma  \\nu \
+\\right)}+\\frac{\\left(-\\nu ^2 \\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}+2 \\alpha  \\gamma  \\nu -\\gamma 
+   \\nu ^2+\\nu ^3\\right) e^{\\frac{1}{2} t \\left(\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)}}{2 \
+\\left(\\frac{1}{4} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma \
++3 \\nu )+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma \
+ \\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha 
+   \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta \
+ \\gamma +\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma \
+ \\nu +\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta 
+   \\gamma  \\nu \\right)} & \\frac{e^{-\\eta  t} \\left(-\\sqrt{4 \\alpha  \
+\\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}+2 \\eta -\\gamma -\\nu \\right) \
+\\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma
+    \\nu +\\nu ^2}+2 \\eta -\\gamma -\\nu \\right)}{4 \\left(-\\alpha  \
+\\gamma +\\eta ^2-\\eta  \\gamma -\\eta  \\nu +\\gamma  \\nu \\right)} & 0 \\\\
+ -\\frac{\\gamma  \\nu  e^{-\\eta  t}}{-\\alpha  \\gamma +\\eta ^2-\\eta  \
+\\gamma -\\eta  \\nu +\\gamma  \\nu }+\\frac{\\eta  \\gamma  \\nu  \
+e^{\\frac{1}{2} t \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2
+   \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)}}{\\frac{1}{4} \
+\\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma +3 \\nu )+\\frac{1}{2}
+   \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right) (-2 \\alpha  \\gamma +2 \\eta  \\gamma +2 \\eta  \
+\\nu +2 \\gamma  \\nu )-\\alpha  \\eta  \\gamma +\\frac{1}{2}
+   \\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma -\\nu \\right)^3+\\eta  \\gamma  \\nu }+\\frac{\\eta  \\gamma  \
+\\nu  e^{\\frac{1}{2} t \\left(\\sqrt{4 \\alpha  \\gamma
+   +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \
+\\right)}}{\\frac{1}{4} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \
+\\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3 \\gamma +3 \\nu
+   )+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \
+\\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha  \\gamma +2 \\eta  \\gamma \
++2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha  \\eta  \\gamma
+   +\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu \
++\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta  \\gamma  \\nu }+\\frac{\\eta  \
+\\gamma  \\nu }{\\eta  \\gamma  \\nu -\\alpha  \\eta 
+   \\gamma } & \\frac{\\nu  (\\eta -\\gamma ) e^{-\\eta  t}}{-\\alpha  \
+\\gamma +\\eta ^2-\\eta  \\gamma -\\eta  \\nu +\\gamma  \\nu }-\\frac{\\eta  \
+\\nu  \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma 
+   \\nu +\\nu ^2}-\\gamma +\\nu \\right) e^{\\frac{1}{2} t \\left(-\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \
+\\right)}}{2 \\left(\\frac{1}{4} \\left(-\\sqrt{4 \\alpha 
+   \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \
+\\eta +3 \\gamma +3 \\nu )+\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \\gamma \
++\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right) (-2 \\alpha  \\gamma +2 \\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \
+\\nu )-\\alpha  \\eta  \\gamma +\\frac{1}{2} \\left(-\\sqrt{4 \\alpha  \
+\\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu
+   \\right)^3+\\eta  \\gamma  \\nu \\right)}-\\frac{\\eta  \\nu  \
+\\left(-\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu \
+^2}-\\gamma +\\nu \\right) e^{\\frac{1}{2} t \\left(\\sqrt{4 \\alpha 
+   \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)}}{2 \
+\\left(\\frac{1}{4} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2 \\gamma  \
+\\nu +\\nu ^2}-\\gamma -\\nu \\right)^2 (3 \\eta +3
+   \\gamma +3 \\nu )+\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma \
+^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) (-2 \\alpha  \\gamma +2 \
+\\eta  \\gamma +2 \\eta  \\nu +2 \\gamma  \\nu )-\\alpha
+    \\eta  \\gamma +\\frac{1}{2} \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma \
+^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right)^3+\\eta  \\gamma  \\nu \
+\\right)}+\\frac{\\eta  \\gamma  \\nu }{\\eta  \\gamma  \\nu
+   -\\alpha  \\eta  \\gamma } & 1-\\frac{e^{-\\eta  t} \\left(-\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}+2 \\eta -\\gamma -\\nu \
+\\right) \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma ^2-2
+   \\gamma  \\nu +\\nu ^2}+2 \\eta -\\gamma -\\nu \\right)}{4 \\left(-\\alpha \
+ \\gamma +\\eta ^2-\\eta  \\gamma -\\eta  \\nu +\\gamma  \\nu \\right)} & \
+-\\frac{\\eta  \\left(\\sqrt{4 \\alpha  \\gamma +\\gamma
+   ^2-2 \\gamma  \\nu +\\nu ^2}-\\gamma -\\nu \\right) \\left(\\sqrt{4 \
+\\alpha  \\gamma +\\gamma ^2-2 \\gamma  \\nu +\\nu ^2}+\\gamma +\\nu \
+\\right)}{4 (\\eta  \\gamma  \\nu -\\alpha  \\eta  \\gamma )} \\\\
+\\end{array}
+\\right)\
+\>", "Output",
+ CellChangeTimes->{
+  3.8777311633463087`*^9, 3.8777313431702127`*^9, {3.8777314037033973`*^9, 
+   3.8777314198951483`*^9}, 3.8777341541546884`*^9},
+ CellLabel->
+  "Out[15]//TeXForm=",ExpressionUUID->"153b6224-6501-4c3e-b81c-3d8092d5b5a0"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  TagBox[
+   RowBox[{
+    RowBox[{"MatrixExp", "[", 
+     RowBox[{
+      TagBox[
+       RowBox[{"(", "\[NoBreak]", GridBox[{
+          {
+           RowBox[{"-", "gamma"}], "alpha", "0", "0"},
+          {"gamma", 
+           RowBox[{"-", "nu"}], "0", "0"},
+          {"0", "nu", 
+           RowBox[{"-", "eta"}], "0"},
+          {"0", "0", "eta", "0"}
+         },
+         GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+         GridBoxSpacings->{"Columns" -> {
+             Offset[0.27999999999999997`], {
+              Offset[0.7]}, 
+             Offset[0.27999999999999997`]}, "Rows" -> {
+             Offset[0.2], {
+              Offset[0.4]}, 
+             Offset[0.2]}}], "\[NoBreak]", ")"}],
+       Function[BoxForm`e$, 
+        MatrixForm[BoxForm`e$]]], "t"}], " ", "]"}], "//", " ", "MatrixForm"}],
+   Function[BoxForm`e$, 
+    MatrixForm[BoxForm`e$]]], "]"}]], "Input",
+ CellChangeTimes->{{3.8777310916467986`*^9, 3.877731096054758*^9}, {
+  3.8777315533389874`*^9, 3.8777315588234205`*^9}, {3.8777342128698463`*^9, 
+  3.877734214512947*^9}},
+ CellLabel->"In[16]:=",ExpressionUUID->"37430236-f4ca-458f-b971-a029c237cb8e"],
+
+Cell["\<\
+List(List((Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (gamma*(-(alpha*gamma) + alpha*(eta - nu)) + ((alpha*gamma - (eta - \
+gamma)*gamma)*
+             (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.) + 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (gamma*(-(alpha*gamma) + alpha*(eta - nu)) + ((alpha*gamma - (eta - \
+gamma)*gamma)*
+             (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.),
+    (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)))*t)/2.)*
+        (alpha*(alpha*gamma - (eta - gamma)*gamma) + ((-(alpha*gamma) + \
+alpha*(eta - nu))*
+             (gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.) + 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (alpha*(alpha*gamma - (eta - gamma)*gamma) + ((-(alpha*gamma) + \
+alpha*(eta - nu))*
+             (gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.),0,0),
+   List((Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (gamma*(alpha*gamma - (eta - nu)*nu) + (((eta - gamma)*gamma - \
+gamma*nu)*
+             (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.) + 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (gamma*(alpha*gamma - (eta - nu)*nu) + (((eta - gamma)*gamma - \
+gamma*nu)*
+             (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.),
+    (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)))*t)/2.)*
+        (alpha*((eta - gamma)*gamma - gamma*nu) + ((alpha*gamma - (eta - \
+nu)*nu)*
+             (gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.) + 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (alpha*((eta - gamma)*gamma - gamma*nu) + ((alpha*gamma - (eta - \
+nu)*nu)*
+             (gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2.))/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.),0,0),
+   List((gamma*nu)/(Power(E,eta*t)*(Power(eta,2) - alpha*gamma - eta*gamma - \
+eta*nu + gamma*nu)) + 
+     (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (-(Power(gamma,2)*nu) - gamma*Power(nu,2) - \
+gamma*nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma \
++ 2*eta*nu + 2*gamma*nu)*
+             (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2. + 
+          ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+          Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)),3)/2.)) + 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (-(Power(gamma,2)*nu) - gamma*Power(nu,2) + \
+gamma*nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma \
++ 2*eta*nu + 2*gamma*nu)*
+             (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2. + 
+          ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+          Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)),3)/2.)),
+    -((Power(eta,2)*nu - eta*gamma*nu)/(Power(E,eta*t)*eta*(Power(eta,2) - \
+alpha*gamma - eta*gamma - eta*nu + gamma*nu))) + 
+     (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (2*alpha*gamma*nu - gamma*Power(nu,2) + Power(nu,3) + \
+Power(nu,2)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma \
++ 2*eta*nu + 2*gamma*nu)*
+             (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2. + 
+          ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+          Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)),3)/2.)) + 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (2*alpha*gamma*nu - gamma*Power(nu,2) + Power(nu,3) - \
+Power(nu,2)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma \
++ 2*eta*nu + 2*gamma*nu)*
+             (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2. + 
+          ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+          Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)),3)/2.)),
+    ((2*eta - gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+       (2*eta - gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/
+     (4.*Power(E,eta*t)*(Power(eta,2) - alpha*gamma - eta*gamma - eta*nu + \
+gamma*nu)),0),
+   List(-((gamma*nu)/(Power(E,eta*t)*(Power(eta,2) - alpha*gamma - eta*gamma \
+- eta*nu + gamma*nu))) + 
+     (eta*gamma*nu)/(-(alpha*eta*gamma) + eta*gamma*nu) + (Power(E,
+         ((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*t)/2.)*eta*gamma*nu)/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.) + 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*eta*gamma*nu)/
+      (-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma + \
+2*eta*nu + 2*gamma*nu)*
+           (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/2. + 
+        ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+        Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2)),3)/2.),
+    ((eta - gamma)*nu)/(Power(E,eta*t)*(Power(eta,2) - alpha*gamma - \
+eta*gamma - eta*nu + gamma*nu)) + 
+     (eta*gamma*nu)/(-(alpha*eta*gamma) + eta*gamma*nu) - (Power(E,
+         ((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*t)/2.)*eta*nu*
+        (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*(-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma \
++ 2*eta*nu + 2*gamma*nu)*
+             (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2. + 
+          ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+          Power(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)),3)/2.)) - 
+     (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*eta*nu*
+        (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*(-(alpha*eta*gamma) + eta*gamma*nu + ((-2*alpha*gamma + 2*eta*gamma \
++ 2*eta*nu + 2*gamma*nu)*
+             (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))))/2. + 
+          ((3*eta + 3*gamma + 3*nu)*Power(-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)),2))/4. + 
+          Power(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)),3)/2.)),
+    1 - ((2*eta - gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*
+        (2*eta - gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))))/
+      (4.*Power(E,eta*t)*(Power(eta,2) - alpha*gamma - eta*gamma - eta*nu + \
+gamma*nu)),
+    -0.25*(eta*(-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/(-(alpha*eta*gamma) + eta*gamma*nu)))\
+\>", "Output",
+ CellChangeTimes->{3.877731561926723*^9, 3.877734217858046*^9},
+ CellLabel->
+  "Out[16]//CForm=",ExpressionUUID->"8dea39e5-92d7-4937-86ce-bf1e30a6d520"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mat2", " ", "=", " ", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "gamma"}], ",", " ", "alpha", ",", " ", "0"}], "}"}], ",",
+      " ", "\[IndentingNewLine]", "\t   ", 
+     RowBox[{"{", 
+      RowBox[{"gamma", ",", " ", 
+       RowBox[{"-", "nu"}], ",", " ", "0"}], "}"}], ",", " ", 
+     "\[IndentingNewLine]", "\t   ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "nu", ",", " ", "0"}], "}"}]}], "}"}], "//", 
+   "MatrixForm"}]}]], "Input",
+ CellChangeTimes->{{3.8777356745479555`*^9, 3.877735697819562*^9}, 
+   3.8777357436282935`*^9},
+ CellLabel->"In[17]:=",ExpressionUUID->"5838d7ed-c175-4537-a868-b71caa1a5f13"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"-", "gamma"}], "alpha", "0"},
+     {"gamma", 
+      RowBox[{"-", "nu"}], "0"},
+     {"0", "nu", "0"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.8777357459911103`*^9},
+ CellLabel->
+  "Out[17]//MatrixForm=",ExpressionUUID->"d89505cf-f2fa-4416-8f4b-\
+c190550c0f01"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{"CForm", "[", 
+   TagBox[
+    RowBox[{
+     RowBox[{"MatrixExp", "[", 
+      RowBox[{
+       TagBox[
+        RowBox[{"(", "\[NoBreak]", GridBox[{
+           {
+            RowBox[{"-", "gamma"}], "alpha", "0"},
+           {"gamma", 
+            RowBox[{"-", "nu"}], "0"},
+           {"0", "nu", "0"}
+          },
+          GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+          
+          GridBoxSpacings->{"Columns" -> {
+              Offset[0.27999999999999997`], {
+               Offset[0.7]}, 
+              Offset[0.27999999999999997`]}, "Rows" -> {
+              Offset[0.2], {
+               Offset[0.4]}, 
+              Offset[0.2]}}], "\[NoBreak]", ")"}],
+        Function[BoxForm`e$, 
+         MatrixForm[BoxForm`e$]]], "t"}], " ", "]"}], "//", " ", 
+     "MatrixForm"}],
+    Function[BoxForm`e$, 
+     MatrixForm[BoxForm`e$]]], "]"}]}]], "Input",
+ CellChangeTimes->{{3.877735649316515*^9, 3.8777356557131424`*^9}, 
+   3.877735754091529*^9},
+ CellLabel->"In[18]:=",ExpressionUUID->"e5a4483b-8118-40de-83dc-787bcf334556"],
+
+Cell["\<\
+List(List(-((Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+          (2*alpha*gamma + Power(gamma,2) - gamma*nu - \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+        (-4*alpha*gamma - Power(gamma,2) + 2*gamma*nu - Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+          nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))) + 
+     (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (2*alpha*gamma + Power(gamma,2) - gamma*nu + gamma*Sqrt(4*alpha*gamma \
++ Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))),
+    -((Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+          (-(alpha*gamma) - alpha*nu + alpha*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+        (-4*alpha*gamma - Power(gamma,2) + 2*gamma*nu - Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+          nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))) + 
+     (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (-(alpha*gamma) - alpha*nu - alpha*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))),0),
+   List(-((Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+          (-Power(gamma,2) - gamma*nu + gamma*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+        (-4*alpha*gamma - Power(gamma,2) + 2*gamma*nu - Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+          nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))) + 
+     (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (-Power(gamma,2) - gamma*nu - gamma*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))),
+    -((Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+          (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+        (-4*alpha*gamma - Power(gamma,2) + 2*gamma*nu - Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+          nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))) + 
+     (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))),0),
+   List(-(nu/(alpha - nu)) - (2*Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))*t)/2.)*gamma*nu)/
+      (-4*alpha*gamma - Power(gamma,2) + 2*gamma*nu - Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))) + 
+     (2*Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*gamma*nu)/
+      (4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))),
+    -(nu/(alpha - nu)) + (Power(E,((-gamma - nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))*t)/2.)*nu*
+        (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (-4*alpha*gamma - Power(gamma,2) + 2*gamma*nu - Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))) - 
+     (Power(E,((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*t)/2.)*nu*
+        (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2) + \
+gamma*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)) + 
+        nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))),
+    ((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+       (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/(4.*gamma*(alpha - nu))))\
+\>", "Output",
+ CellChangeTimes->{3.8777357600276976`*^9},
+ CellLabel->
+  "Out[18]//CForm=",ExpressionUUID->"5da1109b-7415-49b2-9e0d-82030cb10c3b"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Taking matrix exponential for EIR model but adding on the incidence \
+\>", "Item",
+ CellChangeTimes->{{3.8793598530044293`*^9, 3.8793598964241605`*^9}, {
+  3.879513041648861*^9, 
+  3.8795130454604335`*^9}},ExpressionUUID->"984d875e-f8aa-4570-888e-\
+05a9e0f1f4ad"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"new_mat", " ", "=", " ", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "gamma"}], ",", " ", "alpha", ",", " ", "0", ",", " ", 
+       "0"}], "}"}], ",", " ", "\[IndentingNewLine]", "\t   ", 
+     RowBox[{"{", 
+      RowBox[{"gamma", ",", " ", 
+       RowBox[{"-", "nu"}], ",", " ", "0", ",", " ", "0"}], "}"}], ",", " ", 
+     "\[IndentingNewLine]", "\t   ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "nu", ",", "  ", "0", ",", " ", "0"}], "}"}], 
+     ",", " ", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{"gamma", ",", " ", "0", ",", " ", "0", ",", " ", "0"}], "}"}]}],
+     "}"}], "//", "MatrixForm"}]}]], "Input",
+ CellChangeTimes->{{3.8793599105911903`*^9, 3.879359931914193*^9}, {
+  3.8795130543550196`*^9, 3.8795130768633556`*^9}, {3.8795131097388597`*^9, 
+  3.879513113313035*^9}, {3.8795131446386814`*^9, 3.8795131465980587`*^9}},
+ CellLabel->"In[3]:=",ExpressionUUID->"6365d84c-6777-4ae7-a131-8ac95806e171"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"-", "gamma"}], "alpha", "0", "0"},
+     {"gamma", 
+      RowBox[{"-", "nu"}], "0", "0"},
+     {"0", "nu", "0", "0"},
+     {"gamma", "0", "0", "0"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{{3.879513137698964*^9, 3.8795131511685886`*^9}},
+ CellLabel->
+  "Out[3]//MatrixForm=",ExpressionUUID->"eca15390-969b-435c-b623-\
+aa87456aec23"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  TagBox[
+   RowBox[{
+    RowBox[{"MatrixExp", "[", 
+     RowBox[{
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          RowBox[{"-", "gamma"}], "alpha", "0", "0"},
+         {"gamma", 
+          RowBox[{"-", "nu"}], "0", "0"},
+         {"0", "nu", "0", "0"},
+         {"gamma", "0", "0", "0"}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}], " ", "t"}], " ", "]"}], "//",
+     " ", "MatrixForm"}],
+   Function[BoxForm`e$, 
+    MatrixForm[BoxForm`e$]]], "]"}]], "Input",
+ CellChangeTimes->{{3.879513119198557*^9, 3.879513125121406*^9}, 
+   3.87951315710638*^9},
+ CellLabel->"In[4]:=",ExpressionUUID->"30d38523-8d86-4644-8d9a-b3ff1da8d711"],
+
+Cell["\<\
+List(List((Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (-2*alpha*gamma + gamma*nu - Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))) + 
+     (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))),
+    (alpha*Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))) + 
+     (alpha*Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))),0,0),
+   List((Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) + 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-2*alpha*gamma + gamma*nu - Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))),
+    (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - nu)*t)/2.)*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))) + 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))),0,0),
+   List(-(nu/(alpha - nu)) - (Power(E,((-gamma - Sqrt(4*alpha*gamma + \
+Power(gamma - nu,2)) - nu)*t)/2.)*nu*
+        (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (-2*alpha*gamma + gamma*nu - Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) - 
+     (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*nu*
+        (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))),
+    -(nu/(alpha - nu)) - (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma \
+- nu,2)) - nu)*t)/2.)*nu*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))) - 
+     (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*nu*
+        (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))),1,0),
+   List(-(nu/(alpha - nu)) + (Power(E,((-gamma - Sqrt(4*alpha*gamma + \
+Power(gamma - nu,2)) - nu)*t)/2.)*
+        (-2*alpha*gamma + gamma*nu - Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))) + 
+     (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))),
+    -(alpha/(alpha - nu)) + (alpha*Power(E,((-gamma - Sqrt(4*alpha*gamma + \
+Power(gamma - nu,2)) - nu)*t)/2.)*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))) + 
+     (alpha*Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))),0,1))\
+\>", "Output",
+ CellChangeTimes->{3.8795131311601057`*^9, 3.879513164697786*^9},
+ CellLabel->
+  "Out[4]//CForm=",ExpressionUUID->"b4ee3da7-bc38-4d48-985b-38f314a0ce78"]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Re-do EIRR but adding a new column for incidence", "Item",
+ CellChangeTimes->{{3.891356371254294*^9, 
+  3.8913564251607656`*^9}},ExpressionUUID->"3e8046c7-166c-48f9-bd9b-\
+89b56f2bdaa9"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"mat3", " ", "=", " ", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "gamma"}], ",", " ", "alpha", ",", " ", "0", ",", " ", 
+       "0", ",", " ", "0"}], "}"}], ",", " ", "\[IndentingNewLine]", "\t   ", 
+     
+     RowBox[{"{", 
+      RowBox[{"gamma", ",", " ", 
+       RowBox[{"-", "nu"}], ",", " ", "0", ",", " ", "0", ",", " ", "0"}], 
+      "}"}], ",", " ", "\[IndentingNewLine]", "\t   ", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", " ", "nu", ",", " ", 
+       RowBox[{"-", "eta"}], ",", " ", "0", ",", " ", "0"}], "}"}], ",", " ", 
+     "\[IndentingNewLine]", "\t    ", 
+     RowBox[{"{", 
+      RowBox[{
+      "0", ",", " ", "0", ",", " ", "eta", ",", " ", "0", ",", " ", "0"}], 
+      "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"{", 
+      RowBox[{
+      "gamma", ",", " ", "0", ",", " ", "0", ",", " ", "0", ",", " ", "0"}], 
+      "}"}]}], "}"}], "//", "MatrixForm"}]}]], "Input",
+ CellChangeTimes->{{3.891356491280736*^9, 3.8913565619717607`*^9}, 
+   3.891357400551559*^9},
+ CellLabel->"In[3]:=",ExpressionUUID->"715e0abe-5476-4bb2-b961-308ec10e73ff"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{"(", "\[NoBreak]", GridBox[{
+     {
+      RowBox[{"-", "gamma"}], "alpha", "0", "0", "0"},
+     {"gamma", 
+      RowBox[{"-", "nu"}], "0", "0", "0"},
+     {"0", "nu", 
+      RowBox[{"-", "eta"}], "0", "0"},
+     {"0", "0", "eta", "0", "0"},
+     {"gamma", "0", "0", "0", "0"}
+    },
+    GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+    GridBoxSpacings->{"Columns" -> {
+        Offset[0.27999999999999997`], {
+         Offset[0.7]}, 
+        Offset[0.27999999999999997`]}, "Rows" -> {
+        Offset[0.2], {
+         Offset[0.4]}, 
+        Offset[0.2]}}], "\[NoBreak]", ")"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
+ CellChangeTimes->{3.891356565795014*^9, 3.891357405414515*^9},
+ CellLabel->
+  "Out[3]//MatrixForm=",ExpressionUUID->"4f68c6c4-8e3e-4267-b6f8-\
+8e5a7eafc306"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"CForm", "[", 
+  TagBox[
+   RowBox[{
+    RowBox[{"MatrixExp", "[", 
+     RowBox[{
+      TagBox[
+       TagBox[
+        RowBox[{"(", "\[NoBreak]", GridBox[{
+           {
+            RowBox[{"-", "gamma"}], "alpha", "0", "0", "0"},
+           {"gamma", 
+            RowBox[{"-", "nu"}], "0", "0", "0"},
+           {"0", "nu", 
+            RowBox[{"-", "eta"}], "0", "0"},
+           {"0", "0", "eta", "0", "0"},
+           {"gamma", "0", "0", "0", "0"}
+          },
+          GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+          
+          GridBoxSpacings->{"Columns" -> {
+              Offset[0.27999999999999997`], {
+               Offset[0.7]}, 
+              Offset[0.27999999999999997`]}, "Rows" -> {
+              Offset[0.2], {
+               Offset[0.4]}, 
+              Offset[0.2]}}], "\[NoBreak]", ")"}],
+        Function[BoxForm`e$, 
+         MatrixForm[BoxForm`e$]]],
+       Function[BoxForm`e$, 
+        MatrixForm[BoxForm`e$]]], "t"}], " ", "]"}], "//", " ", "MatrixForm"}],
+   Function[BoxForm`e$, 
+    MatrixForm[BoxForm`e$]]], "]"}]], "Input",
+ CellChangeTimes->{{3.89135662642132*^9, 3.891356654183516*^9}, 
+   3.89135739513967*^9, {3.891357432303595*^9, 3.891357434554985*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"8e23d7ce-f997-4a07-93a0-d19fb82201e3"],
+
+Cell["\<\
+List(List(-0.25*(Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) \
+- nu)*t)/2.)*
+         (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+         (-2*alpha*gamma + gamma*nu - Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+       (gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))) - 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))),
+    (alpha*Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))) + 
+     (alpha*Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))),0,0,0),
+   List(-0.25*(Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+         (-2*alpha*gamma + gamma*nu - Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))*
+         (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+       (alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) - 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))),
+    (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - nu)*t)/2.)*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))) + 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) + nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))),0,0,0),
+   List(-0.25*(Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*nu*
+         (gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+         (gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+         (-2*alpha*gamma + gamma*nu - Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+       (alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))*
+         (-2*eta + gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) - 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*nu*
+        (gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (4.*alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))*
+        (-2*eta + gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) - 
+     ((2*nu)/(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) - 
+        (2*Power(nu,2))/(alpha*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (2*nu)/(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) + 
+        (2*Power(nu,2))/(alpha*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))))/
+      (Power(E,eta*t)*(-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+          (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma))),
+    (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*nu*
+        (gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))*
+        (-2*eta + gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) + 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*nu*
+        (gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (4.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))*
+        (-2*eta + gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) - 
+     ((nu*(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+         (4.*alpha*Power(gamma,2)*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (nu*(gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+         (4.*alpha*Power(gamma,2)*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))))/
+      (Power(E,eta*t)*(-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+          (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma))),
+    -((Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2))/gamma - 
+         (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma))/
+       (Power(E,eta*t)*(-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+           (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma)))),0,0),
+   List(-0.5*(Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*eta*nu*
+         (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+         (-2*alpha*gamma + gamma*nu - Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+       (alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))*
+         (-2*eta + gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) - 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*eta*nu*
+        (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*alpha*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))*
+        (-2*eta + gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) + 
+     ((2*nu)/(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) - 
+        (2*Power(nu,2))/(alpha*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (2*nu)/(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) + 
+        (2*Power(nu,2))/(alpha*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))))/
+      (Power(E,eta*t)*(-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+          (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma))) + 
+     ((-2*nu)/(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) - 
+        (eta*nu)/(alpha*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) + 
+        (2*Power(nu,2))/(alpha*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (eta*Power(nu,2))/(alpha*gamma*(-2*eta + gamma + nu - \
+Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (eta*nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/
+         (alpha*gamma*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) + 
+        (2*nu)/(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))) + 
+        (eta*nu)/(alpha*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (2*Power(nu,2))/(alpha*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) + 
+        (eta*Power(nu,2))/(alpha*gamma*(-2*eta + gamma + nu + \
+Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (eta*nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/
+         (alpha*gamma*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))))/
+      (-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+        (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma)),
+    (Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*eta*nu*
+        (-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))*
+        (-2*eta + gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) + 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*eta*nu*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+        (-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*gamma*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu \
++ Power(nu,2))*
+        (-2*eta + gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))) + 
+     ((nu*(-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+         (4.*alpha*Power(gamma,2)*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))) - 
+        (nu*(gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+         (4.*alpha*Power(gamma,2)*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2)))))/
+      (Power(E,eta*t)*(-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+          (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma))) + 
+     (((-gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (-((eta*nu*(-gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))))/
+                (alpha*gamma*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))) - 
+             (nu*(gamma + nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*
+                (gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))))/
+              (2.*alpha*gamma*(-2*eta + gamma + nu - Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))))/(2.*gamma) - 
+        ((-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))*
+           (-((eta*nu*(-gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))))/
+                (alpha*gamma*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))) - 
+             (nu*(gamma - nu - Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2)))*
+                (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - \
+2*gamma*nu + Power(nu,2))))/
+              (2.*alpha*gamma*(-2*eta + gamma + nu + Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))))/(2.*gamma))/
+      (-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+        (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma)),
+    1 + (Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma - 
+        (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma))/
+      (Power(E,eta*t)*(-(Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))/gamma) + 
+          (nu*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2)))/(alpha*gamma))),1,0),
+   List(-(nu/(alpha - nu)) - (Power(E,((-gamma + Sqrt(4*alpha*gamma + \
+Power(gamma - nu,2)) - nu)*t)/2.)*
+        (-2*alpha*gamma + gamma*nu - Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))) - 
+     (Power(E,((-gamma - Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (2*alpha*gamma - gamma*nu + Power(nu,2) - nu*Sqrt(4*alpha*gamma + \
+Power(gamma,2) - 2*gamma*nu + Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))),
+    -(alpha/(alpha - nu)) + (alpha*Power(E,((-gamma - Sqrt(4*alpha*gamma + \
+Power(gamma - nu,2)) - nu)*t)/2.)*
+        (-gamma - nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))) + 
+     (alpha*Power(E,((-gamma + Sqrt(4*alpha*gamma + Power(gamma - nu,2)) - \
+nu)*t)/2.)*
+        (gamma + nu + Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))))/
+      (2.*(alpha - nu)*Sqrt(4*alpha*gamma + Power(gamma,2) - 2*gamma*nu + \
+Power(nu,2))),0,0,1))\
+\>", "Output",
+ CellChangeTimes->{3.8913566596732903`*^9, 3.891357438409335*^9},
+ CellLabel->
+  "Out[4]//CForm=",ExpressionUUID->"85f9f78b-6842-4a6f-87b8-391144842e88"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1440, 748},
+WindowMargins->{{-6, Automatic}, {Automatic, 0}},
+TaggingRules-><|"TryRealOnly" -> False|>,
+Magnification:>1.1 Inherited,
+FrontEndVersion->"13.1 for Mac OS X ARM (64-bit) (June 16, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"4e3e4288-9afe-45c5-87bf-5905b456040d"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 385, 6, 34, "Input",ExpressionUUID->"361027a8-881a-45d3-913e-8f7db609272c"],
+Cell[946, 28, 1018, 24, 104, "Input",ExpressionUUID->"9d82e54e-ebec-4cb2-8053-eb118787d891"],
+Cell[1967, 54, 769, 23, 90, "Input",ExpressionUUID->"ad2f3bb1-d1df-4f10-87e1-5100646c8280"],
+Cell[CellGroupData[{
+Cell[2761, 81, 1155, 30, 90, "Input",ExpressionUUID->"152720dd-3638-4dcd-aaf2-d595b2af32f0"],
+Cell[3919, 113, 62210, 1561, 274, "Output",ExpressionUUID->"58b14b29-bbde-40f9-99b0-1f43950e6ecb"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[66166, 1679, 1289, 32, 90, "Input",ExpressionUUID->"724d2cab-5d90-49ad-b8ce-8ef78b9e0551"],
+Cell[67458, 1713, 14647, 216, 1522, "Output",ExpressionUUID->"153b6224-6501-4c3e-b81c-3d8092d5b5a0"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[82142, 1934, 1189, 31, 90, "Input",ExpressionUUID->"37430236-f4ca-458f-b971-a029c237cb8e"],
+Cell[83334, 1967, 12557, 234, 2366, "Output",ExpressionUUID->"8dea39e5-92d7-4937-86ce-bf1e30a6d520"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[95928, 2206, 698, 18, 81, "Input",ExpressionUUID->"5838d7ed-c175-4537-a868-b71caa1a5f13"],
+Cell[96629, 2226, 712, 22, 94, "Output",ExpressionUUID->"d89505cf-f2fa-4416-8f4b-c190550c0f01"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[97378, 2253, 1110, 31, 98, "Input",ExpressionUUID->"e5a4483b-8118-40de-83dc-787bcf334556"],
+Cell[98491, 2286, 5531, 92, 999, "Output",ExpressionUUID->"5da1109b-7415-49b2-9e0d-82030cb10c3b"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[104059, 2383, 273, 6, 36, "Item",ExpressionUUID->"984d875e-f8aa-4570-888e-05a9e0f1f4ad"],
+Cell[CellGroupData[{
+Cell[104357, 2393, 1011, 22, 104, "Input",ExpressionUUID->"6365d84c-6777-4ae7-a131-8ac95806e171"],
+Cell[105371, 2417, 781, 23, 114, "Output",ExpressionUUID->"eca15390-969b-435c-b623-aa87456aec23"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[106189, 2445, 997, 27, 90, "Input",ExpressionUUID->"30d38523-8d86-4644-8d9a-b3ff1da8d711"],
+Cell[107189, 2474, 6150, 123, 1240, "Output",ExpressionUUID->"b4ee3da7-bc38-4d48-985b-38f314a0ce78"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[113388, 2603, 192, 3, 36, "Item",ExpressionUUID->"3e8046c7-166c-48f9-bd9b-89b56f2bdaa9"],
+Cell[CellGroupData[{
+Cell[113605, 2610, 1142, 28, 127, "Input",ExpressionUUID->"715e0abe-5476-4bb2-b961-308ec10e73ff"],
+Cell[114750, 2640, 855, 25, 134, "Output",ExpressionUUID->"4f68c6c4-8e3e-4267-b6f8-8e5a7eafc306"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[115642, 2670, 1322, 35, 110, "Input",ExpressionUUID->"8e23d7ce-f997-4a07-93a0-d19fb82201e3"],
+Cell[116967, 2707, 16012, 314, 3170, "Output",ExpressionUUID->"85f9f78b-6842-4a6f-87b8-391144842e88"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
