@@ -858,6 +858,34 @@ freq_metrics<- function(data, value, true_value, upper, lower) {
   return(metrics)
 }
 
+# rt_metrics --------------------------------------------------------------
+# used for calculating frequentist characteristics of inference for rt
+rt_metrics<- function(data, value, upper, lower) {
+  metric_one <- data %>%
+    mutate(dev = abs({{ value }} - true_rt),
+           CIW = abs({{ upper }} - {{ lower }}),
+           envelope = true_rt >= {{ lower }} & true_rt <=  {{ upper }}) %>%
+    ungroup() %>%
+    filter(!is.na(dev)) %>%
+    summarise(mean_dev = mean(dev),
+              MCIW = mean(CIW),
+              mean_env = mean(envelope))
+  
+  metrics_two <- data %>%
+    mutate(prev_val = lag({{ value }}),
+           prev_rt = lag(true_rt),
+           sv = abs({{ value }} - prev_val),
+           rt_sv = abs(true_rt - prev_rt)) %>%
+    filter(!is.na(sv)) %>%
+    ungroup() %>%
+    summarise(MASV = mean(sv),
+              true_MASV = mean(rt_sv))
+  
+  metrics <- cbind(metric_one, metrics_two)
+  
+  return(metrics)
+}
+
 
 
 
