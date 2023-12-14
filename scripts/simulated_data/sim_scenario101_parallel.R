@@ -6,12 +6,6 @@
 # simulate observed gene counts from our individual seirr engine
 # labeled scenario 101
 library(tidyverse)
-library(glmnet)
-library(patchwork)
-library(GGally)
-library(scales)
-library(cowplot)
-library(gridExtra)
 
 source("src/simulate_stochastic_seirr.R")
 # make a changing vector for r0
