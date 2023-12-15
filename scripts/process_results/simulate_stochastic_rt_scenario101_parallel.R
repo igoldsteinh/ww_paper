@@ -44,6 +44,7 @@ eta = 1/18
 beta_init = r0_init * nu
 beta_vec = unique_r0 * nu 
 
+for (seed in 1:100) {
 set.seed(seed)
 # we have checked and the first 100 all have enough data, so we will just use these
 individ_data <- read_csv(paste0("data/sim_data/scenario101_seed",
@@ -134,4 +135,4 @@ initial_states = state_data %>%
                        mutate(seed = seed)
 
 write_csv(initial_states, here::here("data", "sim_data", paste0("scenario101_seed", seed, "_initstates.csv")))
-
+}
