@@ -8,7 +8,7 @@ source("src/wastewater_functions.R")
 args <- commandArgs(trailingOnly=TRUE)
 
 if (length(args) == 0) {
-  sim = 1
+  sim = 102
   seed = 1
 } else {
   sim <- as.integer(args[1])
@@ -21,7 +21,7 @@ dir_create(path("results", "eirrc_closed", "mcmc_summaries"))
 priors_only = sim == 0
 
 # a hack for dealing with re-using scenario 1 data
-repeat_scenario1s = c(3,4,5,6,7,8,9,10, 12, "frw")
+repeat_scenario1s = c(3,4,5,6,7,8,9,10, 12, "frw", 102)
 repeat_scenario41s = c(411, 4111)
 
 if (sim %in% repeat_scenario1s) {
@@ -144,7 +144,7 @@ post_pred_address <- paste0("results/eirrc_closed/posterior_predictive/posterior
                             ".csv")
 eirr_post_pred <- read_csv(post_pred_address)
 
-if (sim != "real" & sim != "uci" & sim!= "uci_region1" & sim != "uci_region2" & sim != "uci_region3") {
+if (sim != "real" & sim != "uci" & sim!= "uci_region1" & sim != "uci_region2" & sim != "uci_region3" & sim != 101) {
   if (sim != 12 & scenario_sim != 41) {
     simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_fitted_genecount_obsdata.csv")
     
@@ -182,6 +182,8 @@ if (sim != "real" & sim != "uci" & sim!= "uci_region1" & sim != "uci_region2" & 
   
   simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region3.csv"))
   
+} else if (sim == 101) {
+  simdata <- read_csv(here::here("data", "sim_data", paste0("scenario101_seed", seed, "_fitted_genecount_obsdata")))
 }
 
 if (sim == 3) {

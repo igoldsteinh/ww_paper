@@ -64,6 +64,46 @@ if sim == 1
   data_log_copies = long_dat[:, :value]
 end 
 
+### stochastic Rt scenario
+if sim == 101
+  dat = CSV.read(string("data/sim_data/scenario101_seed", seed, "_fitted_genecount_obsdata.csv"), DataFrame)
+  ## Define Priors
+  const gamma_sd = 0.2
+  const gamma_mean =log(1/4)
+  const nu_sd = 0.2
+  const nu_mean = log(1/7)
+  const eta_sd = 0.2
+  const eta_mean = log(1/18)
+  const rho_gene_sd = 1
+  const rho_gene_mean = 0
+  const tau_sd = 1
+  const tau_mean = 0
+  const lambda_mean = 5.685528
+  const lambda_sd = 2.178852
+  const df_shape = 2
+  const df_scale = 10
+  const sigma_rt_sd = 0.2
+  const sigma_rt_mean = log(0.1)
+  const rt_init_sd = 0.1
+  const rt_init_mean = log(0.88)
+
+  # bespoke initial conditions to account for stochasticity
+  bespoke_init_conds = CSV.read(string("data/sim_data/scenario101_seed", seed, "_initstates.csv"), DataFrame)
+  const E_init_sd = 0.05
+  const E_init_mean = convert(Float64,bespoke_init_conds[1,:E])
+  const I_init_sd = 0.05
+  const I_init_mean = convert(Float64, bespoke_init_conds[1,:I])
+  const R1_init_sd = 0.05
+  const R1_init_mean = convert(Float64, bespoke_init_conds[1,:R1])
+
+
+
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
+  grid_size = 1.0
+end 
 
 
 ### LA data
@@ -186,17 +226,41 @@ if sim == 10
   long_dat = filter(:value => value -> value > 0, long_dat)
   data_log_copies = long_dat[:, :value]
 end 
+### finer random walk grid_size
+if sim == 102
+  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+  ## Define Priors
+  include(projectdir("src/prior_constants_eirr_closed_scenario102.jl"))
+
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  long_dat = filter(:value => value -> value > 0, long_dat)
+  data_log_copies = long_dat[:, :value]
+  grid_size = 1.0
+end 
+
 
 obstimes = long_dat[:, :new_time]
 obstimes = convert(Vector{Float64}, obstimes)
 
-# choose change times 
-if maximum(obstimes) % 7 == 0
-  param_change_max = maximum(obstimes) - 7
+# pick the change times 
+if sim != 102
+  if maximum(obstimes) % 7 == 0
+    param_change_max = maximum(obstimes) - 7
+  else 
+    param_change_max = maximum(obstimes)
+  end 
+  param_change_times = collect(7:7.0:param_change_max)
 else 
-  param_change_max = maximum(obstimes)
+  if maximum(obstimes) % 3 == 0
+    param_change_max = maximum(obstimes) - 3
+  else 
+    param_change_max = maximum(obstimes)
+  end 
+  param_change_times = collect(3:3.0:param_change_max)
 end 
-param_change_times = collect(7:7.0:param_change_max)
+
 full_time_series = collect(minimum(obstimes):grid_size:maximum(obstimes))
 outs_tmp = dualcache(zeros(6,length(full_time_series)), 10)
 

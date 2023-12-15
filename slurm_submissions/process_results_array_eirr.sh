@@ -14,9 +14,6 @@ module load R
 cd //dfs6/pub/igoldst1/wastewater2
 sim_num=1
 
-if [ $SLURM_ARRAY_TASK_ID == 1 ]; then
-sbatch --depend=afterany:$SLURM_JOB_ID slurm_submissions/summarise_eirr.sh
-fi
 
-Rscript scripts/process_results/process_results_eirr_closed.R $sim_num $SLURM_ARRAY_TASK_ID
+Rscript scripts/process_results/process_results_eirrc_closed.R $sim_num $SLURM_ARRAY_TASK_ID
 
