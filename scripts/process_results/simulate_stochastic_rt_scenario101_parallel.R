@@ -75,7 +75,11 @@ wide_format = individ_data %>% group_by(labels) %>%
                     mutate(infectious_period = recover_time - infectious_time,
                            r1_period = stopshed_time - recover_time) 
 
-times = 1:floor(max(individ_data$t))
+obs_start = max(which(r0_vec == 0.9)) 
+obs_end = obs_start + (19 * 7) - 1
+
+
+times = obs_start:obs_end
 
 
 # create true RNA conc data ----------------------------------------------
@@ -87,9 +91,6 @@ times = 1:floor(max(individ_data$t))
 
 
 # simulate data sets from the true values (Scenario 1)------------------------
-obs_start = max(which(r0_vec == 0.9)) 
-obs_end = obs_start + (19 * 7) - 1
-
 obs_true_data = true_conc_data %>% filter(time >= obs_start & time <= obs_end)
 
 obs_data = simulate_gene_data(obs_true_data,
