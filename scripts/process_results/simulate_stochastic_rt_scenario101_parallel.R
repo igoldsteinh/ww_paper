@@ -80,7 +80,7 @@ times = 1:floor(max(individ_data$t))
 
 # create true RNA conc data ----------------------------------------------
 
-  true_conc_data = map(current_times, ~calc_total_gene_counts(wide_format, time = .x, N = N)) %>%
+  true_conc_data = map(times, ~calc_total_gene_counts(wide_format, time = .x, N = N)) %>%
     bind_rows()
   
 
