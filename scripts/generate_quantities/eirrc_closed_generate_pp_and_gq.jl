@@ -39,7 +39,6 @@ end
 if sim == 56
   sim = "real"
 end 
-Logging.disable_logging(Logging.Warn)
 
 mkpath(resultsdir("eirrc_closed"))
 mkpath(resultsdir("eirrc_closed", "posterior_samples"))
