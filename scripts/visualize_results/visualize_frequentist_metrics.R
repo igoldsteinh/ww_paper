@@ -846,3 +846,117 @@ new_all_metric_plot_95 <- all_metric_dev_plot_95 + all_metric_env_plot_95 + all_
 
 ggsave(here::here("figures", "scenario1_frequentist_metrics_95CI.pdf"), new_all_metric_plot_95, width = 11, height =11)
 
+# scenario 101 vs 1 --------------------------------------------------------------
+# read in data, lets just look at 80% CI
+
+eirr_rt_scenario1 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario1_allseeds_rt_quantiles.csv")) %>% 
+  mutate(model = "EIRR-ww")%>% 
+  filter(.width == 0.8)
+
+eirr_rt_scenario101 <- read_csv(here::here("results", "eirrc_closed", "eirrc_scenario101_allseeds_rt_quantiles.csv")) %>% 
+  mutate(model = "EIRR-ww (Stoch Rt)")%>% 
+  filter(.width == 0.8)
+
+
+# create metrics
+
+eirr_rt_metrics = NULL
+for (i in 1:100) {
+  sub_frame = eirr_rt_scenario1 %>% filter(seed == i) 
+  metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
+                                                                                            model = "EIRR-ww")
+  eirr_rt_metrics = bind_rows(eirr_rt_metrics, metrics)
+}
+
+eirr_rt_metrics_101 = NULL
+for (i in 1:100) {
+  sub_frame = eirr_rt_scenario101 %>% filter(seed == i) 
+  metrics = rt_metrics(sub_frame, value = value, upper = .upper, lower = .lower) %>% mutate(seed = i,
+                                                                                            model = "EIRR-ww (Stoch Rt)")
+  eirr_rt_metrics_101 = bind_rows(eirr_rt_metrics_101, metrics)
+}
+
+
+all_metrics <- bind_rows(eirr_rt_metrics, eirr_rt_metrics_101) %>% 
+  pivot_longer(cols = -c(seed, model), names_to = "metric")
+
+
+level_list <- c("mean_dev", "mean_env", "MCIW", "MASV", "true_MASV")
+
+label_list <- c("Deviation", "Envelope", "MCIW", "MASV", "True MASV")
+all_metrics$metric <- factor(all_metrics$metric, levels=level_list, labels=label_list)
+
+model_level_list <-c ("EIRR-ww", "EIRR-ww (Stoch Rt)")
+all_metrics$model <- factor(all_metrics$model, levels = model_level_list)
+
+all_metrics$useful_value <- 0
+all_metrics$useful_value[all_metrics$metric == "Envelope"] <- 0.8
+all_metrics$useful_value[all_metrics$metric == "MCIW"] <- NA
+all_metrics$useful_value[all_metrics$metric == "MASV"] <- 0.02361307
+all_metric_plot <- all_metrics %>% 
+  filter(metric != "True MASV") %>% 
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  facet_wrap(vars(metric),
+             scales = "free") +
+  ggtitle("Frequentist Metrics Across Models") + 
+  ylab("") + 
+  xlab("Model")
+
+all_metric_dev_plot <- all_metrics %>% 
+  filter(metric == "Deviation") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x=element_blank(),
+  ) +
+  ggtitle("Deviation") + 
+  ylab("Deviation") + 
+  xlab("")
+
+all_metric_env_plot <- all_metrics %>% 
+  filter(metric == "Envelope") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18),
+        axis.text.x = element_blank()) +
+  ggtitle("Envelope") + 
+  ylab("Envelope") + 
+  xlab("")
+
+
+all_metric_mciw_plot <- all_metrics %>% 
+  filter(metric == "MCIW") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MCIW") + 
+  ylab("MCIW") + 
+  xlab("Model")
+
+all_metric_masv_plot <- all_metrics %>% 
+  filter(metric == "MASV") %>%
+  ggplot(aes(x = model, y = value)) + 
+  geom_boxplot() + 
+  geom_hline(aes(yintercept = useful_value)) + 
+  theme_bw() + 
+  theme(text = element_text(size = 18)) +
+  ggtitle("MASV") + 
+  ylab("MASV") + 
+  xlab("Model")
+
+all_metric_plot_stochRt <- all_metric_dev_plot + all_metric_env_plot + all_metric_mciw_plot + all_metric_masv_plot + plot_annotation(
+  title = 'Frequentist Metrics (Stochastic vs Fixed Rt)'
+) &
+  theme(text = element_text(size = 18))
+
+ggsave(here::here("figures", "stochvsfixed_frequentist_metrics.pdf"), all_metric_plot_stochRt, width = 11, height =11)
