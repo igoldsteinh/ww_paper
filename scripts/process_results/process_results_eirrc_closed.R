@@ -183,7 +183,7 @@ if (sim != "real" & sim != "uci" & sim!= "uci_region1" & sim != "uci_region2" & 
   simdata <- read_csv(here::here("data", "uci_data", "uci_fitting_data_region3.csv"))
   
 } else if (sim == 101) {
-  simdata <- read_csv(here::here("data", "sim_data", paste0("scenario101_seed", seed, "_fitted_genecount_obsdata")))
+  simdata <- read_csv(here::here("data", "sim_data", paste0("scenario101_seed", seed, "_fitted_genecount_obsdata.csv")))
 }
 
 if (sim == 3) {
