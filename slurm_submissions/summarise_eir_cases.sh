@@ -11,7 +11,7 @@
 
 module purge
 module load R
-cd //dfs6/pub/igoldst1/wastewater2
+cd //dfs6/pub/igoldst1/ww_paper
 
 sim_num=1
 Rscript scripts/process_results/summarise_eir_cases.R $sim_num
