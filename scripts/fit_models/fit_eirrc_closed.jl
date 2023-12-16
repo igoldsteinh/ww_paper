@@ -48,7 +48,8 @@ mkpath(resultsdir("eirrc_closed", "posterior_samples"))
 n_samples = 250
 n_chains = 4
 
-
+print(sim)
+print(seed)
 
 ## Load Data
 
@@ -68,6 +69,7 @@ end
 
 ### stochastic Rt scenario
 if sim == 101
+  print("hello scenario 101")
   dat = CSV.read(string("data/sim_data/scenario101_seed", seed, "_fitted_genecount_obsdata.csv"), DataFrame)
   ## Define Priors
   const gamma_sd = 0.2
@@ -101,7 +103,9 @@ if sim == 101
 
 
   subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  print(subset_dat)
   long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  print(long_dat)
   long_dat = filter(:value => value -> value > 0, long_dat)
   data_log_copies = long_dat[:, :value]
   grid_size = 1.0
