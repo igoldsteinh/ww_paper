@@ -45,7 +45,7 @@ mkpath(resultsdir("eirrc_closed"))
 mkpath(resultsdir("eirrc_closed", "posterior_samples"))
 
 ## Control Parameters
-n_samples = 250
+n_samples = 500
 n_chains = 4
 
 ## Load Data

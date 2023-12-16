@@ -61,7 +61,7 @@ obstimes = convert(Vector{Float64}, obstimes)
 param_change_times = obstimes[1:(end - 1)]
 
 ## Control Parameters
-n_samples = 250
+n_samples = 500
 n_chains = 4
 
 

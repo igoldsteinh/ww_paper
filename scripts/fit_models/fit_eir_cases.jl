@@ -48,7 +48,7 @@ mkpath(resultsdir("eir_cases"))
 mkpath(resultsdir("eir_cases", "posterior_samples"))
 
 ## Control Parameters
-n_samples = 100
+n_samples = 500
 n_chains = 4
 
 

@@ -16,14 +16,14 @@ using Logging
 
 sim =
 if length(ARGS) == 0
-"own"
+102
 else
   parse(Int64, ARGS[1])
 end
 
 seed = 
 if length(ARGS) == 0
-  2
+  1
 else 
   parse(Int64, ARGS[2])
 end 
@@ -51,7 +51,7 @@ mkpath(resultsdir("seirr_student"))
 mkpath(resultsdir("seirr_student", "posterior_samples"))
 
 ## Control Parameters
-n_samples = 250
+n_samples = 500
 n_chains = 4
 
 ## Load Data
@@ -67,17 +67,37 @@ if sim == 1
   include(projectdir("src/prior_constants_seirr_student.jl"))
 end 
 
+if sim == 102
+  all_dat = CSV.read("data/sim_data/scenario1_fitted_genecount_obsdata.csv", DataFrame)
+  dat = subset(all_dat, :seed => ByRow(x -> x == seed))
+  subset_dat = dat[:, [:new_time, :log_gene_copies1, :log_gene_copies2, :log_gene_copies3]]
+  long_dat = DataFrames.stack(subset_dat, [:log_gene_copies1, :log_gene_copies2, :log_gene_copies3])
+  data_log_copies = long_dat[:, :value]
+
+  ## Define Priors
+  include(projectdir("src/prior_constants_seirr_student_scenario102.jl"))
+end 
 
 
 
 obstimes = long_dat[:, :new_time]
 obstimes = convert(Vector{Float64}, obstimes)
-if maximum(obstimes) % 7 == 0
-  param_change_max = maximum(obstimes) - 7
+if sim != 102
+  if maximum(obstimes) % 7 == 0
+    param_change_max = maximum(obstimes) - 7
+  else 
+    param_change_max = maximum(obstimes)
+  end 
+  param_change_times = collect(7:7.0:param_change_max)
 else 
-  param_change_max = maximum(obstimes)
+  if maximum(obstimes) % 3 == 0
+    param_change_max = maximum(obstimes) - 3
+  else 
+    param_change_max = maximum(obstimes)
+  end 
+  param_change_times = collect(3:3.0:param_change_max)
 end 
-param_change_times = collect(7:7.0:param_change_max)
+
   
   
 
@@ -93,24 +113,47 @@ else
 include(projectdir("src/bayes_seirr_student.jl"))
 end
 
+if sim == 102
+  my_model_optimize = bayes_seirr_student(
+      data_log_copies, 
+      obstimes, 
+      param_change_times, 
+      true, 
+      prob,
+      1e-11,
+      1e-8,
+      3)
 
-my_model_optimize = bayes_seirr_student(
+  my_model = bayes_seirr_student(
     data_log_copies, 
     obstimes, 
     param_change_times, 
     true, 
     prob,
-    1e-11,
-    1e-8)
+    1e-9,
+    1e-6, 
+    3)
+else 
+  my_model_optimize = bayes_seirr_student(
+      data_log_copies, 
+      obstimes, 
+      param_change_times, 
+      true, 
+      prob,
+      1e-11,
+      1e-8,
+      7)
 
-my_model = bayes_seirr_student(
-  data_log_copies, 
-  obstimes, 
-  param_change_times, 
-  true, 
-  prob,
-  1e-9,
-  1e-6)
+  my_model = bayes_seirr_student(
+    data_log_copies, 
+    obstimes, 
+    param_change_times, 
+    true, 
+    prob,
+    1e-9,
+    1e-6,
+    7)
+end
 
 
 # Sample Posterior
