@@ -53,10 +53,13 @@ full_stan_diag <- map(mcmc_list, ~read_csv(here::here("results", "eirrc_closed",
 
 write_csv(full_stan_diag, here::here("results", "eirrc_closed", paste0("eirrc_closed_scenario", sim,  "_allseeds_stan_diag.csv")))
 # create final rt frame ---------------------------------------------------
+full_simdata <- vector(mode='list', length=100)
+for (i in 1:100) {
+  full_simdata[[i]] <- read_csv(here::here("data", "sim_data", paste0("scenario101_seed", i, "_full_genecount_obsdata.csv")))
+}
 
-full_simdata_address <- paste0("data/sim_data/scenario", scenario_sim, "_full_genecount_obsdata.csv")
 
-full_simdata <- read_csv(full_simdata_address) %>% rename("true_rt" = "Rt") %>% 
+full_simdata <- full_simdata %>% bind_rows()%>% rename("true_rt" = "Rt") %>% 
   group_by(seed) %>% 
   fill(true_rt, .direction = "down")  # if Rt is missing, it is because no conditions changed in the day that it was missing, in such a case, the previous value is the true Rt
 
@@ -64,10 +67,14 @@ full_simdata <- read_csv(full_simdata_address) %>% rename("true_rt" = "Rt") %>%
 # but then based on how we choose to space apart observations (every two days, every seven etc)
 # there is a max observed time in the data set, we should not judge the model beyond the fitted data (for now)
 # this time should be the same across models (it will be the same for the case models even though they're slightly different)
-fitted_simdata_address <- paste0("data/scenario", scenario_sim, "_pop1000_fitted_genecount_obsdata.csv")
+fitted_simdata <- vector(mode='list', length=100)
+for (i in 1:100) {
+  fitted_simdata[[i]] <- read_csv(here::here("data", "sim_data", paste0("scenario101_seed", i, "_fitted_genecount_obsdata.csv")))
+}
 
 
-fitted_simdata <- read_csv(fitted_simdata_address)
+
+fitted_simdata <- fitted_simdata %>% bind_rows()
 max_time <- fitted_simdata %>% group_by(seed) %>% summarise(max_time = max(time))
 
 timevarying_quantiles <- map(timevarying_list, ~read_csv(here::here("results", "eirrc_closed", "generated_quantities", .x)) %>% 
@@ -95,8 +102,7 @@ rt_quantiles <- timevarying_quantiles %>%
 #   ) %>%
 #   bind_rows(.id = "seed")
 
-write_csv(rt_quantiles, here::here("results", "eirrc_closed", paste0("ei_scenario", sim,  "_allseeds_rt_quantiles.csv")))
-# write_csv(I_quantiles, here::here("results", "eirrc_closed", paste0("eirr_scenario", sim,  "_allseeds_prevI_quantiles.csv")))
+write_csv(rt_quantiles, here::here("results", "eirrc_closed", paste0("eirrc_scenario", sim,  "_allseeds_rt_quantiles.csv")))
 
 # visualize results
 # all credit to Damon Bayer for plot functions 
