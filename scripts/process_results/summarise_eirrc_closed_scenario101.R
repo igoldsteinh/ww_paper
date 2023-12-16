@@ -43,7 +43,7 @@ full_stan_diag <- map(mcmc_list, ~read_csv(here::here("results", "eirrc_closed",
   bind_rows() %>%
   mutate(seed = as.numeric(stringr::str_extract(address, stringr::regex("(\\d+)(?!.*\\d)")))) %>%  
   group_by(seed) %>% 
-  filter(variable != "R2[1]" & variable != "C[1]") %>%
+  filter(variable != "R2[0]" & variable != "C[0]") %>%
   summarise(min_rhat = min(rhat),
             max_rhat = max(rhat),
             min_ess_bulk = min(ess_bulk),
