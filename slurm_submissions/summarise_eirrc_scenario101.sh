@@ -13,6 +13,6 @@ module purge
 module load R
 cd //dfs6/pub/igoldst1/ww_paper
 
-sim_num=1
-Rscript scripts/process_results/summarise_eirrc_closed.R $sim_num
+sim_num=101
+Rscript scripts/process_results/summarise_eirrc_closed_scenario101.R $sim_num
 
